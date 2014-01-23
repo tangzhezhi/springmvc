@@ -1,0 +1,20 @@
+[ 
+	{
+		"id" : "AL",
+		"text" : "Alabama"
+	}, 
+	{
+		"id" : "AK",
+		"text" : "Alaska"
+	}, {
+		"id" : "AZ",
+		"text" : "Arizona",
+		"selected" : true
+	}, {
+		"id" : "AR",
+		"text" : "Arkansas"
+	}, {
+		"id" : "CA",
+		"text" : "California"
+	} 
+]

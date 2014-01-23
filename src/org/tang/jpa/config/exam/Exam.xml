@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tang.jpa.dao.exam.ExamDao">
+	
+	<resultMap type="TreeDTO" id="TreeDTO">
+    	<result column="id"  property="id" />
+    	<result column="pid"  property="pid" />
+    	<result column="name"  property="name" />
+    	<result column="url"  property="url" />
+    	<result column="checked"  property="checked" />
+    	<result column="iconSkin"  property="iconSkin" />
+    	<result column="bak"  property="bak" />
+	</resultMap>
+	
+	
+	<resultMap type="UserexamDTO" id="UserexamDTO">
+    	<result column="userexamid"  property="userexamid" />
+    	<result column="userid"  property="userid" />
+    	<result column="examid"  property="examid" />
+    	<result column="totalScore"  property="totalScore" />
+	</resultMap>
+	
+	
+	<resultMap type="UserexamdetailsDTO" id="UserexamdetailsDTO">
+    	<result column="userexamid"  property="userexamid" />
+    	<result column="optionid"  property="optionid" />
+    	<result column="userAnswer"  property="userAnswer" />
+    	<result column="optionEarnScore"  property="optionEarnScore" />
+    	<result column="userexamdetailsid"  property="userexamdetailsid" />
+	</resultMap>
+	
+	<select id="findExamTree" parameterType="UserDTO" resultMap="TreeDTO" >   
+		    select t.examtime||t.examsubject||t.examid as id, t.examtime||t.examsubject as pid,
+		    t.examname as name, t.examid as bak from t_exampaper t
+		    union 
+		    select t.examtime||t.examsubject as id,t.examtime as pid ,  t.examtime||t.examsubject as name, '' as bak
+		    from t_exampaper t
+		    union 
+		    select t.examtime as id,'年份' as pid , t.examtime as name, '' as bak
+		    from t_exampaper t
+		<where>
+			 1=1 
+		</where>
+	</select>
+	
+	
+	
+	<select id="findUserExamId" parameterType="UserexamDTO" resultType="String" >   
+		    select userexamid from 
+		     t_userexam t
+		<where>
+			 1=1  and  t.userid =  #{userid}  and  t.examid =  #{examid}
+		</where>
+	</select>
+	
+	
+	<insert id="insertUserExam" parameterType="UserexamDTO">    
+		insert into t_userexam(
+    			userexamid,
+    			userid,
+    			examid,
+    			totalscore
+    			
+		)
+		values(
+    			#{userexamid, jdbcType=VARCHAR},
+    			#{userid, jdbcType=VARCHAR},
+    			#{examid, jdbcType=VARCHAR},
+    			#{totalScore, jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	
+	<insert id="insertUserExamDetails" parameterType="java.util.List">    
+		insert into t_userexamdetails(
+    			userexamdetailsid,
+    			userexamid,
+    			optionid,
+    			useranswer,
+    			optionearnscore
+		)
+		<foreach collection="list" item="item" index="index" separator="union all" >  
+        	select #{item.userexamdetailsid ,jdbcType=VARCHAR},#{item.userexamid ,jdbcType=VARCHAR}
+        	,#{item.optionid ,jdbcType=VARCHAR} ,#{item.userAnswer ,jdbcType=VARCHAR} 
+        	,#{item.optionEarnScore ,jdbcType=VARCHAR}
+        	 from dual  
+    	</foreach>  
+	</insert>
+	
+	
+	
+	<update id="updateUserExamDetails" parameterType="java.util.List">   
+    	<foreach collection="list" item="item" separator="" open="begin" close="end;">
+                update t_userexamdetails
+                <set>
+		    			<if test="item.userAnswer != null and item.userAnswer != '' ">useranswer=#{item.userAnswer},</if>
+		    			<if test="item.optionEarnScore != null and item.optionEarnScore != '' ">optionearnscore=#{item.optionEarnScore},</if>
+		    	</set>
+                where userexamid = #{item.userexamid} and optionid = #{item.optionid};
+        </foreach>
+	</update>
+	
+</mapper>

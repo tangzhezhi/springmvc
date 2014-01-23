@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"     
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xmlns:p="http://www.springframework.org/schema/p"     
+        xmlns:context="http://www.springframework.org/schema/context"     
+         xmlns:mvc="http://www.springframework.org/schema/mvc"  
+   xsi:schemaLocation="http://www.springframework.org/schema/beans 
+   http://www.springframework.org/schema/beans/spring-beans-3.2.xsd   
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd   
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd   
+            http://www.springframework.org/schema/mvc   
+           http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+       http://www.springframework.org/schema/context 
+       http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+	<!-- 启用spring mvc 注解 -->
+	<context:annotation-config />
+
+	<!-- 设置使用注解的类所在的jar包 -->
+	<!-- 
+	<context:component-scan base-package="org.tang.jpa.controller"></context:component-scan>
+	 -->
+	
+	<!-- ②：启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->
+	<bean
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+	</bean>
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" p:ignoreDefaultModelOnRedirect="true">
+		<property name="messageConverters">
+			<list>
+				<bean
+					class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"  p:supportedMediaTypes="*/*" />
+			</list>
+		</property>
+	</bean>
+	
+	
+	 <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">  
+        <property name="mediaTypes">  
+            <map>  
+                <entry key="html" value="text/html" />  
+                <entry key="json" value="application/json" />  
+            </map>  
+        </property>  
+        <property name="viewResolvers">  
+            <list>  
+                <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />  
+                <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
+                    <property name="prefix" value="/" />  
+                    <property name="suffix" value=".html" />  
+                </bean>  
+            </list>  
+        </property>  
+        <property name="defaultViews">  
+            <list>  
+                <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />  
+            </list>  
+        </property>  
+    </bean>  
+      
+      <!-- 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 -->
+   	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/*" />  
+			<mvc:mapping path="/*/*" />  
+			<mvc:mapping path="/*/*/*" />  
+			<mvc:exclude-mapping path="/login/userLogin"/>
+			<mvc:exclude-mapping path="/login.html"/>
+            <bean class="org.tang.jpa.interceptor.AllInterceptor"/> 
+		</mvc:interceptor>
+	</mvc:interceptors>
+      
+      
+	<mvc:resources mapping="/resources/**" location="/resources/" cache-period="31536000"/>
+  	<mvc:resources mapping="/js/**" location="/resources/js/"/>  
+    <mvc:resources mapping="/css/**" location="/resources/css/"/>  
+      
+      
+          <!-- SpringMVC在超出上传文件限制时，会抛出org.springframework.web.multipart.MaxUploadSizeExceededException -->  
+    <!-- 该异常是SpringMVC在检查上传的文件信息时抛出来的，而且此时还没有进入到Controller方法中 -->  
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">  
+        <property name="exceptionMappings">  
+            <props>  
+                <!-- 遇到MaxUploadSizeExceededException异常时，自动跳转到/WEB-INF/error_fileupload.jsp页面 -->  
+                <prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">/html/error/405</prop>  
+                <!-- 处理其它异常(包括Controller抛出的) -->  
+                <prop key="java.lang.Throwable">/html/error/500</prop>  
+            </props>  
+        </property>  
+    </bean>  
+      
+</beans>

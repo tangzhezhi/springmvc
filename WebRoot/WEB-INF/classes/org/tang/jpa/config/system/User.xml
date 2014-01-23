@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tang.jpa.dao.system.UserDao">
+
+	<resultMap type="UserDTO" id="UserDTO">
+		<id 	column="userid" property="userId" />
+		<result column="orgid"  property="orgId" />
+		<result column="roleid" property="roleId" />
+		<result column="departmentid" property="departmentId" />
+		<result column="orgname"  property="orgName" />
+		<result column="rolename" property="roleName" />
+		<result column="departmentname" property="departmentName" />
+		<result column="username" property="userName" />
+		<result column="userpwd" property="userPwd" />
+		<result column="userphone" property="userPhone" />
+		<result column="useremail" property="userEmail" />
+		<result column="usertype" property="userType" />
+		<result column="userlevel" property="userLevel" />
+	</resultMap>
+	
+	
+	<resultMap type="Page" id="PageUser">
+		<result column="totalRecord" property="totalRecord" />
+		<result  column="totalPage" property="totalPage" />
+		<result column="pageNo" property="pageNo" />
+		<result column="pageSize"  property="pageSize" />
+		<collection property="results" ofType="UserDTO">
+     		<id 	column="userid" property="userId" />
+			<result column="orgid"  property="orgId" />
+			<result column="roleid" property="roleId" />
+			<result column="departmentid" property="departmentId" />
+			<result column="orgname"  property="orgName" />
+			<result column="departmentname" property="departmentName" />
+			<result column="rolename" property="roleName" />
+			<result column="username" property="userName" />
+			<result column="userpwd" property="userPwd" />
+			<result column="userphone" property="userPhone" />
+			<result column="useremail" property="userEmail" />
+			<result column="usertype" property="userType" />
+			<result column="userlevel" property="userLevel" />
+			
+    	</collection>
+	</resultMap>
+
+	<!-- 查询用户登录  用户信息放入session -->
+	<select id="selectUserLoginInfo" parameterType="UserDTO" resultMap="UserDTO" >   
+		select 
+		u.userid,u.orgid,r.roleid,u.departmentid,u.username,u.userpwd,u.userphone,
+		u.useremail,u.usertype,u.userlevel,r.rolename from t_user u left join t_user_role ur
+		on (u.userid = ur.userid) left join t_role r  on (ur.roleid = r.roleid)
+		<where>
+			 1=1
+			<if test="userName != null">
+			 	and u.username = #{userName}
+    		</if>
+    		<if test="userPwd != null">
+				and u.userpwd = #{userPwd}
+    		</if>
+    		<if test="orgId != null">
+				and u.orgid = #{orgId}
+    		</if>
+		</where>
+	</select>
+	 
+	 
+	 <!-- 查询分页 -->
+	<select id="selectUserAll" parameterType="Page" resultMap="PageUser" >   
+		select  
+    			t.userid,
+    			t.orgid,
+    			o.orgname,
+    			t.departmentid,
+    			d.departmentname,
+    			r.roleid,
+    			r.rolename,
+    			t.username,
+    			t.userpwd,
+    			t.userphone,
+    			t.useremail,
+    			t.usertype,
+    			t.userlevel,
+    			t.usercredits
+		 from T_USER t 
+		 left join t_organization o  on (t.orgid = o.orgid) 
+		 left join t_user_role ur on (t.userid = ur.userid) 
+		 left join t_role r  on (ur.roleid = r.roleid)
+		 left join t_department d  on (t.departmentid = d.departmentid) 
+		<where>
+			 1=1 
+    		<if test="params.userId != null  and  params.userId != '' ">
+			 	 and  t.userId   =  #{params.userId}
+    		</if>
+    		<if test="params.orgId != null  and  params.orgId != '' ">
+			 	 and  t.orgid   =  #{params.orgId}
+    		</if>
+    		<if test="params.departmentId != null and  params.departmentId  != '' ">
+			 	 and  t.departmentid   =  #{params.departmentId}
+    		</if>
+    		<if test="params.userName != null  and  params.userName != '' ">
+			 	  and  t.username   like  '%${params.userName}%'
+    		</if>
+    		<if test="params.userPwd != null and  params.userPwd  != '' ">
+			 	 and  t.userpwd   =  #{params.userPwd}
+    		</if>
+    		<if test="params.userPhone != null and  params.userPhone  != '' ">
+			 	 and  t.userphone   =  #{params.userPhone}
+    		</if>
+    		<if test="params.userEmail != null and  params.userEmail != '' ">
+			 	 and  t.useremail   =  #{params.userEmail}
+    		</if>
+    		<if test="params.userType != null and  params.userType != '' ">
+			 	 and  t.usertype   =  #{params.userType}
+    		</if>
+    		<if test="params.userLevel != null and  params.userLevel != '' ">
+			 	 and  t.userlevel   =  #{params.userLevel}
+    		</if>
+    		<if test="params.userCredits != null and  params.userCredits != '' ">
+			 	 and  t.usercredits   =  #{params.userCredits}
+    		</if>
+		</where>
+	</select>
+	
+	
+	<!-- 向数据库中插入资源记录-->
+	<insert id="insertUser" parameterType="UserDTO">    
+		 <selectKey keyProperty="userId" resultType="String" order="BEFORE">  
+            select   sys_guid() as userId from dual 
+    	</selectKey>
+		insert into T_USER(
+    			userid,
+    			orgid,
+    			departmentid,
+    			username,
+    			userpwd,
+    			userphone,
+    			useremail,
+    			usertype,
+    			userlevel,
+    			usercredits
+		)
+		values(
+				#{userId, jdbcType=VARCHAR},
+    			#{orgId, jdbcType=VARCHAR},
+    			#{departmentId, jdbcType=VARCHAR},
+    			#{userName, jdbcType=VARCHAR},
+    			#{userPwd, jdbcType=VARCHAR},
+    			#{userPhone, jdbcType=VARCHAR},
+    			#{userEmail, jdbcType=VARCHAR},
+    			#{userType, jdbcType=VARCHAR},
+    			#{userLevel, jdbcType=VARCHAR},
+    			#{userCredits, jdbcType=VARCHAR}
+		)
+	</insert>
+
+
+	
+	<!-- 向数据库中插入用户角色记录-->
+	<insert id="insertUserRole" parameterType="UserDTO">    
+		insert into T_USER_ROLE(
+    			userid,
+    			roleid
+		)
+		values(
+				#{userId, jdbcType=VARCHAR},
+    			#{roleId, jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	
+	
+	
+	  <!-- 更新库中的资源 -->
+	<update id="updateUser" parameterType="UserDTO">   
+		update T_USER  
+		<set>
+    			<if test="orgId != null and orgId != '' ">orgid=#{orgId},</if>
+    			<if test="departmentId != null and departmentId != '' ">departmentid=#{departmentId},</if>
+    			<if test="userName != null and userName != '' ">username=#{userName},</if>
+    			<if test="userPwd != null and userPwd != '' ">userpwd=#{userPwd},</if>
+    			<if test="userPhone != null and userPhone != '' ">userphone=#{userPhone},</if>
+    			<if test="userEmail != null and userEmail != '' ">useremail=#{userEmail},</if>
+    			<if test="userType != null and userType != '' ">usertype=#{userType},</if>
+    			<if test="userLevel != null and userLevel != '' ">userlevel=#{userLevel},</if>
+    			<if test="userCredits != null and userCredits != '' ">usercredits=#{userCredits},</if>
+    	</set>
+    	where userId=#{userId}
+	</update>
+	
+	
+	
+	<update id="updateUserRole" parameterType="UserDTO">   
+		update T_USER_ROLE  
+		<set>
+    			<if test="roleId != null and roleId != '' ">roleid=#{roleId},</if>
+    	</set>
+    	where userId=#{userId}
+	</update>
+	
+	
+	
+	<!-- 删除-->
+	<delete id="deleteUser" parameterType="String">    
+		delete from T_USER  where userid=  #{userId}
+	</delete>
+	
+	
+	<delete id="deleteUserRole" parameterType="String">    
+		delete from T_USER_ROLE  where userid=  #{userId}
+	</delete>
+	
+
+</mapper>

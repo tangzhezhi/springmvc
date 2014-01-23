@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tang.jpa.dao.system.ResourceDao">
+
+	<resultMap type="ResourceDTO" id="ResourceDTO">
+		<id 	column="resourceId" property="resourceId" />
+		<result column="roleId"  property="roleId" />
+		<result column="resourceName" property="resourceName" />
+		<result column="resourceCode" property="resourceCode" />
+		<result column="resourceUrl" property="resourceUrl" />
+		<result column="resourceParentId" property="resourceParentId" />
+		<result column="resourceSort" property="resourceSort" />
+	</resultMap>
+	
+	<resultMap type="Page" id="PageResource">
+		<result column="totalRecord" property="totalRecord" />
+		<result  column="totalPage" property="totalPage" />
+		<result column="pageNo" property="pageNo" />
+		<result column="pageSize"  property="pageSize" />
+		<collection property="results" ofType="ResourceDTO">
+		<id 	column="resourceId" property="resourceId" />
+			<result column="roleId"  property="roleId" />
+			<result column="resourceName" property="resourceName" />
+			<result column="resourceCode" property="resourceCode" />
+			<result column="resourceUrl" property="resourceUrl" />
+			<result column="resourceParentId" property="resourceParentId" />
+			<result column="resourceSort" property="resourceSort" />
+    	</collection>
+	</resultMap>
+	
+	
+	
+	
+	 <!-- 查询用户资源 -->
+	<select id="selectResourceOfUser" parameterType="ResourceDTO" resultMap="ResourceDTO" >   
+		select  t.resourceid,t.resourcename,t.resourceurl,t.resourceparentid from t_resource t
+		left join t_role_resource rr on(
+		     rr.resourceid = t.resourceid
+		)
+		left join t_role r on (
+		 rr.roleid = r.roleid)
+		<where>
+			 1=1 
+			<if test="resourceType != null">
+			 	 and  t.resourcetype  =  #{resourceType}
+    		</if>
+    		<if test="resourceType == null">
+			 	 and  t.resourcetype  =  '1'
+    		</if>
+			<if test="roleId != null">
+			 	 and  r.roleid  =  #{roleId}
+    		</if>
+    		<if test="resourceName != null and resourceName !='' ">
+			 	 and  t.resourcename  like '%${resourceName}%'
+    		</if>
+		</where>
+		 order by t.resourcesort
+	</select>
+	
+	
+	
+		
+	 <!-- 查询资源 分页 -->
+	<select id="selectResourceAll" parameterType="Page" resultMap="PageResource" >   
+	    select  t.resourceid,t.resourcename,t.resourceurl,t.resourceparentid,t.resourcecode from (
+			select  t.resourceid,t.resourcename,t.resourceurl,t.resourceparentid,t.resourcecode,
+			  t.resourcesort, t.resourcetype
+			 from t_resource t
+			left join t_role_resource rr on(
+			     rr.resourceid = t.resourceid
+			)
+			left join t_role r on (
+			 rr.roleid = r.roleid)
+			<where>
+				 1=1 
+				<if test="params.resourceType != null">
+				 	 and  t.resourcetype  =  #{params.resourceType}
+	    		</if>
+				<if test="params.roleId != null">
+				 	 and  r.roleid  =  #{params.roleId}
+	    		</if>
+	    		<if test="params.resourceName != null and params.resourceName !='' ">
+				 	 and  t.resourcename  like '%${params.resourceName}%'
+	    		</if>
+			</where>
+			union all
+				select '0' as resourceid,'系统根节点' as resourcename,'' as resourceurl, 
+				'' as resourceparentid,'' as resourcecode , '0' as resourcesort,
+				'1' as resoucetype
+				from dual
+		) t  order by t.resourcetype , t.resourcesort
+		
+	</select>
+	
+	
+	
+	
+	
+	<!-- 向数据库中插入资源记录-->
+	<insert id="insertResource" parameterType="ResourceDTO">    
+		 <selectKey keyProperty="resourceId" resultType="String" order="BEFORE">  
+            select   sys_guid() as resourceId from dual 
+    	</selectKey>
+		insert into t_resource(resourceid,resourcename,resourcecode,resourceurl,resourceparentid,resourcesort,resourcetype)
+		values(#{resourceId},
+		#{resourceName , jdbcType=VARCHAR},
+		#{resourceCode , jdbcType=VARCHAR},
+		#{resourceUrl , jdbcType=VARCHAR},
+		#{resourceParentId , jdbcType=VARCHAR},
+		#{resourceSort , jdbcType=VARCHAR},
+		#{resourceType , jdbcType=VARCHAR})
+	</insert>
+
+
+	
+	<!-- 向数据库中插入角色资源记录-->
+	<insert id="insertRoleResource" parameterType="ResourceDTO">    
+		insert into t_role_resource(roleid,resourceid)
+		values(#{roleId , jdbcType=VARCHAR},
+		#{resourceId , jdbcType=VARCHAR})
+	</insert>
+
+	
+	
+	  <!-- 更新库中的资源 -->
+	<update id="updateResource" parameterType="ResourceDTO">   
+		update t_resource  
+		<set>
+	      <if test="resourceName != null">resourceName=#{resourceName},</if>
+	      <if test="resourceCode != null">resourceCode=#{resourceCode},</if>
+	      <if test="resourceUrl != null">resourceUrl=#{resourceUrl},</if>
+	      <if test="resourceParentId != null">resourceParentId=#{resourceParentId},</if>
+	      <if test="resourceSort != null">resourceSort=#{resourceSort},</if>
+	      <if test="resourceType != null">resourceType=#{resourceType},</if>
+    	</set>
+    	where resourceId=#{resourceId}
+	</update>
+	
+	<!-- 删除-->
+	<delete id="deleteResource" parameterType="String">    
+		delete from t_resource where resourceId=#{resourceId}
+	</delete>
+	
+		<!-- 删除资源角色对应关系-->
+	<delete id="deleteRoleResource" parameterType="ResourceDTO">    
+		delete from t_role_resource where resourceId=#{resourceId} and roleId = #{roleId}
+	</delete>
+	
+	
+</mapper>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tang.jpa.dao.system.RoleDao">
+
+	<resultMap type="RoleDTO" id="RoleDTO">
+    	<result column="roleid"  property="roleId" />
+    	<result column="orgid"  property="orgId" />
+    	<result column="orgname"  property="orgName" />
+    	<result column="roleName"  property="roleName" />
+	</resultMap>
+	
+	<resultMap type="Page" id="PageRole">
+		<result column="totalRecord" property="totalRecord" />
+		<result  column="totalPage" property="totalPage" />
+		<result column="pageNo" property="pageNo" />
+		<result column="pageSize"  property="pageSize" />
+		<collection property="results" ofType="RoleDTO">
+    		<result column="roleid"  property="roleId" />
+    		<result column="orgid"  property="orgId" />
+    		<result column="orgname"  property="orgName" />
+    		<result column="roleName"  property="roleName" />
+    	</collection>
+	</resultMap>
+	
+	
+	<resultMap type="TreeDTO" id="TreeDTO">
+    	<result column="id"  property="id" />
+    	<result column="pid"  property="pid" />
+    	<result column="name"  property="name" />
+    	<result column="url"  property="url" />
+    	<result column="checked"  property="checked" />
+    	<result column="iconSkin"  property="iconSkin" />
+	</resultMap>
+		
+	 <!-- 查询分页 -->
+	<select id="selectRoleAll" parameterType="Page" resultMap="PageRole" >   
+		select  
+    			t.roleid,
+    			t.orgid,
+    			t.roleName,
+    			o.orgname
+		 from T_ROLE t left join t_organization o  on (t.orgid = o.orgid)
+		<where>
+			 1=1 
+    		<if test="params.roleId != null and params.roleId != '' " >
+			 	 and  t.roleid   =  #{params.roleId}
+    		</if>
+    		<if test="params.orgId != null and params.orgId != '' " >
+			 	 and  t.orgid   =  #{params.orgId}
+    		</if>
+    		<if test="params.orgName != null and params.orgName != '' " >
+			 	 and  o.orgname   like  '%${params.orgId}%'
+    		</if>
+    		<if test="params.roleName != null and params.roleName != '' " >
+			 	 and  t.roleName   =  #{params.roleName}
+    		</if>
+		</where>
+	</select>
+	
+	
+	<!-- 向数据库中插入资源记录-->
+	<insert id="insertRole" parameterType="RoleDTO">    
+		 <selectKey keyProperty="roleId" resultType="String" order="BEFORE">  
+            select   sys_guid() as roleId from dual 
+    	</selectKey>
+		insert into T_ROLE(
+    			roleid,
+    			orgid,
+    			roleName
+		)
+		values(
+    			#{roleId, jdbcType=VARCHAR},
+    			#{orgId, jdbcType=VARCHAR},
+    			#{roleName, jdbcType=VARCHAR}
+		)
+	</insert>
+
+
+	
+	
+	  <!-- 更新库中的资源 -->
+	<update id="updateRole" parameterType="RoleDTO">   
+		update T_ROLE  
+		<set>
+    			<if test="orgId != null and orgId != '' ">orgId=#{orgId},</if>
+    			<if test="roleName != null and roleName != '' ">roleName=#{roleName},</if>
+    	</set>
+    	where roleid=#{roleId}
+	</update>
+	
+	<!-- 删除-->
+	<delete id="deleteRole" parameterType="String">    
+		delete from T_ROLE  where roleId=  #{roleId}
+	</delete>
+	
+	
+	
+    <!-- 角色权限-->
+	<select id="findRoleAuthTree" parameterType="UserDTO" resultMap="TreeDTO" >   
+	select a.id,a.name,a.pid,a.iconSkin,  decode(b.id,null,'false' ,'true')  as checked,a.url from (
+		select  t.resourceid as id,t.resourcename as name,t.resourceparentid as pid, 
+		decode(t.resourcetype, '1','pIcon01' ,'icon02') as iconSkin ,
+		t.resourceurl as url
+		from t_resource t
+		left join t_role_resource rr on(
+		     rr.resourceid = t.resourceid
+		)
+		left join t_role r on (
+		 rr.roleid = r.roleid)
+		<where>
+			 1=1 
+			<if test="roleId != null">
+			 	 and  r.roleid  =  #{roleId}
+    		</if>
+		</where>
+		) a
+		left join 
+	     (select  t.resourceid as id from t_resource t
+			left join t_role_resource rr on(
+			     rr.resourceid = t.resourceid
+			)
+			left join t_role r on (
+			 rr.roleid = r.roleid)
+		     <where>
+				 1=1 
+				<if test="appointRoleId != null">
+				 	 and  r.roleid  =  #{appointRoleId}
+	    		</if>
+			</where>
+	     ) b 
+     	on (a.id = b.id)
+		
+	</select>
+	
+	
+	
+	<!-- 删除角色权限-->
+	<delete id="deleteRoleAuth" parameterType="String">    
+		delete from t_role_resource  where roleId=  #{roleId}
+	</delete>
+	
+	
+		
+	<!-- 向数据库中批量插入角色权限记录-->
+	<insert id="saveRoleAuth" parameterType="java.util.List">    
+		insert into t_role_resource(
+    			roleid,
+    			resourceid
+		)
+		<foreach collection="list" item="item" index="index" separator="union all" >  
+        	select #{item.roleid ,jdbcType=VARCHAR},#{item.resourceid ,jdbcType=VARCHAR} from dual  
+    	</foreach>  
+	</insert>
+	
+</mapper>

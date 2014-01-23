@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tang.jpa.dao.exam.ExampaperDao">
+	
+	<resultMap type="OptionsDTO" id="OptionsDTO">
+    	<result column="optionid"  property="optionid" />
+    	<result column="optionContents"  property="optionContents" />
+    	<result column="optionAnswer"  property="optionAnswer" />
+    	<result column="optionType"  property="optionType" />
+    	<result column="optionTitle"  property="optionTitle" />
+    	<result column="optionKnowledgePoint"  property="optionKnowledgePoint" />
+    	<result column="optionDate"  property="optionDate" />
+    	<result column="optionLevelDifficult"  property="optionLevelDifficult" />
+	</resultMap>
+	
+	
+	<resultMap type="ExampaperDTO" id="ExampaperDTO">
+    	<result column="examid"  property="examid" />
+    	<result column="examName"  property="examName" />
+    	<result column="examOperater"  property="examOperater" />
+    	<result column="examTime"  property="examTime" />
+    	<result column="examSubject"  property="examSubject" />
+	</resultMap>
+	
+	<resultMap type="ExamPaperDetailsDTO" id="ExamPaperDetailsDTO">
+		<result column="exampaperdetailsid"  property="exampaperdetailsid" />
+    	<result column="examid"  property="examid" />
+    	<result column="optinid"  property="optinid" />
+    	<result column="optionscore"  property="optionScore" />
+    	<result column="optionTitle"  property="optionTitle" />
+    	<result column="optionType"  property="optionType" />
+	</resultMap>
+	
+	
+	<resultMap type="Page" id="PageOptionOfExampaper">
+		<result column="totalRecord" property="totalRecord" />
+		<result  column="totalPage" property="totalPage" />
+		<result column="pageNo" property="pageNo" />
+		<result column="pageSize"  property="pageSize" />
+		<collection property="results" ofType="ExamPaperDetailsDTO">
+			<result column="exampaperdetailsid"  property="exampaperdetailsid" />
+			<result column="examid"  property="examid" />
+	    	<result column="optinid"  property="optinid" />
+	    	<result column="optionscore"  property="optionScore" />
+	    	<result column="optionTitle"  property="optionTitle" />
+	    	<result column="optionType"  property="optionType" />
+    	</collection>
+	</resultMap>
+	
+	
+	
+	<resultMap type="Page" id="PageExampaper">
+		<result column="totalRecord" property="totalRecord" />
+		<result  column="totalPage" property="totalPage" />
+		<result column="pageNo" property="pageNo" />
+		<result column="pageSize"  property="pageSize" />
+		<collection property="results" ofType="ExampaperDTO">
+    		<result column="examid"  property="examid" />
+    		<result column="examName"  property="examName" />
+    		<result column="examOperater"  property="examOperater" />
+    		<result column="examTime"  property="examTime" />
+    		<result column="examSubject"  property="examSubject" />
+    	</collection>
+	</resultMap>
+
+		
+	 <!-- 查询分页 -->
+	<select id="selectExampaperAll" parameterType="Page" resultMap="PageExampaper" >   
+		select  
+    			t.examid,
+    			t.examName,
+    			t.examOperater,
+    			t.examTime,
+    			t.examSubject
+		 from T_EXAMPAPER t
+		<where>
+			 1=1 
+    		<if test="params.examid != null and params.examid != '' " >
+			 	 and  t.examid   =  #{params.examid}
+    		</if>
+    		<if test="params.examName != null and params.examName != '' " >
+			 	 and  t.examName   =  #{params.examName}
+    		</if>
+    		<if test="params.examOperater != null and params.examOperater != '' " >
+			 	 and  t.examOperater   =  #{params.examOperater}
+    		</if>
+    		<if test="params.examTime != null and params.examTime != '' " >
+			 	 and  t.examTime   =  #{params.examTime}
+    		</if>
+    		<if test="params.examSubject != null and params.examSubject != '' " >
+			 	 and  t.examSubject   =  #{params.examSubject}
+    		</if>
+		</where>
+	</select>
+	
+	
+	<!-- 向数据库中插入资源记录-->
+	<insert id="insertExampaper" parameterType="ExampaperDTO">    
+		 <selectKey keyProperty="examid" resultType="String" order="BEFORE">  
+            select   sys_guid() as examid from dual 
+    	</selectKey>
+		insert into T_EXAMPAPER(
+    			examid,
+    			examName,
+    			examOperater,
+    			examTime,
+    			examSubject
+		)
+		values(
+    			#{examid, jdbcType=VARCHAR},
+    			#{examName, jdbcType=VARCHAR},
+    			#{examOperater, jdbcType=VARCHAR},
+    			#{examTime, jdbcType=VARCHAR},
+    			#{examSubject, jdbcType=VARCHAR}
+		)
+	</insert>
+
+
+	
+	
+	  <!-- 更新库中的资源 -->
+	<update id="updateExampaper" parameterType="ExampaperDTO">   
+		update T_EXAMPAPER  
+		<set>
+    			<if test="examid != null and examid != '' ">examid=#{examid},</if>
+    			<if test="examName != null and examName != '' ">examName=#{examName},</if>
+    			<if test="examOperater != null and examOperater != '' ">examOperater=#{examOperater},</if>
+    			<if test="examTime != null and examTime != '' ">examTime=#{examTime},</if>
+    			<if test="examSubject != null and examSubject != '' ">examSubject=#{examSubject},</if>
+    	</set>
+    	where examid=#{examid}
+	</update>
+	
+	<!-- 删除-->
+	<delete id="deleteExampaper" parameterType="String">    
+		delete from T_EXAMPAPER  where examid=  #{exampaperid}
+	</delete>
+	
+	<delete id="deleteAllOptionsOfExampaper" parameterType="String">    
+		delete from t_exampaperdetails  where examid=  #{exampaperid}
+	</delete>
+	
+	
+	<delete id="deleteOneOptionsOfExampaper" parameterType="ExamPaperDetailsDTO">    
+		delete from t_exampaperdetails  t where t.exampaperdetailsid=  #{exampaperdetailsid}
+	</delete>
+	
+	 <!-- 查询分页 -->
+	<select id="queryExamExistsOption" parameterType="ExamPaperDetailsDTO" resultType="int" >   
+		select  count(1)
+		 from t_exampaperdetails t
+		<where>
+			 1=1 
+    		<if test="examid != null and examid != '' " >
+			 	 and  t.examid   =  #{examid}
+    		</if>
+    		<if test="optionid != null and optionid != '' " >
+			 	 and  t.optionid   =  #{optionid}
+    		</if>
+		</where>
+	</select>
+	
+	
+	<select id="queryOptionsOfExam" parameterType="Page" resultMap="PageOptionOfExampaper" >   
+		select  
+				t.exampaperdetailsid,
+    			t.optionid,
+    			o.optiontitle,
+    			o.optiontype,
+    			t.optionscore
+		 from t_exampaperdetails t
+		 left join t_options o on (t.optionid = o.optionid)
+		<where>
+			 1=1 
+    		<if test="params.examid != null and params.examid != '' " >
+			 	 and  t.examid   =  #{params.examid}
+    		</if>
+		</where>
+	</select>
+	
+	
+	
+	
+	
+	<!-- 将题目插入试卷-->
+	<insert id="insertOptionsToExam" parameterType="ExamPaperDetailsDTO">    
+		 <selectKey keyProperty="exampaperdetailsid" resultType="String" order="BEFORE">  
+            select   sys_guid() as exampaperdetailsid from dual 
+    	</selectKey>
+		insert into t_exampaperdetails(
+    			exampaperdetailsid,
+    			examid,
+    			optionid,
+    			optionscore
+		)
+		values(
+    			#{exampaperdetailsid, jdbcType=VARCHAR},
+    			#{examid, jdbcType=VARCHAR},
+    			#{optionid, jdbcType=VARCHAR},
+    			#{optionScore, jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	
+	
+	<update id="modifyOneOptionsOfExampaper" parameterType="ExamPaperDetailsDTO">   
+		update t_exampaperdetails  
+		<set>
+    			<if test="optionScore != null and optionScore != '' ">optionScore=#{optionScore},</if>
+    	</set>
+    	where exampaperdetailsid=#{exampaperdetailsid}
+	</update>
+	
+	
+	<select id="previewExampaper" parameterType="ExampaperDTO" resultMap="OptionsDTO" >   
+		select  
+    			t.optionid,
+    			t.optionContents,
+    			t.optionAnswer,
+    			t.optionType,
+    			t.optionTitle,
+    			t.optionKnowledgePoint,
+    			t.optionDate,
+    			t.optionLevelDifficult
+		 from t_exampaper e 
+		 left join t_exampaperdetails  ed on (e.examid = ed.examid)
+		 left join t_options t
+		  on (ed.optionid = t.optionid)
+		<where>
+			 1=1 
+    		<if test="examid != null and examid != '' " >
+			 	 and  e.examid   =  #{examid}
+    		</if>
+		</where>
+	</select>
+	
+	
+	
+</mapper>

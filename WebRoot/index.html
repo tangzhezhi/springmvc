@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" type="text/css"
+			href="resources/css/bootstrap-theme.css" />
+		<link rel="stylesheet" type="text/css"
+			href="resources/css/default.css" />
+		<link href="resources/css/bootstrap.css" rel="stylesheet"
+			media="screen" />
+		<link href="resources/css/easyui.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="resources/css/icon.css">
+		<script type="text/javascript" src="resources/js/jquery.js"></script>
+		<script type="text/javascript" src="resources/js/jquery-migrate.js"></script>
+		<script type="text/javascript" src="resources/js/jquery.json.js">
+</script>
+		<script type="text/javascript" src="resources/js/jquery.easyui.min.js">
+</script>
+		<script type="text/javascript" src="js-mod/system/index.js">
+</script>
+	<script type="text/javascript" src="resources/js/bootstrap.js"></script>
+
+<style type="text/css">
+	#css3menu li{ float:left; list-style-type:none;}
+	#css3menu li a{	color:#fff; padding-right:20px;}
+	#css3menu li a.active{color:yellow;}
+</style>
+
+
+	</head>
+	<body class="easyui-layout" style="overflow-y: hidden" scroll="no">
+		<div region="north" split="true" border="false"
+			style="overflow: hidden; height: 30px; background: url(./resources/img/layout-browser-hd-bg.gif) #7f99be repeat-x center 50%; line-height: 20px; color: #fff; font-family: Verdana, 微软雅黑, 黑体">
+			<span style="float: right; padding-right: 20px;" class="head">欢迎
+				 <a href="#" id="editpass">修改密码</a> <a href="#" id="loginOut">安全退出</a>
+			</span>
+
+			<ul id="css3menu"
+				style="padding: 0px; margin: 0px; list-type: none; float: left; margin-left: 40px;">
+				<li><a href="#"></a></li>
+			</ul>
+		</div>
+		<div region="south" split="true"
+			style="height: 30px; background: #D2E0F2;">
+			<div class="footer">
+				By ST
+			</div>
+		</div>
+		<div region="west" hide="true" split="true" title="导航菜单"
+			style="width: 180px;" id="west">
+			<div id='menu' class="easyui-accordion" fit="true" border="false"></div>
+
+		</div>
+		<div id="mainPanle" region="center"
+			style="background: #eee; overflow-y: hidden">
+			<div id="tabs" class="easyui-tabs" fit="true" border="false">
+				<div title="欢迎使用" style="padding: 20px; overflow: hidden;" id="home">
+					<h1>
+						欢迎使用
+					</h1>
+				</div>
+			</div>
+		</div>
+		
+		<div id="mm" class="easyui-menu" style="width:150px;">
+		<div id="mm-tabupdate">刷新</div>
+		<div class="menu-sep"></div>
+		<div id="mm-tabclose">关闭</div>
+		<div id="mm-tabcloseall">全部关闭</div>
+		<div id="mm-tabcloseother">除此之外全部关闭</div>
+		<div class="menu-sep"></div>
+		<div id="mm-tabcloseright">当前页右侧全部关闭</div>
+		<div id="mm-tabcloseleft">当前页左侧全部关闭</div>
+		<div class="menu-sep"></div>
+		<div id="mm-exit">退出</div>
+	</div>
+	</body>

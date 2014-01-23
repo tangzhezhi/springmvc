@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+		<meta http-equiv="X-UA-Compatible" content="IE=9"> 
+		<meta http-equiv="X-UA-Compatible" content="IE=8"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="../../resources/css/bootstrap.css" rel="stylesheet"	media="screen" />
+		<link rel="stylesheet"	media="screen" 	href="../../resources/css/bootstrap-theme.css" />
+		<link 	href="../../resources/css/easyui.css"  rel="stylesheet"/>
+		<link rel="stylesheet"	media="screen" 	href="../../resources/css/chosen.css" />
+		<script type="text/javascript" src="../../resources/js/jquery.js"></script>
+		<script type="text/javascript" src="../../resources/js/jquery.json.js"></script>
+		<script type="text/javascript" src="../../resources/js/bootstrap.js"></script>
+		
+		<!--[if lt IE 9]>
+		<script type="text/javascript" src="../../resources/js/bootstrap-ie.js"></script>
+		<script type="text/javascript" src="../../resources/js/respond.min.js"></script>
+		<script type="text/javascript" src="../../resources/js/html5shiv.js"></script>
+		<![endif]-->
+		<script type="text/javascript" src="../../resources/js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../resources/js/easyui-lang-zh_CN.js"></script>
+		<script type="text/javascript" src="../../resources/js/chosen.jquery.js"></script>
+		<script type="text/javascript" src="../../js-mod/system/modules.js"></script>
+	</head>
+	<body class="easyui-layout">
+			<div id="headertool">
+				<nav class="navbar navbar-default" role="navigation">
+				 <div class="navbar-header"></div>
+				 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					 <form class="navbar-form navbar-left form-inline" role="search">
+				      <div class="form-group">
+				        <input id="resourcename" type="text" class="form-control" placeholder="名称">
+				      </div>
+				      <button id="query" type="button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>查询</button>
+				      <button id="add" type="button" class="btn btn-default" ><span class="glyphicon glyphicon-plus"></span>新增</button>
+				      <button id="modify" type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>修改</button>
+				      <button id="delete" type="button" class="btn btn-default" ><span class="glyphicon glyphicon-trash"></span>删除</button>
+				    </form>
+				 </div>
+				</nav>
+			</div>
+			
+			<!-- Modal -->
+			<div class="modal fade" id="myModal"  role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			        <h4 class="modal-title" id="myModalLabel">资源面板</h4>
+			      </div>
+			      <div class="modal-body">
+			      		<form id="modal_form" role="form">
+						  <div class="form-group">
+						    <label for="resourcenameModal">资源名</label>
+						    <input type="text" class="form-control" id="resourcenameModal" placeholder="资源名">
+						  </div>
+						  <div class="form-group">
+						    <label for="resourcecodeModal">资源代码</label>
+						    <input type="text" class="form-control" id="resourcecodeModal" placeholder="资源代码">
+						  </div>
+						  <div class="form-group">
+						    <label for="resourceurlModal">URL</label>
+						    <input type="text" class="form-control"  id="resourceurlModal" placeholder="资源URL">
+						  </div>
+						  <div class="form-group">
+						    <label for="resourcetypeModal">资源类型</label>
+						    <select id="resourcetypeModal" class="form-group">
+								<option value="1">页面资源</option>
+								<option value="2">方法资源</option>
+							</select>
+						  </div>
+						  <div class="form-group">
+						    <label for="resourceurlparentidModal">上级资源</label>
+						    <!-- 
+						    <input type="text" class="form-control"  id="resourceurlparentidModal" placeholder="上级资源">
+						     -->
+						    <select id="resourceurlparentidModal" class="form-group" >
+								<option value="">请选择上级资源</option>
+							</select>
+						  </div>
+						</form>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			        <button id="add_modify_modal" type="button" class="btn btn-primary">保存</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			
+			<div>
+				<table id="dg"/>
+			</div>
+			
+	</body>
+	

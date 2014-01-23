@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tang.jpa.dao.system.OrganizationDao">
+
+	<resultMap type="OrganizationDTO" id="OrganizationDTO">
+    	<result column="orgid"  property="orgid" />
+    	<result column="orgname"  property="orgname" />
+    	<result column="orgaddress"  property="orgaddress" />
+    	<result column="orgcontact"  property="orgcontact" />
+    	<result column="orgphone"  property="orgphone" />
+    	<result column="orgemails"  property="orgemails" />
+	</resultMap>
+	
+	<resultMap type="Page" id="PageOrganization">
+		<result column="totalRecord" property="totalRecord" />
+		<result  column="totalPage" property="totalPage" />
+		<result column="pageNo" property="pageNo" />
+		<result column="pageSize"  property="pageSize" />
+		<collection property="results" ofType="OrganizationDTO">
+    		<result column="orgid"  property="orgid" />
+    		<result column="orgname"  property="orgname" />
+    		<result column="orgaddress"  property="orgaddress" />
+    		<result column="orgcontact"  property="orgcontact" />
+    		<result column="orgphone"  property="orgphone" />
+    		<result column="orgemails"  property="orgemails" />
+    	</collection>
+	</resultMap>
+
+		
+	 <!-- 查询分页 -->
+	<select id="selectOrganizationAll" parameterType="Page" resultMap="PageOrganization" >   
+		select  
+    			t.orgid,
+    			t.orgname,
+    			t.orgaddress,
+    			t.orgcontact,
+    			t.orgphone,
+    			t.orgemails
+		 from T_ORGANIZATION t
+		<where>
+			 1=1 
+    		<if test="params.orgid != null and params.orgid != '' ">
+			 	 and  t.orgid   =  #{params.orgid}
+    		</if>
+    		<if test="params.orgname != null and params.orgname != '' ">
+			 	 and  t.orgname   =  #{params.orgname}
+    		</if>
+    		<if test="params.orgaddress != null and params.orgaddress != '' ">
+			 	 and  t.orgaddress   =  #{params.orgaddress}
+    		</if>
+    		<if test="params.orgcontact != null and params.orgcontact != '' ">
+			 	 and  t.orgcontact   =  #{params.orgcontact}
+    		</if>
+    		<if test="params.orgphone != null and params.orgphone != '' ">
+			 	 and  t.orgphone   =  #{params.orgphone}
+    		</if>
+    		<if test="params.orgemails != null and params.orgemails != '' ">
+			 	 and  t.orgemails   =  #{params.orgemails}
+    		</if>
+		</where>
+	</select>
+	
+	
+	<!-- 向数据库中插入资源记录-->
+	<insert id="insertOrganization" parameterType="OrganizationDTO">    
+		 <selectKey keyProperty="orgid" resultType="String" order="BEFORE">  
+            select   sys_guid() as orgid from dual 
+    	</selectKey>
+		insert into T_ORGANIZATION(
+    			orgid,
+    			orgname,
+    			orgaddress,
+    			orgcontact,
+    			orgphone,
+    			orgemails
+		)
+		values(
+    			#{orgid, jdbcType=VARCHAR},
+    			#{orgname, jdbcType=VARCHAR},
+    			#{orgaddress, jdbcType=VARCHAR},
+    			#{orgcontact, jdbcType=VARCHAR},
+    			#{orgphone, jdbcType=VARCHAR},
+    			#{orgemails, jdbcType=VARCHAR}
+		)
+	</insert>
+
+
+	
+	
+	  <!-- 更新库中的资源 -->
+	<update id="updateOrganization" parameterType="OrganizationDTO">   
+		update T_ORGANIZATION  
+		<set>
+    			<if test="orgname != null and orgname != '' ">orgname=#{orgname},</if>
+    			<if test="orgaddress != null and orgaddress != '' ">orgaddress=#{orgaddress},</if>
+    			<if test="orgcontact != null and orgcontact != '' ">orgcontact=#{orgcontact},</if>
+    			<if test="orgphone != null and orgphone != '' ">orgphone=#{orgphone},</if>
+    			<if test="orgemails != null and orgemails != '' ">orgemails=#{orgemails},</if>
+    	</set>
+    	where orgid=#{orgid}
+	</update>
+	
+	<!-- 删除-->
+	<delete id="deleteOrganization" parameterType="String">    
+		delete from T_ORGANIZATION  where orgid=  #{orgid}
+	</delete>
+	
+	
+</mapper>

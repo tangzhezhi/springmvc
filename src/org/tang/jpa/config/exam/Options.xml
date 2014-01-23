@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tang.jpa.dao.exam.OptionsDao">
+
+	<resultMap type="OptionsDTO" id="OptionsDTO">
+    	<result column="optionid"  property="optionid" />
+    	<result column="optionContents"  property="optionContents" />
+    	<result column="optionAnswer"  property="optionAnswer" />
+    	<result column="optionType"  property="optionType" />
+    	<result column="optionTitle"  property="optionTitle" />
+    	<result column="optionKnowledgePoint"  property="optionKnowledgePoint" />
+    	<result column="optionDate"  property="optionDate" />
+    	<result column="optionLevelDifficult"  property="optionLevelDifficult" />
+	</resultMap>
+	
+	<resultMap type="Page" id="PageOptions">
+		<result column="totalRecord" property="totalRecord" />
+		<result  column="totalPage" property="totalPage" />
+		<result column="pageNo" property="pageNo" />
+		<result column="pageSize"  property="pageSize" />
+		<collection property="results" ofType="OptionsDTO">
+    		<result column="optionid"  property="optionid" />
+    		<result column="optionContents"  property="optionContents" />
+    		<result column="optionAnswer"  property="optionAnswer" />
+    		<result column="optionType"  property="optionType" />
+    		<result column="optionTitle"  property="optionTitle" />
+    		<result column="optionKnowledgePoint"  property="optionKnowledgePoint" />
+    		<result column="optionDate"  property="optionDate" />
+    		<result column="optionLevelDifficult"  property="optionLevelDifficult" />
+    	</collection>
+	</resultMap>
+
+		
+	 <!-- 查询分页 -->
+	<select id="selectOptionsAll" parameterType="Page" resultMap="PageOptions" >   
+		select  
+    			t.optionid,
+    			t.optionContents,
+    			t.optionAnswer,
+    			t.optionType,
+    			t.optionTitle,
+    			t.optionKnowledgePoint,
+    			t.optionDate,
+    			t.optionLevelDifficult
+		 from T_OPTIONS t
+		<where>
+			 1=1 
+    		<if test="params.optionid != null and params.optionid != '' " >
+			 	 and  t.optionid   =  #{params.optionid}
+    		</if>
+    		<if test="params.optionContents != null and params.optionContents != '' " >
+			 	 and  t.optionContents   =  #{params.optionContents}
+    		</if>
+    		<if test="params.optionAnswer != null and params.optionAnswer != '' " >
+			 	 and  t.optionAnswer   =  #{params.optionAnswer}
+    		</if>
+    		<if test="params.optionType != null and params.optionType != '' " >
+			 	 and  t.optionType   =  #{params.optionType}
+    		</if>
+    		<if test="params.optionTitle != null and params.optionTitle != '' " >
+			 	 and  t.optionTitle   like  '%${params.optionTitle}%'
+    		</if>
+    		<if test="params.optionKnowledgePoint != null and params.optionKnowledgePoint != '' " >
+			 	 and  t.optionKnowledgePoint   =  #{params.optionKnowledgePoint}
+    		</if>
+    		<if test="params.optionDate != null and params.optionDate != '' " >
+			 	 and  t.optionDate   =  #{params.optionDate}
+    		</if>
+    		<if test="params.optionLevelDifficult != null and params.optionLevelDifficult != '' " >
+			 	 and  t.optionLevelDifficult   =  #{params.optionLevelDifficult}
+    		</if>
+		</where>
+	</select>
+	
+	
+	<!-- 向数据库中插入资源记录-->
+	<insert id="insertOptions" parameterType="OptionsDTO">    
+		 <selectKey keyProperty="optionid" resultType="String" order="BEFORE">  
+            select   sys_guid() as optionid from dual 
+    	</selectKey>
+		insert into T_OPTIONS(
+    			optionid,
+    			optionContents,
+    			optionAnswer,
+    			optionType,
+    			optionTitle,
+    			optionKnowledgePoint,
+    			optionDate,
+    			optionLevelDifficult
+		)
+		values(
+    			#{optionid, jdbcType=VARCHAR},
+    			#{optionContents, jdbcType=VARCHAR},
+    			#{optionAnswer, jdbcType=VARCHAR},
+    			#{optionType, jdbcType=VARCHAR},
+    			#{optionTitle, jdbcType=VARCHAR},
+    			#{optionKnowledgePoint, jdbcType=VARCHAR},
+    			#{optionDate, jdbcType=VARCHAR},
+    			#{optionLevelDifficult, jdbcType=VARCHAR}
+		)
+	</insert>
+
+
+	
+	
+	  <!-- 更新库中的资源 -->
+	<update id="updateOptions" parameterType="OptionsDTO">   
+		update T_OPTIONS  
+		<set>
+    			<if test="optionid != null and optionid != '' ">optionid=#{optionid},</if>
+    			<if test="optionContents != null and optionContents != '' ">optionContents=#{optionContents},</if>
+    			<if test="optionAnswer != null and optionAnswer != '' ">optionAnswer=#{optionAnswer},</if>
+    			<if test="optionType != null and optionType != '' ">optionType=#{optionType},</if>
+    			<if test="optionTitle != null and optionTitle != '' ">optionTitle=#{optionTitle},</if>
+    			<if test="optionKnowledgePoint != null and optionKnowledgePoint != '' ">optionKnowledgePoint=#{optionKnowledgePoint},</if>
+    			<if test="optionDate != null and optionDate != '' ">optionDate=#{optionDate},</if>
+    			<if test="optionLevelDifficult != null and optionLevelDifficult != '' ">optionLevelDifficult=#{optionLevelDifficult},</if>
+    	</set>
+    	where optionsid=#{optionsid}
+	</update>
+	
+	<!-- 删除-->
+	<delete id="deleteOptions" parameterType="String">    
+		delete from T_OPTIONS  where optionid=  #{optionid}
+	</delete>
+	
+	
+</mapper>

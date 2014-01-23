@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" >
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+		<meta http-equiv="X-UA-Compatible" content="IE=9"> 
+		<meta http-equiv="X-UA-Compatible" content="IE=8"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="../../resources/css/bootstrap.css" rel="stylesheet"	media="screen" />
+		<link rel="stylesheet"	media="screen" 	href="../../resources/css/bootstrap-theme.css" />
+		<link rel="stylesheet"	media="screen" 	href="../../resources/css/bootstrap-ie6.min.css" />
+		<link 	href="../../resources/css/easyui.css"  rel="stylesheet"/>
+		<link rel="stylesheet"	media="screen" 	href="../../resources/css/chosen.css" />
+		<script type="text/javascript" src="../../resources/js/jquery.js"></script>
+		<script type="text/javascript" src="../../resources/js/jquery.json.js"></script>
+		<script type="text/javascript" src="../../resources/js/bootstrap.js"></script>
+		
+		<!--[if lt IE 7]>
+		<script type="text/javascript" src="../../resources/js/bootstrap-ie.js"></script>
+		<script type="text/javascript" src="../../resources/js/respond.min.js"></script>
+		<script type="text/javascript" src="../../resources/js/html5shiv.js"></script>
+		<![endif]-->
+		<script type="text/javascript" src="../../resources/js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../resources/js/easyui-lang-zh_CN.js"></script>
+		<script src="../../resources/js/ckeditor.js"></script>
+		<script src="../../resources/js/adapters/jquery.js"></script>
+		<script type="text/javascript" src="../../resources/js/chosen.jquery.js"></script>
+		<script type="text/javascript" src="../../js-mod/exam/options.js"></script>
+	</head>
+	<body>
+		<div  class="row">
+			<div class="col-md-6">
+				<div id="headertool">
+					<nav class="navbar navbar-default" role="navigation">
+					 <div class="navbar-header"></div>
+					 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						 <form class="navbar-form navbar-left form-inline" role="search">
+					      <div class="form-group">
+					        <input id="optionsname" type="text" class="form-control" placeholder="名称">
+					      </div>
+					      <button id="query" type="button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>查询</button>
+					      <button id="add" type="button" class="btn btn-default" ><span class="glyphicon glyphicon-plus"></span>新增</button>
+					      <button id="modify" type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>修改</button>
+					      <button id="delete" type="button" class="btn btn-default" ><span class="glyphicon glyphicon-trash"></span>删除</button>
+					      <button id="addToExamPaper" type="button" class="btn btn-default" ><span class="glyphicon glyphicon-plus"></span>添加到试卷</button>
+					    </form>
+					 </div>
+					</nav>
+				</div>
+				
+				<div>
+					<table id="dg"></table>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div id="exampaper_headertool">
+					<nav class="navbar navbar-default" role="navigation">
+					 <div class="navbar-header"></div>
+					 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+						 <form class="navbar-form navbar-left form-inline" role="search">
+					      <div class="form-group">
+					        <input id="examname" type="text" class="form-control" placeholder="名称">
+					      </div>
+					      <button id="exampaper_query" type="button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>查询</button>
+					    </form>
+					 </div>
+					</nav>
+				</div>
+				
+				<div>
+					<table id="exampaper_dg"></table>
+				</div>
+			</div>
+		</div>
+			
+			<!-- Modal -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			        <h4 class="modal-title" id="myModalLabel">面板</h4>
+			      </div>
+			      <div class="modal-body">
+			      		<form id="modal_form" class="form-horizontal" role="form">
+						 <div class="form-group col-sm-6 ">
+						    <label  for="optionTypeModal">考题类型</label>
+						    <select id="optionTypeModal" class="form-group chosen-select">
+								<option value="">请选择考题类型</option>
+								<option value="1">单选</option>
+								<option value="2">多选</option>
+								<option value="3">填空</option>
+								<option value="4">简答</option>
+								<option value="5">论证</option>
+							</select>
+						  </div>
+						 <div class="form-group col-sm-6 ">
+						    <label  for="optionTitleModal">考题标题</label>
+						    <input type="text" class="form-control" id="optionTitleModal"  required="true" placeholder="考题标题">
+						  </div>
+						 <div class="form-group col-sm-6 ">
+						    <label  for="optionKnowledgePointModal">考题知识点</label>
+						    <input type="text" class="form-control" id="optionKnowledgePointModal"  required="true" placeholder="考题知识点">
+						  </div>
+						 <div class="form-group col-sm-6 ">
+						    <label  for="optionDateModal">考题时间</label>
+						    <input type="text" class="form-control" id="optionDateModal"  required="true" placeholder="考题时间">
+						  </div>
+						 <div class="form-group col-sm-6 ">
+						    <label  for="optionLevelDifficultModal">考题难度</label>
+						    <input type="text" class="form-control" id="optionLevelDifficultModal"  required="true" placeholder="考题难度">
+						  </div>
+						  
+						  
+						  <div class="form-group col-sm-12 ">
+						    <label  for="optionContentsModal">考题题干</label>
+						    <textarea id="optionContentsModal"  cols="80"  name="optionContentsModal" rows="10" class="form-control" placeholder="考题题干"></textarea>
+						  </div>
+						 <div class="form-group col-sm-12 ">
+						    <label  for="optionAnswerModal">考题答案</label>
+						    <textarea id="optionAnswerModal"  cols="80"  name="optionAnswerModal" rows="10" class="form-control" placeholder="考题答案"></textarea>
+						  </div>
+						  
+						</form>
+			      </div>
+			      <div class="modal-footer">
+			  		  <div class="form-group col-sm-8 pull-right">
+					  	 <button id="add_modify_modal" type="button" class="btn btn-primary">保存</button>
+	        	  		 <button type="button" class="btn btn-default btn-warning" data-dismiss="modal">关闭</button>
+					  </div>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			
+			
+			<!-- 考题内容 Modal -->
+			<div class="modal fade" id="myContentModal" tabindex="-1" role="dialog" aria-labelledby="myContentModal" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			        <h4 class="modal-title" id="myContentModalLabel"><span class="glyphicon glyphicon-search"></span>考题内容与答案</h4>
+			      </div>
+			      <div class="modal-body">
+			      		 <div  id="optionscontent"></div>
+			      </div>
+			      <div class="modal-footer">
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			
+
+			
+			
+	</body>

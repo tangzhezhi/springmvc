@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tang.jpa.dao.system.LoginLogDao">
+
+	<resultMap type="LoginLogDTO" id="LoginLogDTO">
+		<id 	column="logId" property="logId" />
+		<result column="userId"  property="userId" />
+		<result column="operateDate" property="operateDate" />
+		<result column="operateTime" property="operateTime" />
+		<result column="orgId" property="orgId" />
+		<result column="state" property="state" />
+	</resultMap>
+	
+	
+	<resultMap type="Page" id="PageLoginLog">
+		<result column="totalRecord" property="totalRecord" />
+		<result  column="totalPage" property="totalPage" />
+		<result column="pageNo" property="pageNo" />
+		<result column="pageSize"  property="pageSize" />
+		<collection property="results" ofType="LoginLogDTO">
+			<id 	column="logId" property="logId" />
+			<result column="userId"  property="userId" />
+			<result column="operateDate" property="operateDate" />
+			<result column="operateTime" property="operateTime" />
+			<result column="orgId" property="orgId" />
+			<result column="state" property="state" />
+    	</collection>
+	</resultMap>
+	
+	
+	
+	
+	
+	 <!-- 查询用户登录日志 -->
+	<select id="selectLoginLogDTO" parameterType="LoginLogDTO" resultMap="PageLoginLog" >   
+		select  t.logid,t.userid,t.operatedate,t.operatetime,t.orgid,t.state from t_loginlog t
+		left join t_user u on(
+		     t.userid = u.userid
+		)
+		<where>
+			 1=1 
+			<if test="userId != null">
+			 	 and  t.userid  =  #{userId}
+    		</if>
+		</where>
+		 order by t.operatedate desc and t.operatetime desc
+	</select>
+	
+	
+	<!-- 向数据库中插入登录日志-->
+	<insert id="insertLoginLog" parameterType="LoginLogDTO">    
+		 <selectKey keyProperty="logId" resultType="String" order="BEFORE">  
+            select   sys_guid() as logId from dual 
+    	</selectKey>
+		insert into t_LoginLog(logid,userid,operatedate,operatetime,orgid,state)
+		values(#{logId},#{userId},#{operateDate},#{operateTime},#{orgId},#{state})
+	</insert>
+
+</mapper>
