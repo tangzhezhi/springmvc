@@ -30,16 +30,21 @@
 	</resultMap>
 	
 	<select id="findExamTree" parameterType="UserDTO" resultMap="TreeDTO" >   
+		select r.id, r.pid,r.name,r.bak  ,r.orgid  from (
 		    select t.examtime||t.examsubject||t.examid as id, t.examtime||t.examsubject as pid,
-		    t.examname as name, t.examid as bak from t_exampaper t
+		    t.examname as name, t.examid as bak ,t.orgid from t_exampaper t
 		    union 
-		    select t.examtime||t.examsubject as id,t.examtime as pid ,  t.examtime||t.examsubject as name, '' as bak
+		    select t.examtime||t.examsubject as id,t.examtime as pid ,  t.examtime||t.examsubject as name, '' as bak ,t.orgid
 		    from t_exampaper t
 		    union 
-		    select t.examtime as id,'年份' as pid , t.examtime as name, '' as bak
+		    select t.examtime as id,'年份' as pid , t.examtime as name, '' as bak ,t.orgid
 		    from t_exampaper t
+		    ) r
 		<where>
 			 1=1 
+			 <if test="orgId != null and orgId != '' " >
+			 	 and  r.orgid   =  #{orgId}
+    		</if>
 		</where>
 	</select>
 	

@@ -11,6 +11,9 @@
     	<result column="optionKnowledgePoint"  property="optionKnowledgePoint" />
     	<result column="optionDate"  property="optionDate" />
     	<result column="optionLevelDifficult"  property="optionLevelDifficult" />
+    	<result column="orgid"  property="orgid" />
+    	<result column="updater"  property="updater" />
+    	<result column="updatetime"  property="updatetime" />
 	</resultMap>
 	
 	<resultMap type="Page" id="PageOptions">
@@ -27,6 +30,9 @@
     		<result column="optionKnowledgePoint"  property="optionKnowledgePoint" />
     		<result column="optionDate"  property="optionDate" />
     		<result column="optionLevelDifficult"  property="optionLevelDifficult" />
+    		<result column="orgid"  property="orgid" />
+	    	<result column="updater"  property="updater" />
+	    	<result column="updatetime"  property="updatetime" />
     	</collection>
 	</resultMap>
 
@@ -41,10 +47,22 @@
     			t.optionTitle,
     			t.optionKnowledgePoint,
     			t.optionDate,
-    			t.optionLevelDifficult
+    			t.optionLevelDifficult,
+    			t.orgid,
+    			t.updater,
+    			t.updatetime
 		 from T_OPTIONS t
 		<where>
 			 1=1 
+			<if test="params.orgid != null and params.orgid != '' " >
+			 	 and  t.orgid   =  #{params.orgid}
+    		</if>
+    		<if test="params.updater != null and params.updater != '' " >
+			 	 and  t.updater   =  #{params.updater}
+    		</if>
+    		<if test="params.updatetime != null and params.updatetime != '' " >
+			 	 and  t.updatetime   =  #{params.updatetime}
+    		</if>
     		<if test="params.optionid != null and params.optionid != '' " >
 			 	 and  t.optionid   =  #{params.optionid}
     		</if>
@@ -86,7 +104,10 @@
     			optionTitle,
     			optionKnowledgePoint,
     			optionDate,
-    			optionLevelDifficult
+    			optionLevelDifficult,
+    			orgid,
+    			updater,
+    			updatetime
 		)
 		values(
     			#{optionid, jdbcType=VARCHAR},
@@ -96,7 +117,10 @@
     			#{optionTitle, jdbcType=VARCHAR},
     			#{optionKnowledgePoint, jdbcType=VARCHAR},
     			#{optionDate, jdbcType=VARCHAR},
-    			#{optionLevelDifficult, jdbcType=VARCHAR}
+    			#{optionLevelDifficult, jdbcType=VARCHAR},
+    			#{orgid, jdbcType=VARCHAR},
+    			#{updater, jdbcType=VARCHAR},
+    			#{updatetime, jdbcType=VARCHAR}
 		)
 	</insert>
 

@@ -12,11 +12,20 @@ public class ExampaperDTO {
 	private Logger logger = Logger.getLogger(this.getClass());
 	
     private java.lang.String examid;
+    private String orgid;
     private java.lang.String examName;
     private java.lang.String examOperater;
     private java.lang.String examTime;
     private java.lang.String examSubject;
-	
+    
+	public String getOrgid() {
+		return orgid;
+	}
+
+	public void setOrgid(String orgid) {
+		this.orgid = orgid;
+	}
+
 	public java.lang.String getExamid() {
 		return this.examid;
 	}
