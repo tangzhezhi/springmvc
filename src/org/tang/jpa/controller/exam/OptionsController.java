@@ -1,5 +1,6 @@
 package org.tang.jpa.controller.exam;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.tang.jpa.dto.exam.OptionsDTO;
 import org.tang.jpa.dto.system.UserDTO;
 import org.tang.jpa.service.exam.OptionsService;
+import org.tang.jpa.utils.DateTool;
 import org.tang.jpa.utils.MyConstants;
 import org.tang.jpa.utils.Page;
 
@@ -37,6 +39,9 @@ public class OptionsController {
         page.setPageNo(pageNo);
         page.setPageSize(pageSize);
         Map params = new HashMap();
+        if(!dto.getRoleId().equals("1")){
+        	  params.put("orgid", dto.getOrgId());
+        }
         params.put("optionsTitle", optionsName);
         page.setParams(params);
         Page p = optionsService.findOptions(page);
@@ -67,6 +72,9 @@ public class OptionsController {
 	        	rdto.setOptionKnowledgePoint(OptionknowledgePoint);
 	        	rdto.setOptionDate(Optiondate);
 	        	rdto.setOptionLevelDifficult(Optionleveldifficult);
+	        	rdto.setOrgid(dto.getOrgId());
+	        	rdto.setUpdater(dto.getUserId());
+	        	rdto.setUpdatetime(DateTool.getDateStringYMD(new Date()));
 	       
 	        int flag =  optionsService.insertOptions(rdto);
 	        if(flag == 1){

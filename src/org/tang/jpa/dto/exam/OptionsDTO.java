@@ -17,7 +17,11 @@ public class OptionsDTO {
     private java.lang.String optionKnowledgePoint;
     private java.lang.String optionDate;
     private java.lang.String optionLevelDifficult;
-	
+	private String orgid;
+	private String updater;
+	private String updatetime;
+    
+    
 	public java.lang.String getOptionid() {
 		return this.optionid;
 	}
@@ -80,6 +84,30 @@ public class OptionsDTO {
 
 	public void setOptionLevelDifficult(java.lang.String optionLevelDifficult) {
 		this.optionLevelDifficult = optionLevelDifficult;
+	}
+
+	public String getOrgid() {
+		return orgid;
+	}
+
+	public void setOrgid(String orgid) {
+		this.orgid = orgid;
+	}
+
+	public String getUpdater() {
+		return updater;
+	}
+
+	public void setUpdater(String updater) {
+		this.updater = updater;
+	}
+
+	public String getUpdatetime() {
+		return updatetime;
+	}
+
+	public void setUpdatetime(String updatetime) {
+		this.updatetime = updatetime;
 	}
 
 }

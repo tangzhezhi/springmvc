@@ -15,6 +15,7 @@
 	
 	
 	<resultMap type="ExampaperDTO" id="ExampaperDTO">
+		<result column="orgid"  property="orgid" />
     	<result column="examid"  property="examid" />
     	<result column="examName"  property="examName" />
     	<result column="examOperater"  property="examOperater" />
@@ -55,6 +56,7 @@
 		<result column="pageNo" property="pageNo" />
 		<result column="pageSize"  property="pageSize" />
 		<collection property="results" ofType="ExampaperDTO">
+			<result column="orgid"  property="orgid" />
     		<result column="examid"  property="examid" />
     		<result column="examName"  property="examName" />
     		<result column="examOperater"  property="examOperater" />
@@ -75,6 +77,9 @@
 		 from T_EXAMPAPER t
 		<where>
 			 1=1 
+			<if test="params.orgid != null and params.orgid != '' " >
+			 	 and  t.orgid   =  #{params.orgid}
+    		</if>
     		<if test="params.examid != null and params.examid != '' " >
 			 	 and  t.examid   =  #{params.examid}
     		</if>
@@ -104,14 +109,16 @@
     			examName,
     			examOperater,
     			examTime,
-    			examSubject
+    			examSubject,
+    			orgid
 		)
 		values(
     			#{examid, jdbcType=VARCHAR},
     			#{examName, jdbcType=VARCHAR},
     			#{examOperater, jdbcType=VARCHAR},
     			#{examTime, jdbcType=VARCHAR},
-    			#{examSubject, jdbcType=VARCHAR}
+    			#{examSubject, jdbcType=VARCHAR},
+    			#{orgid, jdbcType=VARCHAR}
 		)
 	</insert>
 

@@ -39,6 +39,9 @@ public class ExampaperController {
         page.setPageNo(pageNo);
         page.setPageSize(pageSize);
         Map params = new HashMap();
+        if(!dto.getRoleId().equals("1")){
+      	  params.put("orgid", dto.getOrgId());
+        }
         params.put("examName", exampaperName);
         page.setParams(params);
         Page p = exampaperService.findExampaper(page);
@@ -58,6 +61,7 @@ public class ExampaperController {
 				@RequestParam(value="examSubject",required=false) String ExamSubject
     		) {  
 	        ExampaperDTO rdto = new ExampaperDTO();
+	        	rdto.setOrgid(dto.getOrgId());
 	        	rdto.setExamid(Examid);
 	        	rdto.setExamName(ExamName);
 	        	rdto.setExamOperater(ExamOperater);
