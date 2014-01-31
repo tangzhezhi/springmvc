@@ -9,6 +9,8 @@ public class ExamPaperDetailsDTO {
 	private String optionScore;
 	private String optionTitle;
 	private String optionType;
+	private String optionOrder;
+	
 	
 	public String getExampaperdetailsid() {
 		return exampaperdetailsid;
@@ -45,6 +47,12 @@ public class ExamPaperDetailsDTO {
 	}
 	public void setOptionType(String optionType) {
 		this.optionType = optionType;
+	}
+	public String getOptionOrder() {
+		return optionOrder;
+	}
+	public void setOptionOrder(String optionOrder) {
+		this.optionOrder = optionOrder;
 	}
 	
 }

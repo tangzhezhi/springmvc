@@ -130,6 +130,14 @@ public class ExampaperService {
 		return resultList;
 		
 	}
+
+	public ExampaperDTO findExamInfo(ExamPaperDetailsDTO rdto) {
+		return exampaperDao.findExamInfo(rdto);
+	}
+
+	public ExampaperDTO findExamInfoByExamId(String examid) {
+		return exampaperDao.findExamInfoByExamId(examid);
+	}
 	
 	
 	

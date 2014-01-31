@@ -20,6 +20,8 @@ public class OptionsDTO {
 	private String orgid;
 	private String updater;
 	private String updatetime;
+	private String optionOrder;
+	private String optionScore;
     
     
 	public java.lang.String getOptionid() {
@@ -109,5 +111,22 @@ public class OptionsDTO {
 	public void setUpdatetime(String updatetime) {
 		this.updatetime = updatetime;
 	}
+
+	public String getOptionOrder() {
+		return optionOrder;
+	}
+
+	public void setOptionOrder(String optionOrder) {
+		this.optionOrder = optionOrder;
+	}
+
+	public String getOptionScore() {
+		return optionScore;
+	}
+
+	public void setOptionScore(String optionScore) {
+		this.optionScore = optionScore;
+	}
+	
 
 }

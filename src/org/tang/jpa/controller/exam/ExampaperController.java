@@ -168,12 +168,32 @@ public class ExampaperController {
         if(!("").equals(examid) && null != examid){
         	 p = exampaperService.queryOptionsOfExam(page);
         }
+        
+        ExampaperDTO	examInfo =	exampaperService.findExamInfoByExamId(examid);
+        model.put("totalScore", examInfo==null?"0":examInfo.getTotalScore());
+        model.put("totalItems", examInfo==null?"0":examInfo.getTotalItems());
         model.put("rows",p==null?0:p.getResults());
         model.put("total", p==null?0:p.getTotalRecord());
         return model;  
     }  
 	
-	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/findExamInfoByExamId", method = RequestMethod.POST)  
+    @ResponseBody  
+    public Map<String, Object> findExamInfoByExamId(@ModelAttribute("currentUser") UserDTO dto
+    		,@RequestParam(value="examid",required=true) String examid) {  
+        Map<String, Object> model = new HashMap<String, Object>();
+        
+        Map params = new HashMap();
+        if(!("").equals(examid) && null != examid){
+        	ExampaperDTO	examInfo =	exampaperService.findExamInfoByExamId(examid);
+            model.put("totalScore", examInfo==null?"0":examInfo.getTotalScore());
+            model.put("totalItems", examInfo==null?"0":examInfo.getTotalItems());
+            return model; 
+        }
+        return null;
+ 
+    }  
 	
 	
 	@RequestMapping(value = "/deleteOneOptionsOfExampaper", method = RequestMethod.POST)  
@@ -193,24 +213,26 @@ public class ExampaperController {
     }
 	
 	
+	
 	@RequestMapping(value = "/modifyOneOptionsOfExampaper", method = RequestMethod.POST)  
     @ResponseBody  
-    public String modifyOneOptionsOfExampaper(@ModelAttribute("currentUser") UserDTO dto
+    public Map modifyOneOptionsOfExampaper(@ModelAttribute("currentUser") UserDTO dto
     		,@RequestParam(value="exampaperdetailsid",required=true) String exampaperdetailsid
-    		,@RequestParam(value="optionScore",required=true) String optionScore
+    		,@RequestParam(value="optionScore",required=false) String optionScore
+    		,@RequestParam(value="optionOrder",required=false) String optionOrder
     		) {  
+			Map<String, Object> model = new HashMap<String, Object>();
 			ExamPaperDetailsDTO rdto = new ExamPaperDetailsDTO();
 			rdto.setExampaperdetailsid(exampaperdetailsid);
 			rdto.setOptionScore(optionScore);
+			rdto.setOptionOrder(optionOrder);
 	        int flag =  exampaperService.modifyOneOptionsOfExampaper(rdto);
-	        if(flag == 1){
-	        	return MyConstants.MODIFYSUCCESS.getName();
-	        }
-	        else{
-	        	return MyConstants.MODIFYFAIL.getName();
-	        }
+	        ExampaperDTO	examInfo =	exampaperService.findExamInfo(rdto);
+	        model.put("flag", flag);
+	        model.put("totalScore", examInfo==null?"0":examInfo.getTotalScore());
+	        model.put("totalItems", examInfo==null?"0":examInfo.getTotalItems());
+	        return model;
     }
-	
 	
 	@RequestMapping(value = "/previewExampaper", method = RequestMethod.POST)  
     @ResponseBody  

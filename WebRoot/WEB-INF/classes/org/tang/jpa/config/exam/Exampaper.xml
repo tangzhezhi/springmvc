@@ -21,6 +21,8 @@
     	<result column="examOperater"  property="examOperater" />
     	<result column="examTime"  property="examTime" />
     	<result column="examSubject"  property="examSubject" />
+    	<result column="totalScore"  property="totalScore" />
+    	<result column="totalItems"  property="totalItems" />
 	</resultMap>
 	
 	<resultMap type="ExamPaperDetailsDTO" id="ExamPaperDetailsDTO">
@@ -30,6 +32,7 @@
     	<result column="optionscore"  property="optionScore" />
     	<result column="optionTitle"  property="optionTitle" />
     	<result column="optionType"  property="optionType" />
+    	<result column="optionOrder"  property="optionOrder" />
 	</resultMap>
 	
 	
@@ -45,6 +48,7 @@
 	    	<result column="optionscore"  property="optionScore" />
 	    	<result column="optionTitle"  property="optionTitle" />
 	    	<result column="optionType"  property="optionType" />
+	    	<result column="optionOrder"  property="optionOrder" />
     	</collection>
 	</resultMap>
 	
@@ -174,7 +178,8 @@
     			t.optionid,
     			o.optiontitle,
     			o.optiontype,
-    			t.optionscore
+    			t.optionscore,
+    			t.optionorder 
 		 from t_exampaperdetails t
 		 left join t_options o on (t.optionid = o.optionid)
 		<where>
@@ -198,13 +203,15 @@
     			exampaperdetailsid,
     			examid,
     			optionid,
-    			optionscore
+    			optionscore,
+    			optionorder
 		)
 		values(
     			#{exampaperdetailsid, jdbcType=VARCHAR},
     			#{examid, jdbcType=VARCHAR},
     			#{optionid, jdbcType=VARCHAR},
-    			#{optionScore, jdbcType=VARCHAR}
+    			#{optionScore, jdbcType=VARCHAR},
+    			#{optionOrder, jdbcType=VARCHAR}
 		)
 	</insert>
 	
@@ -214,6 +221,7 @@
 		update t_exampaperdetails  
 		<set>
     			<if test="optionScore != null and optionScore != '' ">optionScore=#{optionScore},</if>
+    			<if test="optionOrder != null and optionOrder != '' ">optionOrder=#{optionOrder},</if>
     	</set>
     	where exampaperdetailsid=#{exampaperdetailsid}
 	</update>
@@ -228,7 +236,9 @@
     			t.optionTitle,
     			t.optionKnowledgePoint,
     			t.optionDate,
-    			t.optionLevelDifficult
+    			t.optionLevelDifficult,
+    			ed.optionScore,
+    			ed.optionOrder
 		 from t_exampaper e 
 		 left join t_exampaperdetails  ed on (e.examid = ed.examid)
 		 left join t_options t
@@ -237,6 +247,31 @@
 			 1=1 
     		<if test="examid != null and examid != '' " >
 			 	 and  e.examid   =  #{examid}
+    		</if>
+		</where>
+		order by ed.optionorder
+	</select>
+	
+	
+		
+	<select id="findExamInfo" parameterType="ExamPaperDetailsDTO" resultMap="ExampaperDTO" >   
+		select sum(t.optionscore) as totalScore,count(t.optionid) as totalItems from t_exampaperdetails  t
+		<where>
+			 1=1 
+    		<if test="exampaperdetailsid != null and exampaperdetailsid != '' " >
+			 	 and  exists  (
+			 	 	select  w.examid from t_exampaperdetails w where   t.examid = w.examid and
+			 	      w.exampaperdetailsid   =  #{exampaperdetailsid}  )  
+    		</if>
+		</where>
+	</select>
+	
+	<select id="findExamInfoByExamId" parameterType="String" resultMap="ExampaperDTO" >   
+		select sum(t.optionscore) as totalScore,count(t.optionid) as totalItems from t_exampaperdetails  t
+		<where>
+			 1=1 
+    		<if test="_parameter != null and _parameter != '' " >
+			 	and t.examid   =  #{examid}
     		</if>
 		</where>
 	</select>

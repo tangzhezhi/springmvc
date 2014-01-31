@@ -30,6 +30,10 @@ public interface ExampaperDao  {
 
 	public int modifyOneOptionsOfExampaper(ExamPaperDetailsDTO rdto);
 
-	public List<OptionsDTO> previewExampaper(ExampaperDTO rdto);  
+	public List<OptionsDTO> previewExampaper(ExampaperDTO rdto);
+
+	public ExampaperDTO findExamInfo(ExamPaperDetailsDTO rdto);
+
+	public ExampaperDTO findExamInfoByExamId(String examid);  
     
 }

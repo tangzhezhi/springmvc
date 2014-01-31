@@ -17,6 +17,8 @@ public class ExampaperDTO {
     private java.lang.String examOperater;
     private java.lang.String examTime;
     private java.lang.String examSubject;
+    private String totalScore;
+    private String totalItems;
     
 	public String getOrgid() {
 		return orgid;
@@ -60,6 +62,22 @@ public class ExampaperDTO {
 	
 	public void setExamSubject(java.lang.String examSubject) {
 		this.examSubject = examSubject;
+	}
+
+	public String getTotalScore() {
+		return totalScore;
+	}
+
+	public void setTotalScore(String totalScore) {
+		this.totalScore = totalScore;
+	}
+
+	public String getTotalItems() {
+		return totalItems;
+	}
+
+	public void setTotalItems(String totalItems) {
+		this.totalItems = totalItems;
 	}
 
 }

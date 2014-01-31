@@ -35,6 +35,18 @@ $(function() {
 				}
 	    	});
 	    	
+			$.ajax({
+			   type: "POST",
+			   url: "../../exampaper/findExamInfoByExamId?random"+parseInt(Math.random()*100000),
+			   data: {
+						examid:examid
+			   },
+			   success: function(msg){
+				   var data = $.parseJSON(msg);
+				   $("#totalscore").empty().append("当前总分值："+data.totalScore);
+				   $("#totalitems").empty().append("当前总题数："+data.totalItems);
+			   }
+			});
 	    	
 	    },
 	     onLoadError:function(){
@@ -233,23 +245,35 @@ $(function() {
 			                        required:true
 			                    }
 			                }
+		           },
+		           {
+		            		field:'optionOrder',
+		            		title:'题号',
+		            		width:$(this).width()*0.15,
+		            		editor:{
+			                    type:'text',
+			                    options:{
+			                        required:true
+			                    }
+			                }
 		           }
 	    ]],
 		onDblClickRow:function(rowIndex,rowData){
            lastIndex=rowIndex;
+           
+           var options = $("#exampaperdetails_dg").datagrid('options');
+           
            $("#exampaperdetails_dg").datagrid('endEdit',rowIndex);
            $("#exampaperdetails_dg").datagrid('beginEdit',rowIndex);
-           var optionScore = rowData.optionScore;
-           $("input.datagrid-editable-input").val(optionScore).bind("blur",function(evt){
-        	   modifyOptionScore(rowData,$(this).val(),eval("rowData.optionScore"));
-               $("#exampaperdetails_dg").datagrid('endEdit',lastIndex);
-           }).bind("keypress",function(evt){
-               if(evt.keyCode==13){
-            	   modifyOptionScore(rowData,$(this).val(),eval("rowData.optionScore"));
-                   $("#exampaperdetails_dg").datagrid('endEdit',lastIndex);
-               }
-           }).focus();
-           lastIndex=rowIndex;
+           
+            $("input.datagrid-editable-input").bind("keypress",function(evt){
+            	 if(evt.keyCode==13){
+            		  $("#exampaperdetails_dg").datagrid('endEdit',lastIndex);
+            	 }
+            });
+        },
+        onAfterEdit:function(rowIndex,rowData,changes){
+        	 modifyOptionScore(rowData,eval("rowData.optionScore"),eval("rowData.optionOrder"));
         },
 	     onLoadError:function(){
                   alert('','加载数据失败！');
@@ -330,19 +354,21 @@ $(function() {
 	});
 	
 	
-	function modifyOptionScore(rowData,value,e){
+	function modifyOptionScore(rowData,value1,value2,e){
          $.ajax({
 		   type: "POST",
 		   url: "../../exampaper/modifyOneOptionsOfExampaper?random"+parseInt(Math.random()*100000),
 		   data: {
 				exampaperdetailsid:rowData.exampaperdetailsid,
-				optionScore:value
+				optionScore:value1,
+				optionOrder:value2
 		   },
 		   success: function(msg){
-		     $.messager.alert("操作提示", $.parseJSON(msg),"info");
+			   var data = $.parseJSON(msg);
+			   $("#totalscore").empty().append("当前总分值："+data.totalScore);
+			   $("#totalitems").empty().append("当前总题数："+data.totalItems);
 		   }
 		});
-		
 	}
 	
 	
