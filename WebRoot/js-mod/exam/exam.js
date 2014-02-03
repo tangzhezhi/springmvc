@@ -81,7 +81,7 @@ $(function() {
 				   else if("2"==dataRow[i].optionType){
 					     option = "<textarea id='"+dataRow[i].optionid+"' cols='80'  name='"+dataRow[i].optionid+"' rows='5'></textarea>";
 				   }
-				  	content =  content +dataRow[i].optionContents+"<p><div>"+option+"</div></p></br> ";
+				  	content =  content +"<span>此题"+dataRow[i].optionScore+"分：</span>"+dataRow[i].optionContents+"<p><div>"+option+"</div></p></br> ";
 			   }
 			   $("#exam_home").empty().append(content);
 			   $("textarea").ckeditor();

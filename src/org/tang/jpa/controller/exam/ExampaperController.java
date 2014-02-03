@@ -170,7 +170,7 @@ public class ExampaperController {
         }
         
         ExampaperDTO	examInfo =	exampaperService.findExamInfoByExamId(examid);
-        model.put("totalScore", examInfo==null?"0":examInfo.getTotalScore());
+        model.put("totalScore", examInfo==null?"0":(examInfo.getTotalScore()==null?"0":examInfo.getTotalScore()));
         model.put("totalItems", examInfo==null?"0":examInfo.getTotalItems());
         model.put("rows",p==null?0:p.getResults());
         model.put("total", p==null?0:p.getTotalRecord());
@@ -187,7 +187,7 @@ public class ExampaperController {
         Map params = new HashMap();
         if(!("").equals(examid) && null != examid){
         	ExampaperDTO	examInfo =	exampaperService.findExamInfoByExamId(examid);
-            model.put("totalScore", examInfo==null?"0":examInfo.getTotalScore());
+            model.put("totalScore", examInfo==null?"0":(examInfo.getTotalScore()==null?"0":examInfo.getTotalScore()));
             model.put("totalItems", examInfo==null?"0":examInfo.getTotalItems());
             return model; 
         }

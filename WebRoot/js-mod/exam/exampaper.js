@@ -65,6 +65,29 @@ $(function() {
 		});
 	
 	
+		function chosenAjaxData(id){
+			var contents = "";
+			$.ajax({
+			   type: "POST",
+			   url:"../../common/queryDictory?random"+parseInt(Math.random()*100000),
+	           dataType:'json',
+	           async:false, 
+	           data:{
+					code:'student_subject',
+					page:1,
+					rows:99999
+				},
+			   success: function(data){
+					var selectObj = $('#'+id); 
+					for(var i=0;i<data.rows.length;i++){
+						contents = contents +"<option value='"+data.rows[i].name+"'>"+data.rows[i].name+"</option>";
+	                } 
+					selectObj.append(contents);
+			   }
+			});
+		}
+	
+	
 	
 	$("#add").click(
 		function () {
@@ -74,7 +97,11 @@ $(function() {
 			
 			$("#dg").datagrid("clearSelections");
 			$('#modal_form')[0].reset();
-			
+			$('#examSubjectModal').empty();
+			chosenAjaxData('examSubjectModal');
+			$('#examSubjectModal').chosen().trigger("chosen:updated");
+			$('#examSubjectModal_chosen .chosen-single > span').empty().append("<span>请选择试卷科目</span>");
+			$('#examSubjectModal_chosen').removeAttr("style"); 
 	});
 	
 	
@@ -94,6 +121,10 @@ $(function() {
 				$('#myModal').modal({
 	  				keyboard: false
 				});
+				
+				 $('#examSubjectModal').empty().append("<option value='"+row.examSubject+"'>"+row.examSubject+"</option>");
+				  chosenAjaxData('examSubjectModal');
+				  $('#examSubjectModal').chosen().trigger("chosen:updated")
 			}
 	});
 	

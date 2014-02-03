@@ -9,6 +9,7 @@
 		<link href="../../resources/css/bootstrap.css" rel="stylesheet"	media="screen" />
 		<link rel="stylesheet"	media="screen" 	href="../../resources/css/bootstrap-theme.css" />
 		<link 	href="../../resources/css/easyui.css"  rel="stylesheet"/>
+		<link rel="stylesheet"	media="screen" 	href="../../resources/css/chosen.css" />
 		<script type="text/javascript" src="../../resources/js/jquery.js"></script>
 		<script type="text/javascript" src="../../resources/js/jquery.json.js"></script>
 		<script type="text/javascript" src="../../resources/js/bootstrap.js"></script>
@@ -19,6 +20,7 @@
 		<![endif]-->
 		<script type="text/javascript" src="../../resources/js/jquery.easyui.min.js"></script>
 		<script type="text/javascript" src="../../resources/js/easyui-lang-zh_CN.js"></script>
+		<script type="text/javascript" src="../../resources/js/chosen.jquery.js"></script>
 		<script type="text/javascript" src="../../js-mod/exam/exampaper.js"></script>
 	</head>
 	<body>
@@ -95,7 +97,12 @@
 						  </div>
 						 <div class="form-group col-sm-6 ">
 						    <label  for="examSubjectModal">试卷科目</label>
+						    <!-- 
 						    <input type="text" class="form-control" id="examSubjectModal"  required="true" placeholder="试卷科目">
+						  	 -->
+						  	<select id="examSubjectModal" class="form-group">
+								<option value="">请选择试卷科目</option>
+							</select>
 						  </div>
 						</form>
 			      </div>
