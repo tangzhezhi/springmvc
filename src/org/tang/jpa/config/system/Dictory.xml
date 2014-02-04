@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tang.jpa.dao.system.CommonDao">
+
+	<resultMap type="DictoryDTO" id="DictoryDTO">
+		<id 	column="id" property="id" />
+		<result column="code"  property="code" />
+		<result column="name" property="name" />
+	</resultMap>
+	
+	<resultMap type="Page" id="PageResource">
+		<result column="totalRecord" property="totalRecord" />
+		<result  column="totalPage" property="totalPage" />
+		<result column="pageNo" property="pageNo" />
+		<result column="pageSize"  property="pageSize" />
+		<collection property="results" ofType="DictoryDTO">
+			<id 	column="id" property="id" />
+			<result column="code"  property="code" />
+			<result column="name" property="name" />
+    	</collection>
+	</resultMap>
+	
+	
+	
+	
+	
+		
+	 <!-- 查询资源 分页 -->
+	<select id="selectDictory" parameterType="Page" resultMap="PageResource" >   
+	    select  t.id,t.name,t.code from t_dictory t
+			<where>
+				 1=1 
+				<if test="params.code != null">
+				 	 and  t.code  =  #{params.code}
+	    		</if>
+			</where>
+	</select>
+	
+	
+</mapper>
