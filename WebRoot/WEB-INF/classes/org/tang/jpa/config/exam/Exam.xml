@@ -34,7 +34,7 @@
 		    select t.examtime||t.examsubject||t.examid as id, t.examtime||t.examsubject as pid,
 		    t.examname as name, t.examid as bak ,t.orgid from t_exampaper t
 		    union 
-		    select t.examtime||t.examsubject as id,t.examtime as pid ,  t.examtime||t.examsubject as name, '' as bak ,t.orgid
+		    select t.examtime||t.examsubject as id,t.examtime as pid , t.examsubject as name, '' as bak ,t.orgid
 		    from t_exampaper t
 		    union 
 		    select t.examtime as id,'年份' as pid , t.examtime as name, '' as bak ,t.orgid
