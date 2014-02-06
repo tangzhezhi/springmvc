@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" >
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+		<meta http-equiv="X-UA-Compatible" content="IE=9"> 
+		<meta http-equiv="X-UA-Compatible" content="IE=8"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="../../resources/css/bootstrap.css" rel="stylesheet"	media="screen" />
+		<link rel="stylesheet"	media="screen" 	href="../../resources/css/bootstrap-theme.css" />
+		<link 	href="../../resources/css/easyui.css"  rel="stylesheet"/>
+		<link rel="stylesheet"	media="screen" 	href="../../resources/css/zTreeStyle.css" />
+		<script type="text/javascript" src="../../resources/js/jquery.js"></script>
+		<script type="text/javascript" src="../../resources/js/jquery.json.js"></script>
+		<script type="text/javascript" src="../../resources/js/bootstrap.js"></script>
+		<!--[if lt IE 9]>
+		<script type="text/javascript" src="../../resources/js/bootstrap-ie.js"></script>
+		<script type="text/javascript" src="../../resources/js/respond.min.js"></script>
+		<script type="text/javascript" src="../../resources/js/html5shiv.js"></script>
+		<![endif]-->
+		<script type="text/javascript" src="../../resources/js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../resources/js/easyui-lang-zh_CN.js"></script>
+		<script type="text/javascript" src="../../resources/js/jquery.ztree.js"></script>
+		<script src="../../resources/js/ckeditor.js"></script>
+		<script src="../../resources/js/adapters/jquery.js"></script>
+		<script type="text/javascript" src="../../js-mod/mybusiness/myexam.js"></script>
+		
+	</head>
+	<body class="easyui-layout">
+      <div region="west" split="true" title="考卷区" style="width:200px;">
+      		<div class="zTreeDemoBackground left">  
+			    <ul id="exampaper_tree" class="ztree"></ul>  
+			</div> 	
+      </div>  
+      <div region="center"  style="padding:5px;">
+			<div title="考卷内容" style="padding: 20px; overflow: hidden;" id="exam_home"></div>
+      </div>  
+	</body>
