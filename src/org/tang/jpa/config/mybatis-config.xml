@@ -26,6 +26,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias alias="UserexamDTO" type="org.tang.jpa.dto.exam.UserexamDTO"/>
 		<typeAlias alias="UserexamdetailsDTO" type="org.tang.jpa.dto.exam.UserexamdetailsDTO"/>
 		
+		<typeAlias alias="ArticleDTO" type="org.tang.jpa.dto.publicInformation.ArticleDTO"/>
 		<typeAlias alias="Page" type="org.tang.jpa.utils.Page"/>
 	</typeAliases>
 	
@@ -45,6 +46,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		 <mapper resource="org/tang/jpa/config/exam/Options.xml" /> 
 		 <mapper resource="org/tang/jpa/config/exam/Exampaper.xml" /> 
 		 <mapper resource="org/tang/jpa/config/exam/Exam.xml" /> 
+		 
+		  <mapper resource="org/tang/jpa/config/publicInformation/Article.xml" /> 
 	</mappers>
 </configuration>
 

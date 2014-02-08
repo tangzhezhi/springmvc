@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tang.jpa.dao.publicInformation.ArticleDao">
+
+	<resultMap type="ArticleDTO" id="ArticleDTO">
+    	<result column="articleId"  property="articleId" />
+    	<result column="articleContent"  property="articleContent" />
+    	<result column="articleType"  property="articleType" />
+    	<result column="articleOperater"  property="articleOperater" />
+    	<result column="createTime"  property="createTime" />
+    	<result column="articleTitle"  property="articleTitle" />
+	</resultMap>
+	
+	<resultMap type="Page" id="PageArticle">
+		<result column="totalRecord" property="totalRecord" />
+		<result  column="totalPage" property="totalPage" />
+		<result column="pageNo" property="pageNo" />
+		<result column="pageSize"  property="pageSize" />
+		<collection property="results" ofType="ArticleDTO">
+    		<result column="articleId"  property="articleId" />
+    		<result column="articleContent"  property="articleContent" />
+    		<result column="articleType"  property="articleType" />
+    		<result column="articleOperater"  property="articleOperater" />
+    		<result column="createTime"  property="createTime" />
+    		<result column="articleTitle"  property="articleTitle" />
+    	</collection>
+	</resultMap>
+
+		
+	 <!-- 查询分页 -->
+	<select id="selectArticleAll" parameterType="Page" resultMap="PageArticle" >   
+		select  
+    			t.articleId,
+    			t.articleContent,
+    			t.articleType,
+    			t.articleOperater,
+    			t.createTime,
+    			t.articleTitle
+		 from T_ARTICLE t
+		<where>
+			 1=1 
+    		<if test="params.articleId != null and params.articleId != '' " >
+			 	 and  t.articleId   =  #{params.articleId}
+    		</if>
+    		<if test="params.articleContent != null and params.articleContent != '' " >
+			 	 and  t.articleContent   =  #{params.articleContent}
+    		</if>
+    		<if test="params.articleType != null and params.articleType != '' " >
+			 	 and  t.articleType   =  #{params.articleType}
+    		</if>
+    		<if test="params.articleOperater != null and params.articleOperater != '' " >
+			 	 and  t.articleOperater   =  #{params.articleOperater}
+    		</if>
+    		<if test="params.createTime != null and params.createTime != '' " >
+			 	 and  t.createTime   =  #{params.createTime}
+    		</if>
+    		<if test="params.articleTitle != null and params.articleTitle != '' " >
+			 	 and  t.articleTitle   =  #{params.articleTitle}
+    		</if>
+		</where>
+	</select>
+	
+	
+	<!-- 向数据库中插入资源记录-->
+	<insert id="insertArticle" parameterType="ArticleDTO">    
+		insert into T_ARTICLE(
+    			articleId,
+    			articleContent,
+    			articleType,
+    			articleOperater,
+    			createTime,
+    			articleTitle
+		)
+		values(
+    			#{articleId, jdbcType=VARCHAR},
+    			#{articleContent, jdbcType=VARCHAR},
+    			#{articleType, jdbcType=VARCHAR},
+    			#{articleOperater, jdbcType=VARCHAR},
+    			#{createTime, jdbcType=VARCHAR},
+    			#{articleTitle, jdbcType=VARCHAR}
+		)
+	</insert>
+
+
+	
+	
+	  <!-- 更新库中的资源 -->
+	<update id="updateArticle" parameterType="ArticleDTO">   
+		update T_ARTICLE  
+		<set>
+    			<if test="articleContent != null and articleContent != '' ">articleContent=#{articleContent},</if>
+    			<if test="articleType != null and articleType != '' ">articleType=#{articleType},</if>
+    			<if test="createTime != null and createTime != '' ">createTime=#{createTime},</if>
+    			<if test="articleTitle != null and articleTitle != '' ">articleTitle=#{articleTitle},</if>
+    	</set>
+    	where articleid=#{articleid}
+	</update>
+	
+	<!-- 删除-->
+	<delete id="deleteArticle" parameterType="String">    
+		delete from T_ARTICLE  where articleid=  #{articleid}
+	</delete>
+	
+	
+</mapper>
