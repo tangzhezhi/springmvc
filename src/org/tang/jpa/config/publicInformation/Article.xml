@@ -93,7 +93,7 @@
     			<if test="createTime != null and createTime != '' ">createTime=#{createTime},</if>
     			<if test="articleTitle != null and articleTitle != '' ">articleTitle=#{articleTitle},</if>
     	</set>
-    	where articleid=#{articleid}
+    	where articleid=#{articleId}
 	</update>
 	
 	<!-- 删除-->
@@ -101,5 +101,15 @@
 		delete from T_ARTICLE  where articleid=  #{articleid}
 	</delete>
 	
+	
+	
+	<select id="showArticleInformationTopFive" resultMap="ArticleDTO">
+		<![CDATA[
+		    select articleId,articleContent,createtime from (
+         		select t.articleId,t.articleContent,t.createtime,dense_rank() over (order by t.createtime)  dr  from T_ARTICLE t
+   			)x
+    		where x.dr < 6
+    	]]>
+	</select>
 	
 </mapper>

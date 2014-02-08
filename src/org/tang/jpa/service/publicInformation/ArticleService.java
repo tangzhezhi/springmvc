@@ -5,6 +5,8 @@
 
 package org.tang.jpa.service.publicInformation;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -67,6 +69,10 @@ public class ArticleService {
 			flag = 0;
 		}
 		return flag;
+	}
+
+	public List showArticleInformationTopFive() {
+		return articleDao.showArticleInformationTopFive();
 	}
 	
 	

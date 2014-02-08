@@ -18,6 +18,8 @@ public interface ArticleDao  {
      
     public int deleteArticle(String articleId);  
      
-    public Page<?> selectArticleAll(Page<?> page);  
+    public Page<?> selectArticleAll(Page<?> page);
+
+	public List showArticleInformationTopFive();  
     
 }

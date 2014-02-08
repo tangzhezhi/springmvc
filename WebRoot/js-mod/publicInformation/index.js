@@ -3,7 +3,7 @@ $(function() {
 	
 	$.ajax({
 	   type: "POST",
-	   url:"../../public/showExamInformationTopFive?random"+parseInt(Math.random()*100000),
+	   url:"../../public/showArticleInformationTopFive?random"+parseInt(Math.random()*100000),
        dataType:'json',
        async:false, 
 	   success: function(data){
@@ -11,9 +11,9 @@ $(function() {
 			  var content = "";
 			  var option = "";
 			  for(var i = 0 ; i < dataRow.length;i++){
-				   option = option + "<p><a id='"+dataRow[i].examid+"' href='./web_content.html?examid="+dataRow[i].examid+"' title='"+dataRow[i].examName+"' target='_blank' >"+dataRow[i].examName+"</a><p>";
+				   option = option + "<p><a id='"+dataRow[i].articleId+"' href='./web_content.html?articleId="+dataRow[i].articleId+"' title='"+dataRow[i].t.articleContent+"' target='_blank' >"+dataRow[i].t.articleContent+"</a><p>";
 			  }
-			  content = "<h2>考试信息</h2>" + option;
+			  content = "<h2>工作动态</h2>" + option;
 			  $("#gzdt").empty().append(content);
 	   }
 	});

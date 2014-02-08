@@ -13,7 +13,7 @@ $(function() {
 		   type: "POST",
 		   url: "../../public/previewExampaper?random"+parseInt(Math.random()*100000),
 		   data: {
-				examid:getUrlParam('examid')
+				articleId:getUrlParam('articleid')
 		   },
 		   success: function(data){
 			   var dataRow = $.parseJSON(data).data

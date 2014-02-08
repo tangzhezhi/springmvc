@@ -16,6 +16,7 @@ import org.tang.jpa.dto.exam.OptionsDTO;
 import org.tang.jpa.dto.system.UserDTO;
 import org.tang.jpa.service.exam.ExamService;
 import org.tang.jpa.service.exam.ExampaperService;
+import org.tang.jpa.service.publicInformation.ArticleService;
 
 
 @Controller("publicIndexController")  
@@ -23,6 +24,9 @@ import org.tang.jpa.service.exam.ExampaperService;
 public class PublicIndexController {
 	@Autowired
 	private ExamService examService;
+	
+	@Autowired
+	private ArticleService articleService;
 	
 	@Autowired
 	private ExampaperService exampaperService;
@@ -38,6 +42,19 @@ public class PublicIndexController {
     }  
 	
 	
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/showArticleInformationTopFive", method = RequestMethod.POST)  
+    @ResponseBody  
+    public Map<String, Object> showArticleInformationTopFive() {  
+        Map<String, Object> model = new HashMap<String, Object>();
+        List articleInfo = articleService.showArticleInformationTopFive();
+        model.put("data",articleInfo);
+        return model;  
+    }  
+	
+	
+	
 	@RequestMapping(value = "/previewExampaper", method = RequestMethod.POST)  
     @ResponseBody  
     public  Map<String, Object>  previewExampaper(@ModelAttribute("currentUser") UserDTO dto
@@ -50,4 +67,11 @@ public class PublicIndexController {
 	        model.put("data", result);
 	        return model;
     }
+	
+	
+	
+	
+	
+	
+	
 }
