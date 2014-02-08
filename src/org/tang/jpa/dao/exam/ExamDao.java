@@ -8,6 +8,7 @@ import org.tang.jpa.dto.exam.UserexamDTO;
 import org.tang.jpa.dto.exam.UserexamdetailsDTO;
 import org.tang.jpa.dto.system.TreeDTO;
 import org.tang.jpa.dto.system.UserDTO;
+import org.tang.jpa.utils.Page;
 
 @Repository
 public interface ExamDao  {
@@ -20,6 +21,6 @@ public interface ExamDao  {
 
 	public String findUserExamId(UserexamDTO userexamDTO);
 
-	public int updateUserExamDetails(List<UserexamdetailsDTO> uList);  
-    
+	public int updateUserExamDetails(List<UserexamdetailsDTO> uList);
+
 }

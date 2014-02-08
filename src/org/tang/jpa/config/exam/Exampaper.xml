@@ -21,6 +21,7 @@
     	<result column="examOperater"  property="examOperater" />
     	<result column="examTime"  property="examTime" />
     	<result column="examSubject"  property="examSubject" />
+    	<result column="createTime"  property="createTime" />
     	<result column="totalScore"  property="totalScore" />
     	<result column="totalItems"  property="totalItems" />
 	</resultMap>
@@ -276,6 +277,15 @@
 		</where>
 	</select>
 	
+	
+	<select id="showExamInformationTopFive" resultMap="ExampaperDTO">
+		<![CDATA[
+		    select examid,examname,createtime from (
+         		select t.examid,t.examname,t.createtime,dense_rank() over (order by t.createtime)  dr  from t_exampaper t
+   			)x
+    		where x.dr < 6
+    	]]>
+	</select>
 	
 	
 </mapper>

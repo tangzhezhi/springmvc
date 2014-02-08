@@ -12,15 +12,20 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tang.jpa.dao.exam.ExamDao;
+import org.tang.jpa.dao.exam.ExampaperDao;
 import org.tang.jpa.dto.exam.UserexamDTO;
 import org.tang.jpa.dto.exam.UserexamdetailsDTO;
 import org.tang.jpa.dto.system.TreeDTO;
 import org.tang.jpa.dto.system.UserDTO;
+import org.tang.jpa.utils.Page;
 
 @Service
 public class ExamService {
 	@Autowired
 	private ExamDao examDao;
+	
+	@Autowired
+	private ExampaperDao exampaperDao;
 	
 	
 	public List<TreeDTO> findExamTree(UserDTO dto) {
@@ -70,6 +75,23 @@ public class ExamService {
 		}
 		return flag;
 	}
+
+
+	public List showExamInformationTopFive() {
+		return exampaperDao.showExamInformationTopFive();
+	}
+	
+	
+//	public Page showExamInformationAllPage(Page page) {
+//		Page  pageList = (Page) exampaperDao.showExamInformationAllPage(page);
+//		if(pageList!=null && pageList.getResults().size() > 0 ){
+//			pageList.setPageNo(page.getPageNo());
+//			pageList.setPageSize(page.getPageSize());
+//			pageList.setTotalPage(page.getTotalPage());
+//			pageList.setTotalRecord(page.getTotalRecord());
+//		}
+//		return pageList;
+//	}
 	
 	
 	
