@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.tang.jpa.dao.publicInformation.ArticleDao;
+import org.tang.jpa.dto.exam.OptionsDTO;
 import org.tang.jpa.dto.publicInformation.ArticleDTO;
 import org.tang.jpa.utils.Page;
 
@@ -71,8 +72,12 @@ public class ArticleService {
 		return flag;
 	}
 
-	public List showArticleInformationTopFive() {
-		return articleDao.showArticleInformationTopFive();
+	public List showArticleInformationTopFive(String articleType) {
+		return articleDao.showArticleInformationTopFive(articleType);
+	}
+
+	public List<ArticleDTO> previewArticle(ArticleDTO rdto) {
+		return articleDao.previewArticle(rdto);
 	}
 	
 	

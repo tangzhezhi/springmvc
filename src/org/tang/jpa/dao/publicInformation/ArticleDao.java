@@ -20,6 +20,8 @@ public interface ArticleDao  {
      
     public Page<?> selectArticleAll(Page<?> page);
 
-	public List showArticleInformationTopFive();  
+	public List showArticleInformationTopFive(String articleType);
+
+	public List<ArticleDTO> previewArticle(ArticleDTO rdto);  
     
 }

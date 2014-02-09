@@ -1,0 +1,49 @@
+
+.head {
+	width: 1004px;
+	height: 84px;
+	background-image: url(../../resources/img/content_top.gif);
+	background-repeat: no-repeat;
+	background-positon: left top;
+	color: #CE2F29;
+	font-size: 13px;
+	text-align: right;
+	clear: both;
+}
+
+.head_title{
+	width: 100%;
+	text-align: center;
+	color: #C82E30;
+	font-size: 20px;
+	font-family: "宋体";
+	font-weight: bold;
+	padding: 13px 0 15px;
+}
+
+.head_explain {
+	border-top: 1px solid #C82E30;
+	background-color: #FBF1EF;
+	padding: 5px;
+	font-size: 12px;
+	text-align: center;
+	color: #F6745B;
+}
+
+
+.head_tools {
+	clear: both;
+	height: 1px;
+	font: 0px/0px Arial;
+	overflow: hidden;
+	border-top: 1px solid #C82E30;
+	margin: 6 0 6 0;
+}
+
+.content_title{
+	font-size: 22px;
+}
+
+.content{
+	font-size: 16px;
+}

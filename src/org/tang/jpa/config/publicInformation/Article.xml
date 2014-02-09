@@ -103,13 +103,37 @@
 	
 	
 	
-	<select id="showArticleInformationTopFive" resultMap="ArticleDTO">
-		<![CDATA[
-		    select articleId,articleContent,createtime from (
-         		select t.articleId,t.articleContent,t.createtime,dense_rank() over (order by t.createtime)  dr  from T_ARTICLE t
-   			)x
+	<select id="showArticleInformationTopFive"  parameterType="String" resultMap="ArticleDTO">
+	    select articleId,articletitle,articleContent,createtime from (
+        		select t.articleId,t.articletitle,t.articleContent,t.createtime,dense_rank() over (order by t.createtime)  dr  from T_ARTICLE t
+        		<where>
+			 1=1 
+	    		<if test="_parameter != null and _parameter != '' "  >
+				 	 and  t.articleType   =  #{articleType}
+	    		</if>
+			</where>
+  			)x
+   			<![CDATA[
     		where x.dr < 6
-    	]]>
+    		]]>
 	</select>
+	
+	<select id="previewArticle" parameterType="ArticleDTO" resultMap="ArticleDTO">
+			select  
+    			t.articleId,
+    			t.articleContent,
+    			t.articleType,
+    			t.articleOperater,
+    			t.createTime,
+    			t.articleTitle
+		 from T_ARTICLE t
+		<where>
+			 1=1 
+    		<if test="articleId != null and articleId != '' " >
+			 	 and  t.articleId   =  #{articleId}
+    		</if>
+		</where>
+	</select>
+	
 	
 </mapper>
