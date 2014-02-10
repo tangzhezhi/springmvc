@@ -1,6 +1,17 @@
 
 $(function() {
 	
+	$("#zxgk_nav > a").attr("href","./index_part.html?articleType="+escape('政协概况'));
+	$("#zxgz_nav > a").attr("href","./index_part.html?articleType="+escape('政协工作'));
+	$("#zxhy_nav > a").attr("href","./index_part.html?articleType="+escape('政协会议'));
+	$("#jyxc_nav > a").attr("href","./index_part.html?articleType="+escape('建言献策'));
+	$("#zxta_nav > a").attr("href","./index_part.html?articleType="+escape('政协提案'));
+	$("#gzzd_nav > a").attr("href","./index_part.html?articleType="+escape('规章制度'));
+	$("#xxyd_nav > a").attr("href","./index_part.html?articleType="+escape('学习园地'));
+	$("#wszl_nav > a").attr("href","./index_part.html?articleType="+escape('文史资料'));
+	$("#mtbd_nav > a").attr("href","./index_part.html?articleType="+escape('媒体报道'));
+	$("#zxwy_nav > a").attr("href","./index_part.html?articleType="+escape('政协委员'));
+	
 	$.ajax({
 	   type: "POST",
 	   url:"../../public/showArticleInformationTopFive?random"+parseInt(Math.random()*100000),

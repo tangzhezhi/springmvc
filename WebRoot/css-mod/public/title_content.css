@@ -1,0 +1,17 @@
+.title_content_top{
+	height: 49px;
+	padding: 16px;
+	background-image:url(../../resources/img/title_content_top.gif) ;
+	background-repeat: no-repeat;
+	background-position: center top;
+}
+
+.title_content {
+	font-size: 13px;
+	color: #000000;
+}
+
+a {
+	text-decoration : none;
+	color: #333333;
+} 
