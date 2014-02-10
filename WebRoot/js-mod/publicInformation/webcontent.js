@@ -8,7 +8,7 @@ $(function() {
 			if (r!=null) return unescape(r[2]); return null; //返回参数值
 		} 
 	
-		
+		$("#index_nav").attr("href","./../../welcome.html");
 		$("#zxgk_nav > a").attr("href","./index_part.html?articleType="+escape('政协概况'));
 		$("#zxgz_nav > a").attr("href","./index_part.html?articleType="+escape('政协工作'));
 		$("#zxhy_nav > a").attr("href","./index_part.html?articleType="+escape('政协会议'));
