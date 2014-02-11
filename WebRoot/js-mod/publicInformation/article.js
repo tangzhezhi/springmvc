@@ -192,7 +192,7 @@ $(function() {
 						   type: "POST",
 						   url: "../../article/deleteArticle?random"+parseInt(Math.random()*100000),
 						   data: {
-								articleid:row.articleid
+								articleid:row.articleId
 						   },
 						   success: function(msg){
 						     $.messager.alert("操作提示", $.parseJSON(msg),"info");

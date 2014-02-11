@@ -47,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		 <mapper resource="org/tang/jpa/config/exam/Exampaper.xml" /> 
 		 <mapper resource="org/tang/jpa/config/exam/Exam.xml" /> 
 		 
-		  <mapper resource="org/tang/jpa/config/publicInformation/Article.xml" /> 
+		 <mapper resource="org/tang/jpa/config/publicInformation/Article.xml" /> 
 	</mappers>
 </configuration>
 

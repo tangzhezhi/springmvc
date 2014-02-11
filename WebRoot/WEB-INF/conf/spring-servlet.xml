@@ -58,6 +58,7 @@
         </property>  
     </bean>  
       
+      
       <!-- 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 -->
    	<mvc:interceptors>
 		<mvc:interceptor>
@@ -65,10 +66,10 @@
 			<mvc:mapping path="/*/*" />  
 			<mvc:mapping path="/*/*/*" />  
 			<mvc:exclude-mapping path="/login/userLogin"/>
-			<mvc:exclude-mapping path="/resource/*"/>
-			<mvc:exclude-mapping path="/resource/**"/>
-			<mvc:exclude-mapping path="/resource/*/*"/>
-			<mvc:exclude-mapping path="/resource/*/*/*"/>
+			<mvc:exclude-mapping path="/resources/*"/>
+			<mvc:exclude-mapping path="/resources/**"/>
+			<mvc:exclude-mapping path="/resources/*/*"/>
+			<mvc:exclude-mapping path="/resources/*/*/*"/>
 			<mvc:exclude-mapping path="/public/*"/>
 			<mvc:exclude-mapping path="/public/*/*"/>
 			<mvc:exclude-mapping path="/public/*/*/*"/>
@@ -82,6 +83,13 @@
   	<mvc:resources mapping="/js/**" location="/resources/js/"/>  
     <mvc:resources mapping="/css/**" location="/resources/css/"/>  
       
+    
+           <!-- SpringMVC上传文件时,需配置MultipartResolver处理器 -->  
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
+        <!-- 指定所上传文件的总大小不能超过800KB......注意maxUploadSize属性的限制不是针对单个文件,而是所有文件的容量之和 -->  
+        <property name="maxUploadSize" value="8000000"/>  
+    </bean>  
+    
       
           <!-- SpringMVC在超出上传文件限制时，会抛出org.springframework.web.multipart.MaxUploadSizeExceededException -->  
     <!-- 该异常是SpringMVC在检查上传的文件信息时抛出来的，而且此时还没有进入到Controller方法中 -->  

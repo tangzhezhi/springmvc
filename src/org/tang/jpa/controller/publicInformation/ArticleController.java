@@ -1,11 +1,16 @@
 package org.tang.jpa.controller.publicInformation;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,12 +19,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.tang.jpa.dto.publicInformation.ArticleDTO;
 import org.tang.jpa.dto.system.UserDTO;
 import org.tang.jpa.service.publicInformation.ArticleService;
 import org.tang.jpa.utils.DateTool;
 import org.tang.jpa.utils.MyConstants;
 import org.tang.jpa.utils.Page;
+import org.tang.jpa.utils.UploadFile;
 
 @Controller("articleController")  
 @RequestMapping("article")  
@@ -120,6 +128,49 @@ public class ArticleController {
 	        else{
 	        	return MyConstants.DELFAIL.getName();
 	        }
+    }
+	
+	
+	
+	
+	
+	  /**
+     * 公用上传Action UploadFile.name 文件名,从前台传人 UploadFile.filePath 路径,从前台传人
+     * ad为存放广告的文件夹 news为存放新闻的文件夹 上传之后的路径地址为
+     * /upload/{UploadFile.filePath}/今年(2012)/当月(02)/UploadFile.name
+     *
+     *
+     * @param file
+     * @return
+     */
+    @RequestMapping(value = "/ckeditorUpload")
+    @ResponseBody
+    public String processImageUpload(UploadFile file,HttpServletRequest request) {
+        String callback = request.getParameter("CKEditorFuncNum");
+        try {
+            File uploadFile;
+            if (StringUtils.isBlank(file.getName())) {
+                file.setName(DateTool.getDateStringYMDHMS(new Date()) );
+            }
+            
+            String path =  "/resources/upload_pic/news";
+            String filePath = request.getSession().getServletContext().getRealPath(path);
+            uploadFile = new File(filePath+"/"+file.getUpload().getOriginalFilename());
+            
+            file.getUpload().getFileItem().write(uploadFile);
+            if(StringUtils.isNotBlank(callback)){
+                return "<script type='text/javascript'>"
+                + "window.parent.CKEDITOR.tools.callFunction(" + callback
+                + ",'" +request.getContextPath() + path+"/"+file.getUpload().getOriginalFilename() + "',''" + ")"+"</script>";
+            }else{
+                return "{" + file.getUpload().getOriginalFilename() + "}!Success!";
+            }
+ 
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "false";
+        }
+ 
     }
 	
 }
