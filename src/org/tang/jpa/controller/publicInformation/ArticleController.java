@@ -2,11 +2,14 @@ package org.tang.jpa.controller.publicInformation;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -75,7 +78,9 @@ public class ArticleController {
 	        	rdto.setArticleOperater(dto.getUserName());
 	        	rdto.setCreateTime(DateTool.getDateStringYMDHMS(new Date()));
 	        	rdto.setArticleTitle(articleTitle);
-	       
+	        	
+	        	List<String> articlePics = getImageUrl(articleContent);
+	        	rdto.setArticlePics(articlePics);
 	        int flag =  articleService.insertArticle(rdto);
 	        if(flag == 1){
 	        	return MyConstants.ADDSUCCESS.getName();
@@ -172,5 +177,19 @@ public class ArticleController {
         }
  
     }
+    
+    
+    
+    
+    private List<String> getImageUrl(String content){
+		 Matcher matcher = Pattern.compile("<img.*src=(.*?)[^>]*?/>").matcher(content);  
+	        List<String> listImgUrl = new ArrayList<String>();  
+	        while (matcher.find()) {  
+	            listImgUrl.add(matcher.group());  
+	        }  
+	        return listImgUrl;
+	        
+    }
+    
 	
 }

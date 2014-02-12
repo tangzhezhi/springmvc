@@ -4,6 +4,8 @@
  */
 
 package org.tang.jpa.dto.publicInformation;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 
 public class ArticleDTO {
@@ -17,6 +19,7 @@ public class ArticleDTO {
     private java.lang.String articleOperater;
     private java.lang.String createTime;
     private java.lang.String articleTitle;
+    private List<String> articlePics;
 	
 	public java.lang.String getArticleId() {
 		return this.articleId;
@@ -61,4 +64,12 @@ public class ArticleDTO {
 		this.articleTitle = articleTitle;
 	}
 
+	public List<String> getArticlePics() {
+		return articlePics;
+	}
+
+	public void setArticlePics(List<String> articlePics) {
+		this.articlePics = articlePics;
+	}
+	
 }

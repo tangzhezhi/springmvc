@@ -11,6 +11,17 @@
     	<result column="articleTitle"  property="articleTitle" />
 	</resultMap>
 	
+	<resultMap type="PictureDTO" id="PictureDTO">
+    	<result column="articleId"  property="articleId" />
+    	<result column="picName"  property="picName" />
+    	<result column="picUrl"  property="picUrl" />
+    	<result column="pictureid"  property="pictureid" />
+    	<result column="createTime"  property="createTime" />
+    	<result column="userId"  property="userId" />
+	</resultMap>
+	
+	
+	
 	<resultMap type="Page" id="PageArticle">
 		<result column="totalRecord" property="totalRecord" />
 		<result  column="totalPage" property="totalPage" />
@@ -81,8 +92,25 @@
     			#{articleTitle, jdbcType=VARCHAR}
 		)
 	</insert>
-
-
+	
+	<insert id="insertPics" parameterType="java.util.List">    
+		insert into t_picture(
+    			pictureid,
+    			picName,
+    			picUrl,
+    			createTime,
+    			articleId
+		)
+		<foreach collection="list" item="item" index="index" separator="union all" >  
+        	select #{item.pictureid ,jdbcType=VARCHAR},#{item.picName ,jdbcType=VARCHAR}
+        	,#{item.picUrl ,jdbcType=VARCHAR} ,#{item.createTime ,jdbcType=VARCHAR} 
+        	,#{item.articleId ,jdbcType=VARCHAR}
+        	 from dual  
+    	</foreach>  
+	</insert>
+	
+	
+	
 	
 	
 	  <!-- 更新库中的资源 -->
@@ -135,6 +163,20 @@
     		</if>
 		</where>
 	</select>
+	
+	<select id="showPicInformationTopFive"   resultMap="PictureDTO">
+	    select articleId,pictureid,picurl,picname,createtime from (
+        		select t.articleId,t.pictureid,t.picurl,t.picname,t.createtime,dense_rank() over (order by t.createtime)  dr  from t_picture t
+        		<where>
+			 1=1 
+			</where>
+  			)x
+   			<![CDATA[
+    		where x.dr < 6
+    		]]>
+	</select>
+	
+	
 	
 	
 </mapper>

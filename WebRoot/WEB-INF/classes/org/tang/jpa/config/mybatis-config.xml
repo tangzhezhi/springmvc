@@ -25,8 +25,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias alias="ExamPaperDetailsDTO" type="org.tang.jpa.dto.exam.ExamPaperDetailsDTO"/>
 		<typeAlias alias="UserexamDTO" type="org.tang.jpa.dto.exam.UserexamDTO"/>
 		<typeAlias alias="UserexamdetailsDTO" type="org.tang.jpa.dto.exam.UserexamdetailsDTO"/>
-		
 		<typeAlias alias="ArticleDTO" type="org.tang.jpa.dto.publicInformation.ArticleDTO"/>
+		<typeAlias alias="PictureDTO" type="org.tang.jpa.dto.publicInformation.PictureDTO"/>
 		<typeAlias alias="Page" type="org.tang.jpa.utils.Page"/>
 	</typeAliases>
 	

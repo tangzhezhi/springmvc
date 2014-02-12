@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Repository;
 import org.tang.jpa.dto.publicInformation.ArticleDTO;
+import org.tang.jpa.dto.publicInformation.PictureDTO;
 import org.tang.jpa.utils.Page;
 
 @Repository
@@ -22,6 +23,10 @@ public interface ArticleDao  {
 
 	public List showArticleInformationTopFive(String articleType);
 
-	public List<ArticleDTO> previewArticle(ArticleDTO rdto);  
+	public List<ArticleDTO> previewArticle(ArticleDTO rdto);
+
+	public int insertPics(List<PictureDTO> picdtoList);
+
+	public List showPicInformationTopFive();  
     
 }

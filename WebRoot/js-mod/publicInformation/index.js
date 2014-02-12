@@ -13,6 +13,32 @@ $(function() {
 	$("#mtbd_nav > a").attr("href","./html/publicInformation/index_part.html?articleType="+escape('媒体报道'));
 	$("#zxwy_nav > a").attr("href","./html/publicInformation/index_part.html?articleType="+escape('政协委员'));
 	
+	
+	$.ajax({
+	   type: "POST",
+	   url:"./public/showPicInformationTopFive?random"+parseInt(Math.random()*100000),
+       dataType:'json',
+       async:true, 
+	   success: function(data){
+			  var dataRow = data.data;
+			  var content = "";
+			  var option = "";
+			  
+			  for(var i = 0 ; i < dataRow.length;i++){
+				  if(i==0){
+					    option = option + "<div class='item active'>"+dataRow[i].picUrl+"<div class='container'><div class='carousel-caption'><p>"+dataRow[i].picName+"</p></div></div></div>";
+				  }
+				  else{
+					  option = option + "<div class='item'>"+dataRow[i].picUrl+"<div class='container'><div class='carousel-caption'><p>"+dataRow[i].picName+"</p></div></div></div>";
+				  }
+			  }
+			  content =  option;
+			  $("#pic_content").empty().append(content);
+	   }
+	});
+	
+	
+	
 	$.ajax({
 	   type: "POST",
 	   url:"./public/showArticleInformationTopFive?random"+parseInt(Math.random()*100000),

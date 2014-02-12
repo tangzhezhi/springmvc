@@ -56,6 +56,19 @@ public class PublicIndexController {
     }  
 	
 	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/showPicInformationTopFive", method = RequestMethod.POST)  
+    @ResponseBody  
+    public Map<String, Object> showPicInformationTopFive() {  
+        Map<String, Object> model = new HashMap<String, Object>();
+        List picInfo = articleService.showPicInformationTopFive();
+        model.put("data",picInfo);
+        return model;  
+    }  
+	
+	
+	
+	
 	
 	@RequestMapping(value = "/previewExampaper", method = RequestMethod.POST)  
     @ResponseBody  
