@@ -158,6 +158,8 @@ $(function() {
 			
 			$('#orgidModal_chosen .chosen-single > span').empty().append("<span>请选择组织</span>");
 			$('#roleidModal_chosen .chosen-single > span').empty().append("<span>请选择角色</span>");
+			$('#orgidModal_chosen').removeAttr("style"); 
+			$('#roleidModal_chosen').removeAttr("style"); 
 	});
 	
 	$("#modify").click(

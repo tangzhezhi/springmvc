@@ -214,5 +214,11 @@ $(function() {
 	   }
 	});
 	
+	
+//	$("#wsta").click(function(){
+//		
+//	});
+		
+	
 });
 

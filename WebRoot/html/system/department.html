@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" >
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+		<meta http-equiv="X-UA-Compatible" content="IE=9"> 
+		<meta http-equiv="X-UA-Compatible" content="IE=8"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="../../resources/css/bootstrap.css" rel="stylesheet"	media="screen" />
+		<link rel="stylesheet"	media="screen" 	href="../../resources/css/bootstrap-theme.css" />
+		<link 	href="../../resources/css/easyui.css"  rel="stylesheet"/>
+		<link rel="stylesheet"	media="screen" 	href="../../resources/css/chosen.css" />
+		<script type="text/javascript" src="../../resources/js/jquery.js"></script>
+		<script type="text/javascript" src="../../resources/js/jquery.json.js"></script>
+		<script type="text/javascript" src="../../resources/js/bootstrap.js"></script>
+		<!--[if lt IE 9]>
+		<script type="text/javascript" src="../../resources/js/bootstrap-ie.js"></script>
+		<script type="text/javascript" src="../../resources/js/respond.min.js"></script>
+		<script type="text/javascript" src="../../resources/js/html5shiv.js"></script>
+		<![endif]-->
+		<script type="text/javascript" src="../../resources/js/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../../resources/js/easyui-lang-zh_CN.js"></script>
+		<script type="text/javascript" src="../../resources/js/chosen.jquery.js"></script>
+		<script type="text/javascript" src="../../js-mod/system/department.js"></script>
+	</head>
+	<body>
+			<div id="headertool">
+				<nav class="navbar navbar-default" role="navigation">
+				 <div class="navbar-header"></div>
+				 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					 <form class="navbar-form navbar-left form-inline" role="search">
+				      <div class="form-group">
+				        <input id="departmentname" type="text" class="form-control" placeholder="名称">
+				      </div>
+				      <button id="query" type="button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>查询</button>
+				      <button id="add" type="button" class="btn btn-default" ><span class="glyphicon glyphicon-plus"></span>新增</button>
+				      <button id="modify" type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>修改</button>
+				      <button id="delete" type="button" class="btn btn-default" ><span class="glyphicon glyphicon-trash"></span>删除</button>
+				    </form>
+				 </div>
+				</nav>
+			</div>
+			
+			<!-- Modal -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			        <h4 class="modal-title" id="myModalLabel">面板</h4>
+			      </div>
+			      <div class="modal-body">
+			      		<form id="modal_form" class="form-horizontal" role="form">
+						 <div class="form-group ">
+						     <input type="hidden" id="departmentidModal"  >
+						    <label  for="orgidModal">上级组织</label>
+						    <select id="orgidModal" class="form-group chosen-select"  data-placeholder="请选择部门上级组织">  
+       							<option value="">请选择部门上级组织</option>
+   						 	</select>
+						  </div>
+						 <div class="form-group ">
+						    <label  for="departmentnameModal">部门名称</label>
+						    <input type="text" class="form-control" id="departmentnameModal"  required="true" placeholder="部门名称">
+						  </div>
+						</form>
+			      </div>
+			      <div class="modal-footer">
+			  		  <div class="form-group col-sm-8 pull-right">
+					  	 <button id="add_modify_modal" type="button" class="btn btn-primary">保存</button>
+	        	  		 <button type="button" class="btn btn-default btn-warning" data-dismiss="modal">关闭</button>
+					  </div>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			
+			<div>
+				<table id="dg"/>
+			</div>
+			
+	</body>

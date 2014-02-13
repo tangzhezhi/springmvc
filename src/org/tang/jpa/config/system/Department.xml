@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tang.jpa.dao.system.DepartmentDao">
+
+	<resultMap type="DepartmentDTO" id="DepartmentDTO">
+    	<result column="departmentid"  property="departmentid" />
+    	<result column="orgid"  property="orgid" />
+    	<result column="departmentname"  property="departmentname" />
+    	<result column="pdepartmentname"  property="pdepartmentname" />
+    	<result column="orgname"  property="orgname" />
+    	
+	</resultMap>
+	
+	<resultMap type="Page" id="PageDepartment">
+		<result column="totalRecord" property="totalRecord" />
+		<result  column="totalPage" property="totalPage" />
+		<result column="pageNo" property="pageNo" />
+		<result column="pageSize"  property="pageSize" />
+		<collection property="results" ofType="DepartmentDTO">
+    		<result column="departmentid"  property="departmentid" />
+    		<result column="orgid"  property="orgid" />
+    		<result column="departmentname"  property="departmentname" />
+    		<result column="pdepartmentname"  property="pdepartmentname" />
+    		<result column="orgname"  property="orgname" />
+    	</collection>
+	</resultMap>
+
+		
+	 <!-- 查询分页 -->
+	<select id="selectDepartmentAll" parameterType="Page" resultMap="PageDepartment" >   
+		select  
+    			t.departmentid,
+    			t.orgid,
+    			t.departmentname,
+    			o.orgname,
+    			nvl(d.departmentname,o.orgname) as pdepartmentname
+		 from T_DEPARTMENT t
+		 left join t_organization o on (t.orgid = o.orgid)
+		 left join t_department d on (t.pdepartmentid = d.departmentid)
+		<where>
+			 1=1 
+    		<if test="params.departmentid != null and params.departmentid != '' " >
+			 	 and  t.departmentid   =  #{params.departmentid}
+    		</if>
+    		<if test="params.orgid != null and params.orgid != '' " >
+			 	 and  t.orgid   =  #{params.orgid}
+    		</if>
+    		<if test="params.departmentname != null and params.departmentname != '' " >
+			 	 and  t.departmentname   =  #{params.departmentname}
+    		</if>
+		</where>
+	</select>
+	
+	
+	<select id="queryUpperDepartment" parameterType="Page" resultMap="PageDepartment" >   
+		 select departmentid , orgid, departmentname from (
+		    select  
+		          t.departmentid,
+		          t.orgid,
+		          t.departmentname
+		     from T_DEPARTMENT t 
+		     <where>
+				 1=1 
+	    		<if test="params.departmentid != null and params.departmentid != '' " >
+				 	 and  t.departmentid   =  #{params.departmentid}
+	    		</if>
+	    		<if test="params.orgid != null and params.orgid != '' " >
+				 	 and  t.orgid   =  #{params.orgid}
+	    		</if>
+	    		<if test="params.departmentname != null and params.departmentname != '' " >
+				 	 and  t.departmentname   =  #{params.departmentname}
+	    		</if>
+			</where>
+		     union 
+		     select o.orgid  as departmentid ,
+		            o.orgid  as orgid,
+		            o.orgname as departmentname
+		      from t_organization o 
+		      <where>
+				 1=1 
+	    		<if test="params.orgid != null and params.orgid != '' " >
+				 	 and  o.orgid   =  #{params.orgid}
+	    		</if>
+	    		<if test="params.departmentname != null and params.departmentname != '' " >
+				 	 and  o.orgname   =  #{params.departmentname}
+	    		</if>
+			</where>
+		  ) x
+	</select>
+	
+	
+	
+	
+	<!-- 向数据库中插入资源记录-->
+	<insert id="insertDepartment" parameterType="DepartmentDTO">    
+		insert into T_DEPARTMENT(
+    			departmentid,
+    			orgid,
+    			departmentname,
+    			pdepartmentid
+		)
+		values(
+    			#{departmentid, jdbcType=VARCHAR},
+    			#{orgid, jdbcType=VARCHAR},
+    			#{departmentname, jdbcType=VARCHAR},
+    			#{pdepartmentid, jdbcType=VARCHAR}
+		)
+	</insert>
+
+
+	
+	
+	  <!-- 更新库中的资源 -->
+	<update id="updateDepartment" parameterType="DepartmentDTO">   
+		update T_DEPARTMENT  
+		<set>
+    			<if test="orgid != null and orgid != '' ">orgid=#{orgid},</if>
+    			<if test="departmentname != null and departmentname != '' ">departmentname=#{departmentname},</if>
+    			<if test="pdepartmentid != null and pdepartmentid != '' ">pdepartmentid=#{pdepartmentid},</if>
+    	</set>
+    	where departmentid=#{departmentid}
+	</update>
+	
+	<!-- 删除-->
+	<delete id="deleteDepartment" parameterType="String">    
+		delete from T_DEPARTMENT  where departmentid=  #{departmentid}
+	</delete>
+	
+	
+</mapper>
