@@ -135,6 +135,30 @@ $(function() {
 	}
 	
 	
+	function chosenDeptAjaxData(id){
+			var contents = "";
+			$.ajax({
+			   type: "POST",
+			   url:"../../department/queryDepartment?random"+parseInt(Math.random()*100000),
+	           dataType:'json',
+	           async:false, 
+	           data:{
+					page:1,
+					rows:99999
+				},
+			   success: function(data){
+					var selectObj = $('#'+id); 
+					for(var i=0;i<data.rows.length;i++){
+						contents = contents +"<option value='"+data.rows[i].departmentid+"'>"+data.rows[i].departmentname+"</option>";
+	                } 
+					selectObj.append(contents);
+			   }
+			});
+	}
+	
+	
+	
+	
 	
 	
 	$("#add").click(
@@ -156,10 +180,17 @@ $(function() {
 			chosenRoleAjaxData('roleidModal');
 			$('#roleidModal').chosen().trigger("chosen:updated");
 			
+			$('#departmentidModal').empty();
+			chosenDeptAjaxData('departmentidModal');
+			$('#departmentidModal').chosen().trigger("chosen:updated");
+			
 			$('#orgidModal_chosen .chosen-single > span').empty().append("<span>请选择组织</span>");
 			$('#roleidModal_chosen .chosen-single > span').empty().append("<span>请选择角色</span>");
+			$('#departmentidModal_chosen .chosen-single > span').empty().append("<span>请选择用户部门</span>");
+			
 			$('#orgidModal_chosen').removeAttr("style"); 
 			$('#roleidModal_chosen').removeAttr("style"); 
+			$('#departmentidModal_chosen').removeAttr("style"); 
 	});
 	
 	$("#modify").click(
