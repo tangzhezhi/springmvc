@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tang.jpa.dao.publicInformation.OpinionDao">
+
+	<resultMap type="OpinionDTO" id="OpinionDTO">
+    	<result column="opinionid"  property="opinionid" />
+    	<result column="optionTitle"  property="optionTitle" />
+    	<result column="userid"  property="userid" />
+    	<result column="createtime"  property="createtime" />
+    	<result column="approveState"  property="approveState" />
+    	<result column="optionContent"  property="optionContent" />
+    	<result column="approveUserid"  property="approveUserid" />
+    	<result column="approveTime"  property="approveTime" />
+	</resultMap>
+	
+	<resultMap type="Page" id="PageOpinion">
+		<result column="totalRecord" property="totalRecord" />
+		<result  column="totalPage" property="totalPage" />
+		<result column="pageNo" property="pageNo" />
+		<result column="pageSize"  property="pageSize" />
+		<collection property="results" ofType="OpinionDTO">
+    		<result column="opinionid"  property="opinionid" />
+    		<result column="optionTitle"  property="optionTitle" />
+    		<result column="userid"  property="userid" />
+    		<result column="createtime"  property="createtime" />
+    		<result column="approveState"  property="approveState" />
+    		<result column="optionContent"  property="optionContent" />
+    		<result column="approveUserid"  property="approveUserid" />
+    		<result column="approveTime"  property="approveTime" />
+    	</collection>
+	</resultMap>
+
+		
+	 <!-- 查询分页 -->
+	<select id="selectOpinionAll" parameterType="Page" resultMap="PageOpinion" >   
+		select  
+    			t.opinionid,
+    			t.optionTitle,
+    			t.userid,
+    			t.createtime,
+    			t.approveState,
+    			t.optionContent,
+    			t.approveUserid,
+    			t.approveTime
+		 from T_OPINION t
+		<where>
+			 1=1 
+    		<if test="params.opinionid != null and params.opinionid != '' " >
+			 	 and  t.opinionid   =  #params.opinionid}
+    		</if>
+    		<if test="params.optionTitle != null and params.optionTitle != '' " >
+			 	 and  t.optionTitle   =  #params.optionTitle}
+    		</if>
+    		<if test="params.userid != null and params.userid != '' " >
+			 	 and  t.userid   =  #params.userid}
+    		</if>
+    		<if test="params.createtime != null and params.createtime != '' " >
+			 	 and  t.createtime   =  #params.createtime}
+    		</if>
+    		<if test="params.approveState != null and params.approveState != '' " >
+			 	 and  t.approveState   =  #params.approveState}
+    		</if>
+    		<if test="params.optionContent != null and params.optionContent != '' " >
+			 	 and  t.optionContent   =  #params.optionContent}
+    		</if>
+    		<if test="params.approveUserid != null and params.approveUserid != '' " >
+			 	 and  t.approveUserid   =  #params.approveUserid}
+    		</if>
+    		<if test="params.approveTime != null and params.approveTime != '' " >
+			 	 and  t.approveTime   =  #params.approveTime}
+    		</if>
+		</where>
+	</select>
+	
+	
+	<!-- 向数据库中插入资源记录-->
+	<insert id="insertOpinion" parameterType="OpinionDTO">    
+		 <selectKey keyProperty="opinionid" resultType="String" order="BEFORE">  
+            select   sys_guid() as opinionid from dual 
+    	</selectKey>
+		insert into T_OPINION(
+    			opinionid,
+    			optionTitle,
+    			userid,
+    			createtime,
+    			approveState,
+    			optionContent,
+    			approveUserid,
+    			approveTime
+		)
+		values(
+    			#opinionid, jdbcType=VARCHAR},
+    			#optionTitle, jdbcType=VARCHAR},
+    			#userid, jdbcType=VARCHAR},
+    			#createtime, jdbcType=VARCHAR},
+    			#approveState, jdbcType=VARCHAR},
+    			#optionContent, jdbcType=VARCHAR},
+    			#approveUserid, jdbcType=VARCHAR},
+    			#approveTime, jdbcType=VARCHAR}
+		)
+	</insert>
+
+
+	
+	
+	  <!-- 更新库中的资源 -->
+	<update id="updateOpinion" parameterType="OpinionDTO">   
+		update T_OPINION  
+		<set>
+    			<if test="opinionid != null and opinionid != '' ">opinionid=#opinionid},</if>
+    			<if test="optionTitle != null and optionTitle != '' ">optionTitle=#optionTitle},</if>
+    			<if test="userid != null and userid != '' ">userid=#userid},</if>
+    			<if test="createtime != null and createtime != '' ">createtime=#createtime},</if>
+    			<if test="approveState != null and approveState != '' ">approveState=#approveState},</if>
+    			<if test="optionContent != null and optionContent != '' ">optionContent=#optionContent},</if>
+    			<if test="approveUserid != null and approveUserid != '' ">approveUserid=#approveUserid},</if>
+    			<if test="approveTime != null and approveTime != '' ">approveTime=#approveTime},</if>
+    	</set>
+    	where opinionid=#opinionid}
+	</update>
+	
+	<!-- 删除-->
+	<delete id="deleteOpinion" parameterType="String">    
+		delete from T_OPINION  where opinionid=  #opinionid}
+	</delete>
+	
+	
+</mapper>

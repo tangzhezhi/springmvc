@@ -138,7 +138,7 @@ $(function() {
 			 content = "<a href='./html/publicInformation/index_part.html?articleType="+param+"' target='_blank' ><img src='./resources/img/middle_03.gif' width='383' height='25' border='0'></a>" + option;
 			  index_zxta = "<a   href='#'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;专题活动&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;更多>></a>" + subject_option;
 			  $("#zxta").empty().append(content);
-			  $("#index_subject").empty().append(index_zxta);
+//			  $("#index_subject").empty().append(index_zxta);
 	   }
 	});
 	
