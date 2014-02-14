@@ -84,7 +84,7 @@ $(function() {
 			chosenAjaxData('resourceurlparentidModal');
 			$('#resourceurlparentidModal').chosen().trigger("chosen:updated");
 			$('#resourceurlparentidModal_chosen .chosen-single > span').empty().append("<span>请选择上级资源</span>");
-			
+			$('#resourceurlparentidModal_chosen').removeAttr("style"); 
 	});
 	
 	
