@@ -23,7 +23,7 @@
 		<script type="text/javascript" src="../../resources/js/easyui-lang-zh_CN.js"></script>
 		<script src="../../resources/js/ckeditor.js"></script>
 		<script src="../../resources/js/adapters/jquery.js"></script>
-		<script type="text/javascript" src="../../js-mod/publicInformation/opinion.js"></script>
+		<script type="text/javascript" src="../../js-mod/publicInformation/opinion_approve.js"></script>
 	</head>
 	<body class="easyui-layout">
 			<div id="headertool">
@@ -35,9 +35,7 @@
 				        <input id="opinionTitle" type="text" class="form-control" placeholder="名称">
 				      </div>
 				      <button id="query" type="button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>查询</button>
-				      <button id="add" type="button" class="btn btn-default" ><span class="glyphicon glyphicon-plus"></span>新增</button>
-				      <button id="modify" type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>修改</button>
-				      <button id="delete" type="button" class="btn btn-default" ><span class="glyphicon glyphicon-trash"></span>删除</button>
+				      <button id="modify" type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>审核</button>
 				    </form>
 				 </div>
 				</nav>
@@ -66,7 +64,8 @@
 						</form>
 			      </div>
 			      <div class="modal-footer">
-			      	<button id="add_modify_modal" type="button" class="btn btn-primary">保存</button>
+			      	<button id="add_modify_modal" type="button" class="btn btn-primary">审核通过</button>
+			      	<button id="add_modify_modal_no" type="button" class="btn btn-warning">审核不通过</button>
 			        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 			      </div>
 			    </div>

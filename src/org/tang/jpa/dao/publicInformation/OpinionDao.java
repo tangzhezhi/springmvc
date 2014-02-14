@@ -20,4 +20,8 @@ public interface OpinionDao  {
      
     public Page<?> selectOpinionAll(Page<?> page);  
     
+    public OpinionDTO selectOpinion(String opinionid);
+
+	public int updateApproveOpinion(OpinionDTO rdto);
+    
 }

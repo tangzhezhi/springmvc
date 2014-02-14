@@ -44,10 +44,35 @@ public class OpinionController {
         params.put("opinionTitle", opinionTitle);
         page.setParams(params);
         Page p = opinionService.findOpinion(page);
-        model.put("rows", p.getResults());
-        model.put("total", p.getTotalRecord());
+        model.put("rows",p==null?0:p.getResults());
+        model.put("total", p==null?0:p.getTotalRecord());
         return model;  
     }  
+	
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/queryWaiteApproveOpinion", method = RequestMethod.POST)  
+    @ResponseBody  
+    public Map<String, Object> queryWaiteApproveOpinion(@ModelAttribute("currentUser") UserDTO dto
+    		,@RequestParam(value="opinionTitle",required=false) String opinionTitle
+    		,@RequestParam(value="page",required=false) int pageNo
+    		,@RequestParam(value="rows",required=false) int pageSize) {  
+        Map<String, Object> model = new HashMap<String, Object>();
+        
+        Page page = new Page();
+        page.setPageNo(pageNo);
+        page.setPageSize(pageSize);
+        Map params = new HashMap();
+        params.put("opinionTitle", opinionTitle);
+        params.put("approveState", "0");
+        page.setParams(params);
+        Page p = opinionService.findOpinion(page);
+        model.put("rows",p==null?0:p.getResults());
+        model.put("total", p==null?0:p.getTotalRecord());
+        return model;  
+    }  
+	
+	
 	
 	
 	@RequestMapping(value = "/addOpinion", method = RequestMethod.POST)  
@@ -67,7 +92,7 @@ public class OpinionController {
 	        	rdto.setOpinionTitle(OpinionTitle);
 	        	rdto.setUserid(dto.getUserId());
 	        	rdto.setCreatetime(DateTool.getDateStringYMDHMS(new Date()));
-	        	rdto.setApproveState(ApproveState);
+	        	rdto.setApproveState("0");
 	        	rdto.setOpinionContent(OpinionContent);
 	        	rdto.setApproveUserid(ApproveUserid);
 	        	rdto.setApproveTime(ApproveTime);
@@ -91,10 +116,11 @@ public class OpinionController {
 				@RequestParam(value="userid",required=false) String Userid,
 				@RequestParam(value="createtime",required=false) String Createtime,
 				@RequestParam(value="approveState",required=false) String ApproveState,
-				@RequestParam(value="OpinionContent",required=false) String OpinionContent,
+				@RequestParam(value="opinionContent",required=false) String OpinionContent,
 				@RequestParam(value="approveUserid",required=false) String ApproveUserid,
 				@RequestParam(value="approveTime",required=false) String ApproveTime
     		) {  
+		 	int flag  = 0 ;
 	        OpinionDTO rdto = new OpinionDTO();
         		rdto.setOpinionid(Opinionid);
         		rdto.setOpinionTitle(OpinionTitle);
@@ -103,13 +129,20 @@ public class OpinionController {
         		rdto.setApproveUserid(ApproveUserid);
         		rdto.setApproveTime(ApproveTime);
 	       
-	        int flag =  opinionService.updateOpinion(rdto);
-	        if(flag == 1){
-	        	return MyConstants.MODIFYSUCCESS.getName();
-	        }
-	        else{
-	        	return MyConstants.MODIFYFAIL.getName();
-	        }
+        	OpinionDTO opiniondto = opinionService.selectOpinion(Opinionid);
+        	if(opiniondto!=null && ("0").equals(opiniondto.getApproveState())){
+        		flag =  opinionService.updateOpinion(rdto);
+    	        if(flag == 1){
+    	        	return MyConstants.MODIFYSUCCESS.getName();
+    	        }
+    	        else{
+    	        	return MyConstants.MODIFYFAIL.getName();
+    	        }
+        	}
+        	else{
+        		return MyConstants.HADAPPROVAL.getName();
+        	}
+
     }
 	
 	
@@ -119,13 +152,47 @@ public class OpinionController {
     public String deleteOpinion(@ModelAttribute("currentUser") UserDTO dto
     		,@RequestParam(value="opinionid",required=true) String opinionId) {  
 			OpinionDTO rdto = new OpinionDTO();
-	        int flag =  opinionService.deleteOpinion(opinionId);
-	        if(flag == 1){
-	        	return MyConstants.DELSUCCESS.getName();
-	        }
-	        else{
-	        	return MyConstants.DELFAIL.getName();
-	        }
+			int flag = 0;
+        	OpinionDTO opiniondto = opinionService.selectOpinion(opinionId);
+        	if(opiniondto!=null && ("0").equals(opiniondto.getApproveState())){
+        		flag =  opinionService.deleteOpinion(opinionId);
+    	        if(flag == 1){
+    	        	return MyConstants.DELSUCCESS.getName();
+    	        }
+    	        else{
+    	        	return MyConstants.DELFAIL.getName();
+    	        }
+        	}
+        	else{
+        		return MyConstants.HADAPPROVAL.getName();
+        	}
     }
+	
+	
+	
+	@RequestMapping(value = "/approveOpinion", method = RequestMethod.POST)  
+    @ResponseBody  
+    public String approveOpinion(@ModelAttribute("currentUser") UserDTO dto,
+				@RequestParam(value="opinionid",required=false) String Opinionid,
+				@RequestParam(value="approveState",required=false) String ApproveState
+    		) {  
+		 		int flag  = 0 ;
+		 		OpinionDTO rdto = new OpinionDTO();
+        		rdto.setOpinionid(Opinionid);
+        		rdto.setApproveState(ApproveState);
+        		rdto.setApproveTime(DateTool.getDateStringYMDHMS(new Date()));
+        		rdto.setApproveUserid(dto.getUserId());
+        		
+        		flag =  opinionService.updateApproveOpinion(rdto);
+    	        if(flag == 1){
+    	        	return MyConstants.SUCCESS.getName();
+    	        }
+    	        else{
+    	        	return MyConstants.FAIL.getName();
+    	        }
+
+    }
+	
+	
 	
 }

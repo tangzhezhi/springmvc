@@ -25,7 +25,25 @@ $(function() {
 	    	 	  {field:'opinionTitle',title:'提案标题',width:$(this).width()*0.15},
 	    	 	  {field:'userid',title:'提案人ID',width:$(this).width()*0.15,hidden:true},
 	    	 	  {field:'createtime',title:'创建时间',width:$(this).width()*0.15},
-	    	 	  {field:'approveState',title:'审核状态',width:$(this).width()*0.15},
+	    	 	  {
+	    	 		  field:'approveState',
+	    	 		  title:'审核状态',
+	    	 		  width:$(this).width()*0.15,
+	    	 		  formatter:function(val,row){
+			                if (val == '0'){
+			                    return '未审核';
+			                } 
+			                else if (val == '1'){
+			                    return '已审核';
+			                }
+			              	else if (val == '2'){
+			                    return '审核为通过';
+			                }
+			                else {
+			                    return '未知状态';
+			                }
+		            	},
+	    	 	  },
 	    	 	  {field:'opinionContent',title:'提案内容',width:$(this).width()*0.15,hidden:true},
 	    	 	  {field:'approveUserid',title:'核查人ID',width:$(this).width()*0.15,hidden:true},
 	    	 	  {field:'approveTime',title:'核查时间',width:$(this).width()*0.15}
@@ -34,14 +52,13 @@ $(function() {
                   alert('','加载数据失败！');
          },
          onLoadSuccess:function(){
-        	 $('#dg').datagrid('opinions').pagination=true;
          }
 	});
 	
 	$("#query").click(
 		function () {
 			$('#dg').datagrid('reload',{
-				opinionname: $('#opinionname').val()
+				opinionTitle: $('#opinionTitle').val()
 			}).datagrid("clearSelections");
 		});
 	
@@ -73,6 +90,7 @@ $(function() {
 				$('#myModal').modal({
 	  				keyboard: false
 				});
+				$('#opinionContentModal').ckeditor();
 			}
 	});
 	

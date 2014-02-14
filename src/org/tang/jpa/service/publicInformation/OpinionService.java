@@ -24,10 +24,12 @@ public class OpinionService {
 	 */
 	public  Page findOpinion(Page page){
 		Page  pageList = (Page) opinionDao.selectOpinionAll(page);
-		pageList.setPageNo(page.getPageNo());
-		pageList.setPageSize(page.getPageSize());
-		pageList.setTotalPage(page.getTotalPage());
-		pageList.setTotalRecord(page.getTotalRecord());
+		if(pageList!=null && pageList.getResults().size() > 0 ){
+			pageList.setPageNo(page.getPageNo());
+			pageList.setPageSize(page.getPageSize());
+			pageList.setTotalPage(page.getTotalPage());
+			pageList.setTotalRecord(page.getTotalRecord());
+		}
 		return pageList;
 	}
 	
@@ -54,6 +56,19 @@ public class OpinionService {
 		return flag;
 	}
 	
+	public int updateApproveOpinion(OpinionDTO rdto){
+		int flag = 0;
+		if(rdto!=null){
+			flag = opinionDao.updateApproveOpinion(rdto);
+		}
+		else{
+			flag = 0;
+		}
+		return flag;
+	}
+	
+	
+	
 	
 	
 	public int deleteOpinion(String opinionId){
@@ -66,6 +81,11 @@ public class OpinionService {
 		}
 		return flag;
 	}
+	
+	public OpinionDTO selectOpinion(String opinionId){
+		return opinionDao.selectOpinion(opinionId);
+	}
+	
 	
 	
 	

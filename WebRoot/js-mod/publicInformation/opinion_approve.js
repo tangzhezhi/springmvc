@@ -1,7 +1,7 @@
 
 $(function() {
 	$('#dg').datagrid({
-	    url:"../../opinion/queryOpinion?random"+parseInt(Math.random()*100000),
+	    url:"../../opinion/queryWaiteApproveOpinion?random"+parseInt(Math.random()*100000),
 	    method:"POST",
 	    showFooter: true,
 	    loadMsg:"请稍等.....",
@@ -21,27 +21,41 @@ $(function() {
         afterPageText: '页    共 {pages} 页',  
         displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录',  
 	    columns:[[
-	    	 	  {field:'opinionid',title:'提案ID',width:$(this).width()*0.15},
-	    	 	  {field:'optionTitle',title:'提案标题',width:$(this).width()*0.15},
-	    	 	  {field:'userid',title:'提案人ID',width:$(this).width()*0.15},
+	    	 	  {field:'opinionid',title:'提案ID',width:$(this).width()*0.15,hidden:true},
+	    	 	  {field:'opinionTitle',title:'提案标题',width:$(this).width()*0.15},
+	    	 	  {field:'userid',title:'提案人ID',width:$(this).width()*0.15,hidden:true},
 	    	 	  {field:'createtime',title:'创建时间',width:$(this).width()*0.15},
-	    	 	  {field:'approveState',title:'审核状态',width:$(this).width()*0.15},
-	    	 	  {field:'optionContent',title:'提案内容',width:$(this).width()*0.15},
-	    	 	  {field:'approveUserid',title:'核查人ID',width:$(this).width()*0.15},
+	    	 	  {
+	    	 		  field:'approveState',
+	    	 		  title:'审核状态',
+	    	 		  width:$(this).width()*0.15,
+	    	 		  formatter:function(val,row){
+			                if (val == '0'){
+			                    return '未审核';
+			                } 
+			                else if (val == '1'){
+			                    return '已审核';
+			                }
+			                else {
+			                    return '未知状态';
+			                }
+		            	},
+	    	 	  },
+	    	 	  {field:'opinionContent',title:'提案内容',width:$(this).width()*0.15,hidden:true},
+	    	 	  {field:'approveUserid',title:'核查人ID',width:$(this).width()*0.15,hidden:true},
 	    	 	  {field:'approveTime',title:'核查时间',width:$(this).width()*0.15}
 	    ]],
 	     onLoadError:function(){
                   alert('','加载数据失败！');
          },
          onLoadSuccess:function(){
-        	 $('#dg').datagrid('options').pagination=true;
          }
 	});
 	
 	$("#query").click(
 		function () {
 			$('#dg').datagrid('reload',{
-				opinionname: $('#opinionname').val()
+				opinionTitle: $('#opinionTitle').val()
 			}).datagrid("clearSelections");
 		});
 	
@@ -55,7 +69,7 @@ $(function() {
 			
 			$("#dg").datagrid("clearSelections");
 			$('#modal_form')[0].reset();
-			
+			$('#opinionContentModal').ckeditor();
 	});
 	
 	
@@ -68,16 +82,12 @@ $(function() {
 			}
 			else{
 		    	 	  $("#opinionidModal").val(row.opinionid);
-		    	 	  $("#optionTitleModal").val(row.optionTitle);
-		    	 	  $("#useridModal").val(row.userid);
-		    	 	  $("#createtimeModal").val(row.createtime);
-		    	 	  $("#approveStateModal").val(row.approveState);
-		    	 	  $("#optionContentModal").val(row.optionContent);
-		    	 	  $("#approveUseridModal").val(row.approveUserid);
-		    	 	  $("#approveTimeModal").val(row.approveTime);
+		    	 	  $("#opinionTitleModal").val(row.opinionTitle);
+		    	 	  $("#opinionContentModal").val(row.opinionContent);
 				$('#myModal').modal({
 	  				keyboard: false
 				});
+				$('#opinionContentModal').ckeditor();
 			}
 	});
 	
@@ -87,60 +97,13 @@ $(function() {
 	$("#add_modify_modal").click(
 		function (){
 			var row = $("#dg").datagrid("getSelected");
-			
-			//新增
-			if(row == null ||  row == "undefined"){
-				var opinionid = $("#opinionidModal").val();
-				var optionTitle = $("#optionTitleModal").val();
-				var userid = $("#useridModal").val();
-				var createtime = $("#createtimeModal").val();
-				var approveState = $("#approveStateModal").val();
-				var optionContent = $("#optionContentModal").val();
-				var approveUserid = $("#approveUseridModal").val();
-				var approveTime = $("#approveTimeModal").val();
-				
-				$.ajax({
-				   type: "POST",
-				   url: "../../opinion/addOpinion?random"+parseInt(Math.random()*100000),
-				   data: {
-							opinionid:opinionid,
-							optionTitle:optionTitle,
-							userid:userid,
-							createtime:createtime,
-							approveState:approveState,
-							optionContent:optionContent,
-							approveUserid:approveUserid,
-							approveTime:approveTime
-				   },
-				   success: function(msg){
-				     $.messager.alert("操作提示", $.parseJSON(msg),"info");
-				     $('#dg').datagrid('reload');
-				     $("#dg").datagrid("clearSelections");
-				   }
-				});
-			}
-			else{
 				var opinionid = row.opinionid;
-				var opinionid = $("#opinionidModal").val();
-				var optionTitle = $("#optionTitleModal").val();
-				var userid = $("#useridModal").val();
-				var createtime = $("#createtimeModal").val();
-				var approveState = $("#approveStateModal").val();
-				var optionContent = $("#optionContentModal").val();
-				var approveUserid = $("#approveUseridModal").val();
-				var approveTime = $("#approveTimeModal").val();
 				$.ajax({
 				   type: "POST",
-				   url: "../../opinion/modifyOpinion?random"+parseInt(Math.random()*100000),
+				   url: "../../opinion/approveOpinion?random"+parseInt(Math.random()*100000),
 				   data: {
 							opinionid:opinionid,
-							optionTitle:optionTitle,
-							userid:userid,
-							createtime:createtime,
-							approveState:approveState,
-							optionContent:optionContent,
-							approveUserid:approveUserid,
-							approveTime:approveTime
+							approveState:"1",
 				   },
 				   success: function(msg){
 				     $.messager.alert("操作提示", $.parseJSON(msg),"info");
@@ -148,42 +111,30 @@ $(function() {
 				     $("#dg").datagrid("clearSelections");
 				   }
 				});
-			}
 		}
 	);
 	
 	
-	
-	
-	$("#delete").click(
-		function () {
+	$("#add_modify_modal_no").click(
+		function (){
 			var row = $("#dg").datagrid("getSelected");
-			if(row == null || row == "undefined"){
-				$.messager.alert("操作提示", "请选择一行记录","info");
-			}
-			else{
-				 $.messager.confirm("操作提示", "您确定要执行操作吗？", function (data) {
-		         	if (data) {
-		         		$.ajax({
-						   type: "POST",
-						   url: "../../opinion/deleteOpinion?random"+parseInt(Math.random()*100000),
-						   data: {
-								opinionid:row.opinionid
-						   },
-						   success: function(msg){
-						     $.messager.alert("操作提示", $.parseJSON(msg),"info");
-						     $('#dg').datagrid('reload');
-						     $("#dg").datagrid("clearSelections");
-						   }
-						});
-		            }
-		            else {
-		                return false;
-		            }
-		         });
-			}
-			
-	});
+				var opinionid = row.opinionid;
+				$.ajax({
+				   type: "POST",
+				   url: "../../opinion/approveOpinion?random"+parseInt(Math.random()*100000),
+				   data: {
+							opinionid:opinionid,
+							approveState:"2",
+				   },
+				   success: function(msg){
+				     $.messager.alert("操作提示", $.parseJSON(msg),"info");
+				     $('#dg').datagrid('reload');
+				     $("#dg").datagrid("clearSelections");
+				   }
+				});
+		}
+	);
+	
 	
 	
 });
