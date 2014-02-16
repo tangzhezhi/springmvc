@@ -9,37 +9,39 @@ $(function() {
 		} 
 	
 		$("#index_nav").attr("href","./../../welcome.html");
-		$("#zxgk_nav > a").attr("href","./index_part.html?articleType="+escape('政协概况'));
-		$("#zxgz_nav > a").attr("href","./index_part.html?articleType="+escape('政协工作'));
-		$("#zxhy_nav > a").attr("href","./index_part.html?articleType="+escape('政协会议'));
-		$("#jyxc_nav > a").attr("href","./index_part.html?articleType="+escape('建言献策'));
-		$("#zxta_nav > a").attr("href","./index_part.html?articleType="+escape('政协提案'));
-		$("#gzzd_nav > a").attr("href","./index_part.html?articleType="+escape('规章制度'));
-		$("#xxyd_nav > a").attr("href","./index_part.html?articleType="+escape('学习园地'));
-		$("#wszl_nav > a").attr("href","./index_part.html?articleType="+escape('文史资料'));
-		$("#mtbd_nav > a").attr("href","./index_part.html?articleType="+escape('媒体报道'));
-		$("#zxwy_nav > a").attr("href","./index_part.html?articleType="+escape('政协委员'));
+	$("#axx_nav > a").attr("href","./index_part.html?examType="+escape('爱学习'));
+	$("#kgw_nav > a").attr("href","./index_part.html?examType="+escape('考公务'));
+	$("#kjz_nav > a").attr("href","./index_part.html?examType="+escape('考驾照'));
+	$("#qwt_nav > a").attr("href","./index_part.html?examType="+escape('趣味题'));
+	$("#wyy_nav > a").attr("href","./index_part.html?examType="+escape('玩英语'));
 		
 		
 		$.ajax({
 		   type: "POST",
-		   url: "../../public/previewArticle?random"+parseInt(Math.random()*100000),
+		   url: "../../public/previewExampaper?random"+parseInt(Math.random()*100000),
 		   data: {
-				articleId:getUrlParam('articleId')
+				examid:getUrlParam('examid')
 		   },
 		   success: function(data){
-			   var dataRow = $.parseJSON(data).data
+			    var dataRow = $.parseJSON(data).data
 			   var content = "";
 			   var option = "";
-			   var date="";
+			   var temp_tools = "<p class='head_explain'>【<a href='#' onclick='window.print();'>打印本页</a>】【<a href='#' onclick='window.close();'>关闭窗口</a>】</p>";
 			   for(var i = 0 ; i < dataRow.length;i++){
-				    var temp_date = dataRow[i].createTime;
-				    date = "<p class='head_explain text-left'>发布日期:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+temp_date.substring(0,4)+"-"+temp_date.substring(4,6)+"-"+temp_date.substring(6,8)+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;作者:</p>";
-				    var temp_tools = "<p class='head_explain'>【<a href='#' onclick='window.print();'>打印本页</a>】【<a href='#' onclick='window.close();'>关闭窗口</a>】</p>";
-				    content = "<div><p class='text-center h3 head_title' >"+dataRow[i].articleTitle+"</p>"+date+temp_tools+"</div>";
-				  	content =  content +"<p class='text-center h2'>"+dataRow[i].articleTitle+"</p><div class='content'>"+dataRow[i].articleContent+"</div></br> ";
+				   if("1"==dataRow[i].optionType){
+					    option = "<input type='radio' id='"+dataRow[i].optionid+"' name='"+dataRow[i].optionid+"' value='A'>A</input>" +
+					    "<span/>&nbsp;&nbsp;<span/><input type='radio' id='"+dataRow[i].optionid+"' name='"+dataRow[i].optionid+"' value='B'>B</input>" +
+					    "<span/>&nbsp;&nbsp;<span/><input type='radio' id='"+dataRow[i].optionid+"' name='"+dataRow[i].optionid+"' value='C'>C</input>" +
+					    "<span/>&nbsp;&nbsp;<span/><input type='radio' id='"+dataRow[i].optionid+"' name='"+dataRow[i].optionid+"' value='D'>D</input>";
+				   }
+				   else if("2"==dataRow[i].optionType){
+					     option = "<textarea id='"+dataRow[i].optionid+"' cols='80'  name='"+dataRow[i].optionid+"' rows='5'></textarea>";
+				   }
+				  	content =  content +"<span>此题"+dataRow[i].optionScore+"分：</span>"+dataRow[i].optionContents+"<p><div>"+option+"</div></p></br> ";
 			   }
-			   $("#content").empty().append(content);
+			   $("#content").empty().append(temp_tools+content);
+			   $("textarea").ckeditor();
+
 		   }
 		});
 	

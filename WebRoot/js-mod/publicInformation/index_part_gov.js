@@ -11,22 +11,27 @@ $(function() {
 			if (r!=null) return unescape(r[2]); return null; //返回参数值
 		} 
 		
-		var examType = getUrlParam('examType');
+		var articleType = getUrlParam('articleType');
 		
-	$("#index_nav").attr("href","./../../welcome.html");
-	$("#axx_nav > a").attr("href","./index_part.html?examType="+escape('爱学习'));
-	$("#kgw_nav > a").attr("href","./index_part.html?examType="+escape('考公务'));
-	$("#kjz_nav > a").attr("href","./index_part.html?examType="+escape('考驾照'));
-	$("#qwt_nav > a").attr("href","./index_part.html?examType="+escape('趣味题'));
-	$("#wyy_nav > a").attr("href","./index_part.html?examType="+escape('玩英语'));
+		$("#index_nav").attr("href","./../../welcome.html");
+		$("#zxgk_nav > a").attr("href","./index_part.html?articleType="+escape('政协概况'));
+		$("#zxgz_nav > a").attr("href","./index_part.html?articleType="+escape('政协工作'));
+		$("#zxhy_nav > a").attr("href","./index_part.html?articleType="+escape('政协会议'));
+		$("#jyxc_nav > a").attr("href","./index_part.html?articleType="+escape('建言献策'));
+		$("#zxta_nav > a").attr("href","./index_part.html?articleType="+escape('政协提案'));
+		$("#gzzd_nav > a").attr("href","./index_part.html?articleType="+escape('规章制度'));
+		$("#xxyd_nav > a").attr("href","./index_part.html?articleType="+escape('学习园地'));
+		$("#wszl_nav > a").attr("href","./index_part.html?articleType="+escape('文史资料'));
+		$("#mtbd_nav > a").attr("href","./index_part.html?articleType="+escape('媒体报道'));
+		$("#zxwy_nav > a").attr("href","./index_part.html?articleType="+escape('政协委员'));
 		
 		
 		$.ajax({
 		   type: "POST",
-		   url: "../../public/selectExamAll?random"+parseInt(Math.random()*100000),
+		   url: "../../public/selectArticleAll?random"+parseInt(Math.random()*100000),
 		   data: {
 				pageNo:1,
-				examType:examType
+				articleType:articleType
 		   },
 		   success: function(data){
 			   var dataRow = $.parseJSON(data).rows
@@ -37,10 +42,10 @@ $(function() {
 			   for(var i = 0 ; i < dataRow.length;i++){
 				   var temp_date = dataRow[i].createTime;
 				   date = "<span class='text-right text-muted'>["+temp_date.substring(0,4)+"-"+temp_date.substring(4,6)+"-"+temp_date.substring(6,8)+"]</span>";
-				   option = option + "<tr><td><img src='../../resources/img/arrow02.gif' width='10' height='10'>&nbsp;&nbsp;&nbsp;&nbsp;<a id='"+dataRow[i].examid+"' href='./web_content.html?examid="+dataRow[i].examid+"' title='"+dataRow[i].examName+"' target='_blank' >"+dataRow[i].examName+"</a></td><td>"+date+"</td></tr>";
+				   option = option + "<tr><td><img src='../../resources/img/arrow02.gif' width='10' height='10'>&nbsp;&nbsp;&nbsp;&nbsp;<a id='"+dataRow[i].articleId+"' href='./web_content.html?articleId="+dataRow[i].articleId+"' title='"+dataRow[i].articleTitle+"' target='_blank' >"+dataRow[i].articleTitle+"</a></td><td>"+date+"</td></tr>";
 			   }
 			   content = content +option +"</table>";
-			   $("#title_content_top_a").append(examType);
+			   $("#title_content_top_a").append(articleType);
 			   $("#dg").empty().append(content);
 			   $("#totalnum").append("<a href='#'>总共:"+total+"条记录&nbsp;&nbsp;&nbsp;&nbsp;共"+parseInt(total/10+1)+"页</a>");
 			   
@@ -48,14 +53,14 @@ $(function() {
 			   if(total>0){
 				   for(var i = 1 ; i < (total/10)+1; i++){
 					   if(i==1){
-						   page_content = page_content + "<li id=page_li_"+i+" class='active page_li'><a href='#'  onclick=pageClick("+i+",'"+examType+"')>"+i+"<span class='sr-only'>(current)</span></a></li>";
+						   page_content = page_content + "<li id=page_li_"+i+" class='active page_li'><a href='#'  onclick=pageClick("+i+",'"+articleType+"')>"+i+"<span class='sr-only'>(current)</span></a></li>";
 					   }
 					   else if(i==10){
 						   $("#next").removeClass("disabled");
 						   break;
 					   }
 					   else{
-						   page_content = page_content + "<li id=page_li_"+i+"><a href='#' class='page_li' onclick=pageClick("+i+",'"+examType+"')>"+i+"</a></li>";
+						   page_content = page_content + "<li id=page_li_"+i+"><a href='#' class='page_li' onclick=pageClick("+i+",'"+articleType+"')>"+i+"</a></li>";
 					   }
 				   }
 				   $("#currentMaxPage").val(10);
@@ -73,7 +78,7 @@ $(function() {
 			if(total>(beforeClick_currentMaxPage*10)){
 				$(".page_li").detach(); 
 				  for(var i = 0 ; i <= parseInt((total-(beforeClick_currentMaxPage*10))/10)+1; i++){
-						 page_content = page_content + "<li id=page_li_"+parseInt(beforeClick_currentMaxPage/1+i/1)+"><a href='#' class='page_li' onclick=pageClick("+parseInt(beforeClick_currentMaxPage/1+i/1)+",'"+examType+"')>"+parseInt(beforeClick_currentMaxPage/1+i/1)+"</a></li>";
+						 page_content = page_content + "<li id=page_li_"+parseInt(beforeClick_currentMaxPage/1+i/1)+"><a href='#' class='page_li' onclick=pageClick("+parseInt(beforeClick_currentMaxPage/1+i/1)+",'"+articleType+"')>"+parseInt(beforeClick_currentMaxPage/1+i/1)+"</a></li>";
 				   }
 				
 			}
@@ -89,7 +94,7 @@ $(function() {
 			if(total>(beforeClick_currentMaxPage*10)){
 				$(".page_li").detach(); 
 				  for(var i = temp_currentMaxPage-10 ; i < temp_currentMaxPage ; i++){
-						 page_content = page_content + "<li id=page_li_"+i+"><a href='#' class='page_li' onclick=pageClick("+parseInt(i)+",'"+examType+"')>"+parseInt(i)+"</a></li>";
+						 page_content = page_content + "<li id=page_li_"+i+"><a href='#' class='page_li' onclick=pageClick("+parseInt(i)+",'"+articleType+"')>"+parseInt(i)+"</a></li>";
 				   }
 				
 			}
@@ -104,13 +109,13 @@ $(function() {
 	
 });
 
-function pageClick(pageNo,examType){
+function pageClick(pageNo,articleType){
 				$.ajax({
 				   type: "POST",
-				   url: "../../public/selectExamAll?random"+parseInt(Math.random()*100000),
+				   url: "../../public/selectArticleAll?random"+parseInt(Math.random()*100000),
 				   data: {
 						pageNo:pageNo,
-						examType:examType
+						articleType:articleType
 				   },
 				   success: function(data){
 					   var dataRow = $.parseJSON(data).rows
@@ -121,7 +126,7 @@ function pageClick(pageNo,examType){
 					   for(var i = 0 ; i < dataRow.length;i++){
 						   var temp_date = dataRow[i].createTime;
 						   date = "<span class='text-right text-muted'>["+temp_date.substring(0,4)+"-"+temp_date.substring(4,6)+"-"+temp_date.substring(6,8)+"]</span>";
-				   		   option = option + "<tr><td><img src='../../resources/img/arrow02.gif' width='10' height='10'>&nbsp;&nbsp;&nbsp;&nbsp;<a id='"+dataRow[i].examid+"' href='./web_content.html?examid="+dataRow[i].examid+"' title='"+dataRow[i].examName+"' target='_blank' >"+dataRow[i].examName+"</a></td><td>"+date+"</td></tr>";
+						   option = option + "<tr><td><img src='../../resources/img/arrow02.gif' width='10' height='10'>&nbsp;&nbsp;&nbsp;&nbsp;<a id='"+dataRow[i].articleId+"' href='./web_content.html?articleId="+dataRow[i].articleId+"' title='"+dataRow[i].articleTitle+"' target='_blank' >"+dataRow[i].articleTitle+"</a></td><td>"+date+"</td></tr>";
 					   }
 					   content = content +option +"</table>";
 					   $("#dg").empty().append(content);

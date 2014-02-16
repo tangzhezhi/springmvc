@@ -21,6 +21,7 @@
     	<result column="examOperater"  property="examOperater" />
     	<result column="examTime"  property="examTime" />
     	<result column="examSubject"  property="examSubject" />
+    	<result column="examType"  property="examType" />
     	<result column="createTime"  property="createTime" />
     	<result column="totalScore"  property="totalScore" />
     	<result column="totalItems"  property="totalItems" />
@@ -66,7 +67,9 @@
     		<result column="examName"  property="examName" />
     		<result column="examOperater"  property="examOperater" />
     		<result column="examTime"  property="examTime" />
+    		<result column="createTime"  property="createTime" />
     		<result column="examSubject"  property="examSubject" />
+    		<result column="examType"  property="examType" />
     	</collection>
 	</resultMap>
 
@@ -78,7 +81,9 @@
     			t.examName,
     			t.examOperater,
     			t.examTime,
-    			t.examSubject
+    			t.examSubject,
+    			t.createTime,
+    			t.examType
 		 from T_EXAMPAPER t
 		<where>
 			 1=1 
@@ -100,6 +105,12 @@
     		<if test="params.examSubject != null and params.examSubject != '' " >
 			 	 and  t.examSubject   =  #{params.examSubject}
     		</if>
+    		<if test="params.createTime != null and params.createTime != '' " >
+			 	 and  t.createTime   =  #{params.createTime}
+    		</if>
+    		<if test="params.examType != null and params.examType != '' " >
+			 	 and  t.examType   =  #{params.examType}
+    		</if>
 		</where>
 	</select>
 	
@@ -115,7 +126,8 @@
     			examOperater,
     			examTime,
     			examSubject,
-    			orgid
+    			orgid,
+    			createTime
 		)
 		values(
     			#{examid, jdbcType=VARCHAR},
@@ -123,7 +135,9 @@
     			#{examOperater, jdbcType=VARCHAR},
     			#{examTime, jdbcType=VARCHAR},
     			#{examSubject, jdbcType=VARCHAR},
-    			#{orgid, jdbcType=VARCHAR}
+    			#{orgid, jdbcType=VARCHAR},
+    			#{createTime, jdbcType=VARCHAR},
+    			
 		)
 	</insert>
 
@@ -278,11 +292,18 @@
 	</select>
 	
 	
-	<select id="showExamInformationTopFive" resultMap="ExampaperDTO">
-		<![CDATA[
+	<select id="showExamInformationTopFive" parameterType="String" resultMap="ExampaperDTO">
+		
 		    select examid,examname,createtime from (
          		select t.examid,t.examname,t.createtime,dense_rank() over (order by t.createtime)  dr  from t_exampaper t
+         		<where>
+			 		1=1 
+		    		<if test="_parameter != null and _parameter != '' " >
+					 	and t.examtype   =  #{examType}
+		    		</if>
+				</where>
    			)x
+   			<![CDATA[
     		where x.dr < 6
     	]]>
 	</select>

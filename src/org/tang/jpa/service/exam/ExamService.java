@@ -77,21 +77,21 @@ public class ExamService {
 	}
 
 
-	public List showExamInformationTopFive() {
-		return exampaperDao.showExamInformationTopFive();
+	public List showExamInformationTopFive(String examType) {
+		return exampaperDao.showExamInformationTopFive(examType);
 	}
 	
 	
-//	public Page showExamInformationAllPage(Page page) {
-//		Page  pageList = (Page) exampaperDao.showExamInformationAllPage(page);
-//		if(pageList!=null && pageList.getResults().size() > 0 ){
-//			pageList.setPageNo(page.getPageNo());
-//			pageList.setPageSize(page.getPageSize());
-//			pageList.setTotalPage(page.getTotalPage());
-//			pageList.setTotalRecord(page.getTotalRecord());
-//		}
-//		return pageList;
-//	}
+	public Page showExamInformationAllPage(Page page) {
+		Page  pageList = (Page) exampaperDao.selectExampaperAll(page);
+		if(pageList!=null && pageList.getResults().size() > 0 ){
+			pageList.setPageNo(page.getPageNo());
+			pageList.setPageSize(page.getPageSize());
+			pageList.setTotalPage(page.getTotalPage());
+			pageList.setTotalRecord(page.getTotalRecord());
+		}
+		return pageList;
+	}
 	
 	
 	

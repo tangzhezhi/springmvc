@@ -36,9 +36,9 @@ public class PublicIndexController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/showExamInformationTopFive", method = RequestMethod.POST)  
     @ResponseBody  
-    public Map<String, Object> showExamInformationTopFive() {  
+    public Map<String, Object> showExamInformationTopFive(@RequestParam(value="examType",required=true) String examType) {  
         Map<String, Object> model = new HashMap<String, Object>();
-        List examInfo = examService.showExamInformationTopFive();
+        List examInfo = examService.showExamInformationTopFive(examType);
         model.put("data",examInfo);
         return model;  
     }  
@@ -117,6 +117,27 @@ public class PublicIndexController {
 	        model.put("total", p==null?0:p.getTotalRecord());
 	        return model; 
     }
+	
+	@RequestMapping(value = "/selectExamAll", method = RequestMethod.POST)  
+    @ResponseBody  
+    public  Map<String, Object>  selectExamAll(
+    		 @RequestParam(value="pageNo",required=false) int pageNo
+    		,@RequestParam(value="examType",required=false) String examType
+    		) {  
+        	Map<String, Object> model = new HashMap<String, Object>();
+	        Page page = new Page();
+	        page.setPageNo(pageNo);
+	        page.setPageSize(10);
+	        Map params = new HashMap();
+	        params.put("examType", examType);
+	        page.setParams(params);
+	        Page p = examService.showExamInformationAllPage(page);
+	        model.put("rows",p==null?0:p.getResults());
+	        model.put("total", p==null?0:p.getTotalRecord());
+	        return model; 
+    }
+	
+	
 	
 	
 	

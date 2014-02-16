@@ -17,6 +17,7 @@ public class ExampaperDTO {
     private java.lang.String examOperater;
     private java.lang.String examTime;
     private java.lang.String examSubject;
+    private String examType;
     private String createTime;
     private String totalScore;
     private String totalItems;
@@ -88,5 +89,14 @@ public class ExampaperDTO {
 	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
+
+	public String getExamType() {
+		return examType;
+	}
+
+	public void setExamType(String examType) {
+		this.examType = examType;
+	}
+	
 
 }

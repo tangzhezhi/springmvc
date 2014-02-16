@@ -37,7 +37,7 @@ public interface ExampaperDao  {
 	public ExampaperDTO findExamInfoByExamId(String examid);  
 	
 	
-	public List showExamInformationTopFive();
+	public List showExamInformationTopFive(String examType);
 
 	public Page showExamInformationAllPage(Page page);  
     
