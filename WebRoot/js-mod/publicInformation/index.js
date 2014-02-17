@@ -78,7 +78,7 @@ $(function() {
 			   var param = escape("考公务");
 			  for(var i = 0 ; i < dataRow.length;i++){
 			option = option + "<p><img src='./resources/img/arrow.gif' width='5' height='8' border='0'/><a id='"+dataRow[i].examid+"' href='./html/publicInformation/web_content.html?examid="+dataRow[i].examid+"' title='"+dataRow[i].examName+"' target='_blank' >"+dataRow[i].examName+"</a>"+date+"</p>";			  }
-			  content = "<a href='./html/publicInformation/index_part.html?examType="+param+"' target='_blank' ><img src='./resources/img/middle_01.gif' width='383' height='25' border='0'></a>" + option;
+			  content = "<a href='./html/publicInformation/index_part.html?examType="+param+"' target='_blank' ><img src='./resources/img/public_01.gif' width='383' height='25' border='0'></a>" + option;
 			  $("#kgw").empty().append(content);
 	   }
 	});
@@ -99,7 +99,7 @@ $(function() {
 			    var param = escape("考驾照");
 			  for(var i = 0 ; i < dataRow.length;i++){
 			  option = option + "<p><img src='./resources/img/arrow.gif' width='5' height='8' border='0'/><a id='"+dataRow[i].examid+"' href='./html/publicInformation/web_content.html?examid="+dataRow[i].examid+"' title='"+dataRow[i].examName+"' target='_blank' >"+dataRow[i].examName+"</a>"+date+"</p>";			  }
-			  content = "<a href='./html/publicInformation/index_part.html?examType="+param+"' target='_blank' ><img src='./resources/img/middle_02.gif' width='383' height='25' border='0'></a>" + option;
+			  content = "<a href='./html/publicInformation/index_part.html?examType="+param+"' target='_blank' ><img src='./resources/img/public_01.gif' width='383' height='25' border='0'></a>" + option;
 			  $("#kjz").empty().append(content);
 	   }
 	});
@@ -123,7 +123,7 @@ $(function() {
 			  for(var i = 0 ; i < dataRow.length;i++){
 				option = option + "<p><img src='./resources/img/arrow.gif' width='5' height='8' border='0'/><a id='"+dataRow[i].examid+"' href='./html/publicInformation/web_content.html?examid="+dataRow[i].examid+"' title='"+dataRow[i].examName+"' target='_blank' >"+dataRow[i].examName+"</a>"+date+"</p>";			  	   subject_option = subject_option + "<p class='col-lg-12 col-md-12 text-overflow' ><img src='./resources/img/arrow.gif' width='5' height='8' border='0'/><a  id='"+dataRow[i].articleId+"' href='./html/publicInformation/web_content.html?articleId="+dataRow[i].articleId+"' title='"+dataRow[i].articleTitle+"' target='_blank' >"+dataRow[i].articleTitle+"</a><p>";
 			  }
-			 content = "<a href='./html/publicInformation/index_part.html?examType="+param+"' target='_blank' ><img src='./resources/img/middle_03.gif' width='383' height='25' border='0'></a>" + option;
+			 content = "<a href='./html/publicInformation/index_part.html?examType="+param+"' target='_blank' ><img src='./resources/img/public_01.gif' width='383' height='25' border='0'></a>" + option;
 			  $("#qwt").empty().append(content);
 	   }
 	});
@@ -144,7 +144,7 @@ $(function() {
 			     var param = escape("玩英语");
 			  for(var i = 0 ; i < dataRow.length;i++){
 option = option + "<p><img src='./resources/img/arrow.gif' width='5' height='8' border='0'/><a id='"+dataRow[i].examid+"' href='./html/publicInformation/web_content.html?examid="+dataRow[i].examid+"' title='"+dataRow[i].examName+"' target='_blank' >"+dataRow[i].examName+"</a>"+date+"</p>";			  }
-			  content = "<a href='./html/publicInformation/index_part.html?examType="+param+"' target='_blank' ><img src='./resources/img/middle_04.gif' width='383' height='25' border='0'></a>" + option;
+			  content = "<a href='./html/publicInformation/index_part.html?examType="+param+"' target='_blank' ><img src='./resources/img/public_01.gif' width='383' height='25' border='0'></a>" + option;
 			  $("#wyy").empty().append(content);
 	   }
 	});

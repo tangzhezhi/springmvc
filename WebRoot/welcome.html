@@ -26,6 +26,10 @@
      	a {
      		text-decoration : none;
      		color: #333333;
+     	}
+     	
+     	.navbar{
+     		font-size: 18px;
      	} 
      </style>
      
@@ -33,9 +37,9 @@
 
   <body>
 
-    <div class="container bgdiv">
+    <div class="container bgdiv center-block">
       <!-- Static navbar -->
-      <div class="navbar navbar-default" role="navigation">
+      <div class="navbar navbar-default " role="navigation">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
@@ -43,15 +47,17 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a id="index_nav" class="navbar-brand">首 页</a>
+          <a id="index_nav" class="navbar-brand"><p class="navbar-text">首 页</p></a></a>
         </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li id="axx_nav"><a>爱学习</a></li>
-            <li id="kgw_nav"><a>考公务</a></li>
-            <li id="kjz_nav"><a>考驾照</a></li>
-            <li id="qwt_nav"><a>趣味题</a></li>
-            <li id="wyy_nav"><a>玩英语</a></li>
+        <div class="navbar-collapse collapse ">
+          <ul class="nav navbar-nav ">
+            <li id="axx_nav"><a><p class="navbar-text">爱学习</p></a></li>
+            <li id="kgw_nav"><a><p class="navbar-text">考公务</p></a></li>
+            <li id="kjz_nav"><a><p class="navbar-text">考驾照</p></a></li>
+            <li id="wyy_nav"><a><p class="navbar-text">玩英语</p></a></li>
+          </ul>
+          <ul  class="nav navbar-nav navbar-right ">
+          	<li id="qwt_nav"><a><p class="navbar-text">趣味题</p></a></li>
           </ul>
         </div>
       </div>
