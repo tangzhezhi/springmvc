@@ -14,7 +14,7 @@ $(function() {
 	$("#kjz_nav > a").attr("href","./index_part.html?examType="+escape('考驾照'));
 	$("#qwt_nav > a").attr("href","./index_part.html?examType="+escape('趣味题'));
 	$("#wyy_nav > a").attr("href","./index_part.html?examType="+escape('玩英语'));
-		
+		$("#mytest_nav > a").attr("href","./../../login.html");
 		
 		$.ajax({
 		   type: "POST",

@@ -73,6 +73,7 @@ $(function() {
 	   },
 	   success: function(data){
 			  var dataRow = data.data;
+			    var date = "<p  height='29'>&nbsp;&nbsp;</p>";
 			  var content = "";
 			  var option = "";
 			   var param = escape("考公务");
@@ -95,6 +96,7 @@ $(function() {
 	   success: function(data){
 			  var dataRow = data.data;
 			  var content = "";
+			    var date = "<p  height='29'>&nbsp;&nbsp;</p>";
 			  var option = "";
 			    var param = escape("考驾照");
 			  for(var i = 0 ; i < dataRow.length;i++){
@@ -116,6 +118,7 @@ $(function() {
 	   success: function(data){
 			  var dataRow = data.data;
 			  var index_zxta="";
+			    var date = "<p  height='29'>&nbsp;&nbsp;</p>";
 			  var content = "";
 			  var option = "";
 			      var param = escape("趣味题");
@@ -140,6 +143,7 @@ $(function() {
 	   success: function(data){
 			  var dataRow = data.data;
 			  var content = "";
+			    var date = "<p  height='29'>&nbsp;&nbsp;</p>";
 			  var option = "";
 			     var param = escape("玩英语");
 			  for(var i = 0 ; i < dataRow.length;i++){

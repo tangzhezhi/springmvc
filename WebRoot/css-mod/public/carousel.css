@@ -21,6 +21,7 @@ body {
 	font-size: 12px;
 }
 
+/*
 .index_titler_bg {
 	width: 190px;
 	height: 25px;
@@ -34,7 +35,7 @@ body {
 .index_message{
 	border-color: gray;
 }
-
+*/
 
 
 /* CUSTOMIZE THE NAVBAR
@@ -65,7 +66,7 @@ body {
 
 /* Carousel base class */
 .carousel {
-  height: 220px;
+  height: 260px;
   margin-bottom: 20px;
 }
 /* Since positioning the image, we need to help out the caption */
@@ -75,7 +76,7 @@ body {
 
 /* Declare heights because of positioning of img element */
 .carousel .item {
-  height: 220px;
+  height: 260px;
   background-color: #777;
 }
 .carousel-inner > .item > img {
@@ -83,7 +84,7 @@ body {
   top: 0;
   left: 0;
   min-width: 100%;
-  height: 220px;
+  height: 260px;
 }
 
 

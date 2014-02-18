@@ -117,9 +117,6 @@
 	
 	<!-- 向数据库中插入资源记录-->
 	<insert id="insertExampaper" parameterType="ExampaperDTO">    
-		 <selectKey keyProperty="examid" resultType="String" order="BEFORE">  
-            select   sys_guid() as examid from dual 
-    	</selectKey>
 		insert into T_EXAMPAPER(
     			examid,
     			examName,
@@ -127,7 +124,8 @@
     			examTime,
     			examSubject,
     			orgid,
-    			createTime
+    			createTime,
+    			examType
 		)
 		values(
     			#{examid, jdbcType=VARCHAR},
@@ -137,7 +135,7 @@
     			#{examSubject, jdbcType=VARCHAR},
     			#{orgid, jdbcType=VARCHAR},
     			#{createTime, jdbcType=VARCHAR},
-    			
+    			#{examType, jdbcType=VARCHAR}
 		)
 	</insert>
 
@@ -153,6 +151,7 @@
     			<if test="examOperater != null and examOperater != '' ">examOperater=#{examOperater},</if>
     			<if test="examTime != null and examTime != '' ">examTime=#{examTime},</if>
     			<if test="examSubject != null and examSubject != '' ">examSubject=#{examSubject},</if>
+    			<if test="examType != null and examType != '' ">examType=#{examType},</if>
     	</set>
     	where examid=#{examid}
 	</update>

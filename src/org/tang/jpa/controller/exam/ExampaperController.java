@@ -1,8 +1,11 @@
 package org.tang.jpa.controller.exam;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,6 +19,7 @@ import org.tang.jpa.dto.exam.ExampaperDTO;
 import org.tang.jpa.dto.exam.OptionsDTO;
 import org.tang.jpa.dto.system.UserDTO;
 import org.tang.jpa.service.exam.ExampaperService;
+import org.tang.jpa.utils.DateTool;
 import org.tang.jpa.utils.MyConstants;
 import org.tang.jpa.utils.Page;
 
@@ -58,15 +62,18 @@ public class ExampaperController {
 				@RequestParam(value="examName",required=false) String ExamName,
 				@RequestParam(value="examOperater",required=false) String ExamOperater,
 				@RequestParam(value="examTime",required=false) String ExamTime,
-				@RequestParam(value="examSubject",required=false) String ExamSubject
+				@RequestParam(value="examSubject",required=false) String ExamSubject,
+				@RequestParam(value="examType",required=false) String examType
     		) {  
 	        ExampaperDTO rdto = new ExampaperDTO();
 	        	rdto.setOrgid(dto.getOrgId());
-	        	rdto.setExamid(Examid);
+	        	rdto.setExamid(UUID.randomUUID().toString());
 	        	rdto.setExamName(ExamName);
 	        	rdto.setExamOperater(ExamOperater);
 	        	rdto.setExamTime(ExamTime);
 	        	rdto.setExamSubject(ExamSubject);
+	        	rdto.setExamType(examType);
+	        	rdto.setCreateTime(DateTool.getDateStringYMDHMS(new Date()));
 	       
 	        int flag =  exampaperService.insertExampaper(rdto);
 	        if(flag == 1){
@@ -86,13 +93,15 @@ public class ExampaperController {
 				@RequestParam(value="examName",required=false) String ExamName,
 				@RequestParam(value="examOperater",required=false) String ExamOperater,
 				@RequestParam(value="examTime",required=false) String ExamTime,
-				@RequestParam(value="examSubject",required=false) String ExamSubject
+				@RequestParam(value="examSubject",required=false) String ExamSubject,
+				@RequestParam(value="examType",required=false) String examType
     		) {  
 	        ExampaperDTO rdto = new ExampaperDTO();
         		rdto.setExamid(Examid);
         		rdto.setExamName(ExamName);
         		rdto.setExamOperater(ExamOperater);
         		rdto.setExamTime(ExamTime);
+        		rdto.setExamType(examType);
         		rdto.setExamSubject(ExamSubject);
 	       
 	        int flag =  exampaperService.updateExampaper(rdto);

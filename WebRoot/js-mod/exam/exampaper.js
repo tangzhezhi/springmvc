@@ -25,6 +25,7 @@ $(function() {
 	    	 	  {field:'examName',title:'试卷名称',width:$(this).width()*0.15},
 	    	 	  {field:'examOperater',title:'试卷出题人',width:$(this).width()*0.15},
 	    	 	  {field:'examTime',title:'出题时间',width:$(this).width()*0.15},
+	    	 	   {field:'examType',title:'试卷类型',width:$(this).width()*0.15},
 	    	 	  {field:'examSubject',title:'试卷科目',width:$(this).width()*0.15}
 	    ]],
 	    onSelect:function(rowIndex, rowData){
@@ -65,7 +66,7 @@ $(function() {
 		});
 	
 	
-		function chosenAjaxData(id){
+		function chosenAjaxData(id,code){
 			var contents = "";
 			$.ajax({
 			   type: "POST",
@@ -73,7 +74,7 @@ $(function() {
 	           dataType:'json',
 	           async:false, 
 	           data:{
-					code:'student_subject',
+					code:code,
 					page:1,
 					rows:99999
 				},
@@ -98,10 +99,16 @@ $(function() {
 			$("#dg").datagrid("clearSelections");
 			$('#modal_form')[0].reset();
 			$('#examSubjectModal').empty();
-			chosenAjaxData('examSubjectModal');
+			$('#examTypeModal').empty();
+			chosenAjaxData('examSubjectModal','student_subject');
+			chosenAjaxData('examTypeModal','exam_type');
 			$('#examSubjectModal').chosen().trigger("chosen:updated");
+			$('#examTypeModal').chosen().trigger("chosen:updated");
 			$('#examSubjectModal_chosen .chosen-single > span').empty().append("<span>请选择试卷科目</span>");
 			$('#examSubjectModal_chosen').removeAttr("style"); 
+			
+			$('#examTypeModal_chosen .chosen-single > span').empty().append("<span>请选择试卷类型</span>");
+			$('#examTypeModal_chosen').removeAttr("style"); 
 	});
 	
 	
@@ -123,8 +130,11 @@ $(function() {
 				});
 				
 				 $('#examSubjectModal').empty().append("<option value='"+row.examSubject+"'>"+row.examSubject+"</option>");
-				  chosenAjaxData('examSubjectModal');
-				  $('#examSubjectModal').chosen().trigger("chosen:updated")
+				  $('#examTypeModal').empty().append("<option value='"+row.examType+"'>"+row.examType+"</option>");
+				 chosenAjaxData('examSubjectModal','student_subject');
+				 chosenAjaxData('examTypeModal','exam_type');
+				  $('#examSubjectModal').chosen().trigger("chosen:updated");
+				  $('#examTypeModal').chosen().trigger("chosen:updated");
 			}
 	});
 	
