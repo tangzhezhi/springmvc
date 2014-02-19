@@ -7,6 +7,7 @@ $(function() {
 	$("#kjz_nav > a").attr("href","./html/publicInformation/index_part.html?examType="+escape('考驾照'));
 	$("#qwt_nav > a").attr("href","./html/publicInformation/index_part.html?examType="+escape('趣味题'));
 	$("#wyy_nav > a").attr("href","./html/publicInformation/index_part.html?examType="+escape('玩英语'));
+	$("#gxsp_nav > a").attr("href","./html/publicInformation/index_part.html?examType="+escape('搞笑视频'));
 	
 	
 	$.ajax({

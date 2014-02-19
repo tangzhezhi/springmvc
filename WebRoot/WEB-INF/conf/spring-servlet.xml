@@ -40,6 +40,9 @@
             <map>  
                 <entry key="html" value="text/html" />  
                 <entry key="json" value="application/json" />  
+                <entry key="xml" value="application/xml" />  
+                <entry key="octet-stream" value="application/octet-stream" />  
+                 
             </map>  
         </property>  
         <property name="viewResolvers">  
