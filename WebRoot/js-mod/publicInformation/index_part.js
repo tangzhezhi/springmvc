@@ -22,7 +22,7 @@ $(function() {
 	$("#gxsp_nav > a").attr("href","./index_part.html?examType="+escape('搞笑视频'));
 	$("#mytest_nav > a").attr("href","./../../login.html");
 		
-		
+		  $("#title_content_top_h").addClass('title_content_top').append(examType);
 		if(examType!='搞笑视频'){
 			$.ajax({
 			   type: "POST",

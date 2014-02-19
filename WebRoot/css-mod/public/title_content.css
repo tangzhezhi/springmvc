@@ -1,10 +1,20 @@
+
 .title_content_top{
-	height: 49px;
-	padding: 16px;
-	background-image:url(../../resources/img/title_content_top.gif) ;
+	/*
+	height: 25px;
+	padding: 6px;
+	background-image:url(../../resources/img/public_01.gif) ;
 	background-repeat: no-repeat;
-	background-position: center top;
+	*/
+	padding-top:5px;
+	padding-left: 72px;
+	position:absolute;  
+	font-size: 16px;
+	color: #FFFFFF;
+	font-weight: bold;
+	
 }
+
 
 .title_content {
 	font-size: 13px;

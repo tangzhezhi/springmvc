@@ -21,17 +21,25 @@ body {
 	font-size: 12px;
 }
 
-/*
 .index_titler_bg {
-	width: 190px;
-	height: 25px;
+	height: 35px;
 	padding: 6px;
 	font-size: 12px;
-	background-image: url(../../resources/img/title_right_bg.gif);
+	background-image: url(../../resources/img/public_01.gif);
 	background-repeat: no-repeat;
 	background-position: center top;
 }
 
+.index_title_src{
+	padding-top:5px;
+	padding-left: 15px;
+	position:absolute;  
+	font-size: 16px;
+	color: #ffc20e;
+	font-weight: bold;
+}
+
+/*
 .index_message{
 	border-color: gray;
 }
