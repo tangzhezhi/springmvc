@@ -9,7 +9,6 @@
 		<link href="../../resources/css/bootstrap.css" rel="stylesheet"	media="screen" />
 		<link rel="stylesheet"	media="screen" 	href="../../resources/css/bootstrap-theme.css" />
 		<link 	href="../../resources/css/easyui.css"  rel="stylesheet"/>
-		<link rel="stylesheet"	media="screen" 	href="../../resources/css/chosen.css" />
 		<script type="text/javascript" src="../../resources/js/jquery.js"></script>
 		<script type="text/javascript" src="../../resources/js/jquery.json.js"></script>
 		<script type="text/javascript" src="../../resources/js/bootstrap.js"></script>
@@ -20,10 +19,7 @@
 		<![endif]-->
 		<script type="text/javascript" src="../../resources/js/jquery.easyui.min.js"></script>
 		<script type="text/javascript" src="../../resources/js/easyui-lang-zh_CN.js"></script>
-		<script type="text/javascript" src="../../resources/js/chosen.jquery.js"></script>
-		<script src="../../resources/js/ckeditor.js"></script>
-		<script src="../../resources/js/adapters/jquery.js"></script>
-		<script type="text/javascript" src="../../js-mod/publicInformation/article.js"></script>
+		<script type="text/javascript" src="../../js-mod/publicInformation/email.js"></script>
 	</head>
 	<body>
 			<div id="headertool">
@@ -32,7 +28,7 @@
 				 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					 <form class="navbar-form navbar-left form-inline" role="search">
 				      <div class="form-group">
-				        <input id="articlename" type="text" class="form-control" placeholder="名称">
+				        <input id="emailname" type="text" class="form-control" placeholder="名称">
 				      </div>
 				      <button id="query" type="button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>查询</button>
 				      <button id="add" type="button" class="btn btn-default" ><span class="glyphicon glyphicon-plus"></span>新增</button>
@@ -53,25 +49,38 @@
 			      </div>
 			      <div class="modal-body">
 			      		<form id="modal_form" class="form-horizontal" role="form">
-			      		 <input type="hidden"  id="articleIdModal" />
-						 <div class="form-group col-sm-10">
-						    <label  for="articleTitleModal">标题</label>
-						    <input type="text" class="form-control" id="articleTitleModal"  required="true" placeholder="标题">
+						 <div class="form-group col-sm-6">
+						    <label  for="emailidModal">EmailID</label>
+						    <input type="text" class="form-control" id="emailidModal"  required="true" placeholder="EmailID">
 						  </div>
-						 <div class="form-group col-sm-10">
-						    <label  for="articleTypeModal">类型</label>
-						    <select id="articleTypeModal" class="form-group">
-								<option value="">请选择类型</option>
-							</select>
+						 <div class="form-group col-sm-6">
+						    <label  for="fromaddModal">发件人地址</label>
+						    <input type="text" class="form-control" id="fromaddModal"  required="true" placeholder="发件人地址">
 						  </div>
-						  <div class="form-group col-sm-10">
-						    <label  for="articleContentModal">内容</label>
-						    <textarea id="articleContentModal" cols="80"  name="optionContentsModal" rows="10" class="form-control contentArea" placeholder="内容"></textarea>
+						 <div class="form-group col-sm-6">
+						    <label  for="subjectModal">主题</label>
+						    <input type="text" class="form-control" id="subjectModal"  required="true" placeholder="主题">
+						  </div>
+						 <div class="form-group col-sm-6">
+						    <label  for="contentModal">邮件内容</label>
+						    <input type="text" class="form-control" id="contentModal"  required="true" placeholder="邮件内容">
+						  </div>
+						 <div class="form-group col-sm-6">
+						    <label  for="statusModal">状态</label>
+						    <input type="text" class="form-control" id="statusModal"  required="true" placeholder="状态">
+						  </div>
+						 <div class="form-group col-sm-6">
+						    <label  for="toaddModal">收件人地址</label>
+						    <input type="text" class="form-control" id="toaddModal"  required="true" placeholder="收件人地址">
+						  </div>
+						 <div class="form-group col-sm-6">
+						    <label  for="attchfileurlModal">附件地址</label>
+						    <input type="text" class="form-control" id="attchfileurlModal"  required="true" placeholder="附件地址">
 						  </div>
 						</form>
 			      </div>
 			      <div class="modal-footer">
-			  		  <div class="form-group col-sm-10 pull-right">
+			  		  <div class="form-group col-sm-8 pull-right">
 					  	 <button id="add_modify_modal" type="button" class="btn btn-primary">保存</button>
 	        	  		 <button type="button" class="btn btn-default btn-warning" data-dismiss="modal">关闭</button>
 					  </div>
@@ -81,7 +90,7 @@
 			</div>
 			
 			<div>
-				<table id="dg"></table>
+				<table id="dg"/>
 			</div>
 			
 	</body>

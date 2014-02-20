@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tang.jpa.dao.publicInformation.VideoDao">
+
+	<resultMap type="VideoDTO" id="VideoDTO">
+    	<result column="videoid"  property="videoid" />
+    	<result column="videoName"  property="videoName" />
+    	<result column="videoUrl"  property="videoUrl" />
+    	<result column="userid"  property="userid" />
+    	<result column="createtime"  property="createtime" />
+    	<result column="clickNum"  property="clickNum" />
+    	<result column="videoDuration"  property="videoDuration" />
+    	<result column="videoRecommend"  property="videoRecommend" />
+	</resultMap>
+	
+	<resultMap type="Page" id="PageVideo">
+		<result column="totalRecord" property="totalRecord" />
+		<result  column="totalPage" property="totalPage" />
+		<result column="pageNo" property="pageNo" />
+		<result column="pageSize"  property="pageSize" />
+		<collection property="results" ofType="VideoDTO">
+    		<result column="videoid"  property="videoid" />
+    		<result column="videoName"  property="videoName" />
+    		<result column="videoUrl"  property="videoUrl" />
+    		<result column="userid"  property="userid" />
+    		<result column="createtime"  property="createtime" />
+    		<result column="clickNum"  property="clickNum" />
+    		<result column="videoDuration"  property="videoDuration" />
+    		<result column="videoRecommend"  property="videoRecommend" />
+    	</collection>
+	</resultMap>
+
+		
+	 <!-- 查询分页 -->
+	<select id="selectVideoAll" parameterType="Page" resultMap="PageVideo" >   
+		select  
+    			t.videoid,
+    			t.videoName,
+    			t.videoUrl,
+    			t.userid,
+    			t.createtime,
+    			t.clickNum,
+    			t.videoDuration,
+    			t.videoRecommend
+		 from T_VIDEO t
+		<where>
+			 1=1 
+    		<if test="params.videoid != null and params.videoid != '' " >
+			 	 and  t.videoid   =  #{params.videoid}
+    		</if>
+    		<if test="params.videoName != null and params.videoName != '' " >
+			 	 and  t.videoName   =  #{params.videoName}
+    		</if>
+    		<if test="params.videoUrl != null and params.videoUrl != '' " >
+			 	 and  t.videoUrl   =  #{params.videoUrl}
+    		</if>
+    		<if test="params.userid != null and params.userid != '' " >
+			 	 and  t.userid   =  #{params.userid}
+    		</if>
+    		<if test="params.createtime != null and params.createtime != '' " >
+			 	 and  t.createtime   =  #{params.createtime}
+    		</if>
+    		<if test="params.clickNum != null and params.clickNum != '' " >
+			 	 and  t.clickNum   =  #{params.clickNum}
+    		</if>
+    		<if test="params.videoDuration != null and params.videoDuration != '' " >
+			 	 and  t.videoDuration   =  #{params.videoDuration}
+    		</if>
+    		<if test="params.videoRecommend != null and params.videoRecommend != '' " >
+			 	 and  t.videoRecommend   =  #{params.videoRecommend}
+    		</if>
+		</where>
+	</select>
+	
+	
+	<!-- 向数据库中插入资源记录-->
+	<insert id="insertVideo" parameterType="VideoDTO">    
+		insert into T_VIDEO(
+    			videoid,
+    			videoName,
+    			videoUrl,
+    			userid,
+    			createtime,
+    			clickNum,
+    			videoDuration,
+    			videoRecommend
+		)
+		values(
+    			#{videoid, jdbcType=VARCHAR},
+    			#{videoName, jdbcType=VARCHAR},
+    			#{videoUrl, jdbcType=VARCHAR},
+    			#{userid, jdbcType=VARCHAR},
+    			#{createtime, jdbcType=VARCHAR},
+    			#{clickNum, jdbcType=VARCHAR},
+    			#{videoDuration, jdbcType=VARCHAR},
+    			#{videoRecommend, jdbcType=VARCHAR}
+		)
+	</insert>
+
+
+	
+	
+	  <!-- 更新库中的资源 -->
+	<update id="updateVideo" parameterType="VideoDTO">   
+		update T_VIDEO  
+		<set>
+    			<if test="videoid != null and videoid != '' ">videoid=#{videoid},</if>
+    			<if test="videoName != null and videoName != '' ">videoName=#{videoName},</if>
+    			<if test="videoUrl != null and videoUrl != '' ">videoUrl=#{videoUrl},</if>
+    			<if test="userid != null and userid != '' ">userid=#{userid},</if>
+    			<if test="createtime != null and createtime != '' ">createtime=#{createtime},</if>
+    			<if test="clickNum != null and clickNum != '' ">clickNum=#{clickNum},</if>
+    			<if test="videoDuration != null and videoDuration != '' ">videoDuration=#{videoDuration},</if>
+    			<if test="videoRecommend != null and videoRecommend != '' ">videoRecommend=#{videoRecommend},</if>
+    	</set>
+    	where videoid=#{videoid}
+	</update>
+	
+	<!-- 删除-->
+	<delete id="deleteVideo" parameterType="String">    
+		delete from T_VIDEO  where videoid=  #{videoid}
+	</delete>
+	
+	
+</mapper>

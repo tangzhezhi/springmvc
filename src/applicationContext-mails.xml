@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+                    http://www.springframework.org/schema/beans
+                    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                    http://www.springframework.org/schema/context      
+                    http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+	     <!-- 加载属性文件 -->
+    <context:property-placeholder location="classpath:mail.properties" />
+    
+    <bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="${mail.host}"/>
+        <property name="username" value="${mail.username}"/>
+        <property name="password" value="${mail.password}"/>
+    </bean>
+    
+    <bean id="mailService" class="org.tang.jpa.service.publicInformation.MailService">
+        <property name="mailSender" ref="javaMailSender"/>
+        <property name="javaMailSender" ref="javaMailSender"/>
+    </bean>    
+</beans>

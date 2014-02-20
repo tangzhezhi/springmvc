@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tang.jpa.dao.publicInformation.EmailDao">
+
+	<resultMap type="EmailDTO" id="EmailDTO">
+    	<result column="emailid"  property="emailid" />
+    	<result column="fromadd"  property="fromadd" />
+    	<result column="subject"  property="subject" />
+    	<result column="content"  property="content" />
+    	<result column="status"  property="status" />
+    	<result column="toadd"  property="toadd" />
+    	<result column="userid"  property="userid" />
+    	<result column="attchfileurl"  property="attchfileurl" />
+	</resultMap>
+	
+	<resultMap type="Page" id="PageEmail">
+		<result column="totalRecord" property="totalRecord" />
+		<result  column="totalPage" property="totalPage" />
+		<result column="pageNo" property="pageNo" />
+		<result column="pageSize"  property="pageSize" />
+		<collection property="results" ofType="EmailDTO">
+    		<result column="emailid"  property="emailid" />
+    		<result column="fromadd"  property="fromadd" />
+    		<result column="subject"  property="subject" />
+    		<result column="content"  property="content" />
+    		<result column="status"  property="status" />
+    		<result column="toadd"  property="toadd" />
+    		<result column="userid"  property="userid" />
+    		<result column="attchfileurl"  property="attchfileurl" />
+    	</collection>
+	</resultMap>
+
+		
+	 <!-- 查询分页 -->
+	<select id="selectEmailAllUnSend" parameterType="EmailDTO" resultMap="EmailDTO" >   
+		select  
+    			t.emailid,
+    			t.fromadd,
+    			t.subject,
+    			t.content,
+    			t.status,
+    			t.toadd,
+    			t.attchfileurl,
+    			t.userid
+		 from T_EMAIL t
+		<where>
+			 1=1 and  t.status = '0'
+		</where>
+	</select>
+	
+	
+	<select id="selectEmailAll" parameterType="Page" resultMap="PageEmail" >   
+		select  
+    			t.emailid,
+    			t.fromadd,
+    			t.subject,
+    			t.content,
+    			t.status,
+    			t.toadd,
+    			t.attchfileurl,
+    			t.userid
+		 from T_EMAIL t
+		<where>
+			 1=1 
+    		<if test="params.emailid != null and params.emailid != '' " >
+			 	 and  t.emailid   =  #{params.emailid}
+    		</if>
+    		<if test="params.fromadd != null and params.fromadd != '' " >
+			 	 and  t.fromadd   =  #{params.fromadd}
+    		</if>
+    		<if test="params.subject != null and params.subject != '' " >
+			 	 and  t.subject   =  #{params.subject}
+    		</if>
+    		<if test="params.content != null and params.content != '' " >
+			 	 and  t.content   =  #{params.content}
+    		</if>
+    		<if test="params.status != null and params.status != '' " >
+			 	 and  t.status   =  #{params.status}
+    		</if>
+    		<if test="params.toadd != null and params.toadd != '' " >
+			 	 and  t.toadd   =  #{params.toadd}
+    		</if>
+    		<if test="params.attchfileurl != null and params.attchfileurl != '' " >
+			 	 and  t.attchfileurl   =  #{params.attchfileurl}
+    		</if>
+    		<if test="params.userid != null and params.userid != '' " >
+			 	 and  t.userid   =  #{params.userid}
+    		</if>
+		</where>
+	</select>
+	
+	
+	
+	
+	
+	
+	<!-- 向数据库中插入资源记录-->
+	<insert id="insertEmail" parameterType="EmailDTO">    
+		insert into T_EMAIL(
+    			emailid,
+    			fromadd,
+    			subject,
+    			content,
+    			status,
+    			toadd,
+    			attchfileurl,
+    			userid
+		)
+		values(
+    			#{emailid, jdbcType=VARCHAR},
+    			#{fromadd, jdbcType=VARCHAR},
+    			#{subject, jdbcType=VARCHAR},
+    			#{content, jdbcType=VARCHAR},
+    			#{status, jdbcType=VARCHAR},
+    			#{toadd, jdbcType=VARCHAR},
+    			#{attchfileurl, jdbcType=VARCHAR},
+    			#{userid, jdbcType=VARCHAR}
+		)
+	</insert>
+
+
+	
+	
+	  <!-- 更新库中的资源 -->
+	<update id="updateEmail" parameterType="EmailDTO">   
+		update T_EMAIL  
+		<set>
+    			<if test="status != null and status != '' ">status=#{status},</if>
+    	</set>
+    	where emailid=#{emailid}
+	</update>
+	
+	<!-- 删除-->
+	<delete id="deleteEmail" parameterType="String">    
+		delete from T_EMAIL  where emailid=  #{emailid}
+	</delete>
+	
+	
+</mapper>
