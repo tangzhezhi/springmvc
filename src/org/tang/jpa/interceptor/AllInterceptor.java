@@ -88,8 +88,11 @@ public class AllInterceptor implements HandlerInterceptor {
 	    @Override
 	    public void postHandle(HttpServletRequest hsr, HttpServletResponse hsr1, Object o, ModelAndView mav) throws Exception {
 	    	 UserDTO user=(UserDTO) hsr.getSession().getAttribute("currentUser");
-	    	 logger.info("user  login::"+user.getUserName());
-	    	 logger.info("ModelAndView info::"+mav);
+	    	 if(user!=null){
+		    	 logger.info("user  login::"+user.getUserName());
+		    	 logger.info("ModelAndView info::"+mav);
+	    	 }
+
 	    	 
 	    }
 	 

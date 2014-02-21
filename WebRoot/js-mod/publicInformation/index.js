@@ -47,7 +47,7 @@ $(function() {
 			  var dataRow = data.data;
 			  var content = "";
 			  var message_content=""
-			  var option = "";
+			  var option = "<table class='table'>";
 			  var message_option="";
 			  var date = "<p  height='29'>&nbsp;&nbsp;</p>";
 			  var param = escape("爱学习");
@@ -55,10 +55,10 @@ $(function() {
 				  
 				   var temp_date = dataRow[i].createTime;
 				   date = "<span class='text-right text-muted'>["+temp_date.substring(2,4)+"-"+temp_date.substring(4,6)+"-"+temp_date.substring(6,8)+"]</span>";
-				   option = option + "<p><img src='./resources/img/arrow.gif' width='5' height='8' border='0'/><a id='"+dataRow[i].examid+"' href='./html/publicInformation/web_content.html?examid="+dataRow[i].examid+"' title='"+dataRow[i].examName+"' target='_blank' >"+dataRow[i].examName+"</a>"+date+"</p>";
+			  	   option = option +"<tr><td><img src='./resources/img/arrow.gif' width='5' height='8' border='0'/><a id='"+dataRow[i].examid+"' href='./html/publicInformation/web_content.html?examid="+dataRow[i].examid+"' title='"+dataRow[i].examName+"' target='_blank' >"+dataRow[i].examName+"</a></td><td class='text-right'>"+date+"</td></tr>";
 			  }
-			  content = "<div class = 'index_title_src'>爱学习</div><div><a  href='./html/publicInformation/index_part.html?examType="+param+"' target='_blank' ><img src='./resources/img/public_01.gif' width='305' height='29' border='0'></a>" +
-			  "</div>" + option;
+			  content = "<div class = 'index_title_src'>爱学习</div><div><a  href='./html/publicInformation/index_part.html?examType="+param+"' target='_blank' ><img src='./resources/img/public_01.gif' width='355' height='29' border='0'></a>" +
+			  "</div>" + option+"</table>";
 			  $("#axx").empty().append(content);
 			  
 	   }
