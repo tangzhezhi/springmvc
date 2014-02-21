@@ -8,7 +8,9 @@ import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.AbstractResource;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -53,12 +55,36 @@ public class MailService {
 //	public void setEmailDao(EmailDao emailDao) {
 //		this.emailDao = emailDao;
 //	}
-
+	
 	/**
      * 发送简单的文本邮件
      * @param email
      */
-    public int saveSend(EmailDTO dto){
+    public int sendAccountInfo(EmailDTO dto){
+    	int flag = 0;
+    	SimpleMailMessage smm = new SimpleMailMessage();
+        smm.setFrom(dto.getFromadd()==null?"tangzhezi@126.com":dto.getFromadd());
+        smm.setSubject(dto.getSubject());
+        smm.setTo(dto.getToadd());
+        smm.setText(dto.getContent());
+        try {
+			mailSender.send(smm);
+		} catch (MailException e) {
+			flag = 2;
+			e.printStackTrace();
+		}
+        flag = 1;
+    	return flag;
+    }
+	
+	
+	
+	
+	/**
+     * 发送简单的文本邮件
+     * @param email
+     */
+    public int send(EmailDTO dto){
     	int flag = 0;
     	List<EmailDTO> list = emailDao.selectEmailAllUnSend(dto);
     	for(EmailDTO d : list){
@@ -78,12 +104,30 @@ public class MailService {
     	return flag;
     }
     
+    
+    
+    public int sendMimeAccoutInfo(EmailDTO emailDTO) throws MessagingException{
+    	int flag = 0 ;
+        MimeMessage mm = javaMailSender.createMimeMessage();
+        //加上编码，解决中文乱码
+        MimeMessageHelper helper = new MimeMessageHelper(mm,true,"UTF-8");
+        helper.setFrom(emailDTO.getFromadd()==null ? "tangzhezi@126.com":emailDTO.getFromadd());
+        helper.setTo(emailDTO.getToadd());
+        helper.setSubject(emailDTO.getSubject()==null ? "您的账号与密码":emailDTO.getSubject());
+        helper.setText("<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=gb2312\"></head><body><h1><a href='http://www.examtom.com'>"+emailDTO.getContent()+"</a></h1></body></html>",true);
+        javaMailSender.send(mm);
+        flag = 1;
+    	return flag;
+    }
+    
+    
+    
     /**
      * 发送复杂邮件
      * @param EmailDTO
      * @throws MessagingException
      */
-    public int saveSendMime(EmailDTO emailDTO) throws MessagingException{
+    public int sendMime(EmailDTO emailDTO) throws MessagingException{
     	int flag = 0;
     	List<EmailDTO> list = emailDao.selectEmailAllUnSend(emailDTO);
     	for(EmailDTO d : list){

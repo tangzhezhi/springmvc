@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.MessagingException;
+
 import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.tang.jpa.dto.publicInformation.EmailDTO;
 import org.tang.jpa.dto.system.ResourceDTO;
 import org.tang.jpa.dto.system.UserDTO;
+import org.tang.jpa.service.publicInformation.MailService;
 import org.tang.jpa.service.system.ResourceService;
 import org.tang.jpa.service.system.UserService;
 import org.tang.jpa.utils.JsonTool;
@@ -31,6 +35,9 @@ public class UserController {
 	
 	@Autowired
 	private ResourceService resourceService;
+	
+	@Autowired
+	private MailService mailService;
 	
 	
 	@RequestMapping(value = "/menu", method = RequestMethod.POST)  
@@ -108,6 +115,16 @@ public class UserController {
 	       
 	        int flag =  userService.insertUser(rdto);
 	        if(flag == 1){
+	        	EmailDTO edto = new EmailDTO();
+	        	edto.setToadd(rdto.getUserEmail());
+	        	edto.setSubject("您考试汤的账号与密码");
+	        	edto.setContent("您考试汤的账号是："+rdto.getUserName()+"  密码是:"+rdto.getUserPwd());
+	        	try {
+					mailService.sendMimeAccoutInfo(edto);
+				} catch (MessagingException e) {
+					e.printStackTrace();
+				}
+	        	
 	        	return MyConstants.ADDSUCCESS.getName();
 	        }
 	        else{

@@ -37,6 +37,9 @@ public class EmailDTO {
 	}
 	
 	public void setFromadd(java.lang.String fromadd) {
+		if(fromadd.equals("") || null == fromadd){
+			fromadd = "tangzhezi@126.com";
+		}
 		this.fromadd = fromadd;
 	}
 	public java.lang.String getSubject() {
