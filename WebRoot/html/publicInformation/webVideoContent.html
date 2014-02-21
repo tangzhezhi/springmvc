@@ -14,6 +14,7 @@
 	<script type="text/javascript" src="../../resources/js/jquery.js"></script>
 	<script type="text/javascript" src="../../resources/js/jquery.json.js"></script>
     <script type="text/javascript" src="../../resources/js/bootstrap.js"></script>
+    <script type="text/javascript" src="../../resources/js/jquery.ztree.js"></script>
      <script type="text/javascript" src="../../resources/js/jPlay/js/jquery.jplayer.min.js"></script>
      <script type="text/javascript" src="../../resources/js/jPlay/js/jplayer.playlist.min.js"></script>
      <script type="text/javascript" src="../../js-mod/publicInformation/webVideoContent.js"></script>
@@ -55,7 +56,11 @@
 					<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span><img src="../../resources/img/xs.gif" width="15" height="11" border="0" align="absmiddle"> 您现在的位置：<a href="../welcome/" style="color:#CE2F29;">首页 </a>-&gt;<font color="#CE2F29"><strong> 内容显示页面 </strong></font>
 				</div>
 	  		</div>
-	  		<div id="content" class="col-lg-10 col-md-10 col-md-offset-1 col-sm-10 content">
+	  		
+	  		<div id="videoTree" class="col-lg-2 col-md-2 col-sm-2">
+	  			 <ul id="treeDemo" class="ztree"></ul>  
+	  		</div>
+	  		<div id="content" class="col-lg-8 col-md-8 col-md-offset-1 col-sm-8 content">
 	  		<!--  
 	  			<div id="jquery_jplayer_1"></div>
 				<div id="jp_container_1">
@@ -110,7 +115,6 @@
 					
 					
 					
-					<!--  
 						<div id="jp_container_1" class="jp-video jp-video-360p">
 							<div class="jp-type-single">
 								<div id="jquery_jplayer_1" class="jp-jplayer"></div>
@@ -158,12 +162,11 @@
 								</div>
 							</div>
 						</div>
-					-->
 					
 					
 					
 					
-					
+					<!-- 
 					<div id="jp_container_N" class="jp-video jp-video-270p">
 						<div class="jp-type-playlist">
 							<div id="jquery_jplayer_N" class="jp-jplayer"></div>
@@ -211,7 +214,6 @@
 							</div>
 							<div class="jp-playlist">
 								<ul>
-									<!-- The method Playlist.displayPlaylist() uses this unordered list -->
 									<li></li>
 								</ul>
 							</div>
@@ -256,6 +258,7 @@
 							To remove the 3rd and 4th items, you'd use <code class="prettyprint">remove(2)</code> and then <code class="prettyprint">remove(2)</code> again.
 							The <code class="prettyprint">remove()</code> method returns a <code class="prettyprint">true</code> when successful, a <code class="prettyprint">false</code> when ignored, which allows you to know whether it worked or not.
 						</p>
+						 -->
 	  		</div>
 	  </div>
     </div>
