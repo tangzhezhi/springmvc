@@ -11,6 +11,8 @@
     	<result column="clickNum"  property="clickNum" />
     	<result column="videoDuration"  property="videoDuration" />
     	<result column="videoRecommend"  property="videoRecommend" />
+    	<result column="videoSubject"  property="videoSubject" />
+    	<result column="videoTime"  property="videoTime" />
 	</resultMap>
 	
 	<resultMap type="Page" id="PageVideo">
@@ -27,9 +29,21 @@
     		<result column="clickNum"  property="clickNum" />
     		<result column="videoDuration"  property="videoDuration" />
     		<result column="videoRecommend"  property="videoRecommend" />
+    		<result column="videoSubject"  property="videoSubject" />
+    		<result column="videoTime"  property="videoTime" />
     	</collection>
 	</resultMap>
-
+	
+	<resultMap type="TreeDTO" id="TreeDTO">
+    	<result column="id"  property="id" />
+    	<result column="pid"  property="pid" />
+    	<result column="name"  property="name" />
+    	<result column="url"  property="url" />
+    	<result column="checked"  property="checked" />
+    	<result column="iconSkin"  property="iconSkin" />
+    	<result column="bak"  property="bak" />
+	</resultMap>
+	
 		
 	 <!-- 查询分页 -->
 	<select id="selectVideoAll" parameterType="Page" resultMap="PageVideo" >   
@@ -41,7 +55,9 @@
     			t.createtime,
     			t.clickNum,
     			t.videoDuration,
-    			t.videoRecommend
+    			t.videoRecommend,
+    			t.videoSubject,
+    			t.videoTime
 		 from T_VIDEO t
 		<where>
 			 1=1 
@@ -73,6 +89,26 @@
 	</select>
 	
 	
+	<select id="findVideoTree"  resultMap="TreeDTO" >   
+    	select r.id, r.pid,r.name,r.bak ,r.url   from (
+	        select t.videotime||t.videosubject||t.videoid as id, t.videotime||t.videosubject as pid,
+	        t.videoname as name, t.videoid as bak ,t.videourl as url from t_video t
+	        union 
+	        select t.videotime||t.videosubject as id,t.videotime as pid , t.videosubject as name, '' as bak 
+	        ,'' as url
+	        from t_video t
+	        union 
+	        select t.videotime as id,'年份' as pid , t.videotime as name, '' as bak ,'' as url
+	        from t_video t
+        ) r
+		<where>
+			 1=1 
+		</where>
+	</select>
+	
+	
+	
+	
 	<!-- 向数据库中插入资源记录-->
 	<insert id="insertVideo" parameterType="VideoDTO">    
 		insert into T_VIDEO(
@@ -83,7 +119,9 @@
     			createtime,
     			clickNum,
     			videoDuration,
-    			videoRecommend
+    			videoRecommend,
+    			videoSubject,
+    			videoTime
 		)
 		values(
     			#{videoid, jdbcType=VARCHAR},
@@ -93,7 +131,9 @@
     			#{createtime, jdbcType=VARCHAR},
     			#{clickNum, jdbcType=VARCHAR},
     			#{videoDuration, jdbcType=VARCHAR},
-    			#{videoRecommend, jdbcType=VARCHAR}
+    			#{videoRecommend, jdbcType=VARCHAR},
+    			#{videoSubject, jdbcType=VARCHAR},
+    			#{videoTime, jdbcType=VARCHAR}
 		)
 	</insert>
 
@@ -104,14 +144,12 @@
 	<update id="updateVideo" parameterType="VideoDTO">   
 		update T_VIDEO  
 		<set>
-    			<if test="videoid != null and videoid != '' ">videoid=#{videoid},</if>
     			<if test="videoName != null and videoName != '' ">videoName=#{videoName},</if>
-    			<if test="videoUrl != null and videoUrl != '' ">videoUrl=#{videoUrl},</if>
-    			<if test="userid != null and userid != '' ">userid=#{userid},</if>
-    			<if test="createtime != null and createtime != '' ">createtime=#{createtime},</if>
     			<if test="clickNum != null and clickNum != '' ">clickNum=#{clickNum},</if>
     			<if test="videoDuration != null and videoDuration != '' ">videoDuration=#{videoDuration},</if>
     			<if test="videoRecommend != null and videoRecommend != '' ">videoRecommend=#{videoRecommend},</if>
+    			<if test="videoSubject != null and videoSubject != '' ">videoSubject=#{videoSubject},</if>
+    			<if test="videoTime != null and videoTime != '' ">videoTime=#{videoTime},</if>
     	</set>
     	where videoid=#{videoid}
 	</update>

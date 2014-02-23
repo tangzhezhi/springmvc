@@ -1,5 +1,6 @@
 package org.tang.jpa.controller.publicInformation;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.tang.jpa.dto.publicInformation.VideoDTO;
 import org.tang.jpa.dto.system.UserDTO;
 import org.tang.jpa.service.publicInformation.VideoService;
+import org.tang.jpa.utils.DateTool;
 import org.tang.jpa.utils.MyConstants;
 import org.tang.jpa.utils.Page;
 
@@ -48,6 +50,21 @@ public class VideoController {
     }  
 	
 	
+	
+	@RequestMapping(value = "/queryVideoTree", method = RequestMethod.POST)  
+    @ResponseBody  
+    public Map<String, Object> queryVideoTree() {  
+        Map<String, Object> model = new HashMap<String, Object>();
+        try {
+			List videoTree = videoService.findVideoTree();
+			model.put("tree",videoTree);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        return model;  
+    }  
+	
+	
 	@RequestMapping(value = "/addVideo", method = RequestMethod.POST)  
     @ResponseBody  
     public String addVideo(@ModelAttribute("currentUser") UserDTO dto,
@@ -58,17 +75,21 @@ public class VideoController {
 				@RequestParam(value="createtime",required=false) String createtime,
 				@RequestParam(value="clickNum",required=false) String clickNum,
 				@RequestParam(value="videoDuration",required=false) String videoDuration,
-				@RequestParam(value="videoRecommend",required=false) String videoRecommend
+				@RequestParam(value="videoRecommend",required=false) String videoRecommend,
+				@RequestParam(value="videoSubject",required=false) String videoSubject,
+				@RequestParam(value="videoTime",required=false) String videoTime
     		) {  
 	        	VideoDTO rdto = new VideoDTO();
 	        	rdto.setVideoid(UUID.randomUUID().toString());
 	        	rdto.setVideoName(videoName);
 	        	rdto.setVideoUrl(videoUrl);
-	        	rdto.setUserid(userid);
-	        	rdto.setCreatetime(createtime);
+	        	rdto.setUserid(dto.getUserId());
+	        	rdto.setCreatetime(DateTool.getDateStringYMDHMS(new Date()));
 	        	rdto.setClickNum(clickNum);
 	        	rdto.setVideoDuration(videoDuration);
 	        	rdto.setVideoRecommend(videoRecommend);
+	        	rdto.setVideoSubject(videoSubject);
+	        	rdto.setVideoTime(videoTime);
 	       
 	        int flag =  videoService.insertVideo(rdto);
 	        if(flag == 1){
@@ -91,16 +112,20 @@ public class VideoController {
 				@RequestParam(value="createtime",required=false) String createtime,
 				@RequestParam(value="clickNum",required=false) String clickNum,
 				@RequestParam(value="videoDuration",required=false) String videoDuration,
-				@RequestParam(value="videoRecommend",required=false) String videoRecommend
+				@RequestParam(value="videoRecommend",required=false) String videoRecommend,
+				@RequestParam(value="videoSubject",required=false) String videoSubject,
+				@RequestParam(value="videoTime",required=false) String videoTime
     		) {  
 	        VideoDTO rdto = new VideoDTO();
         		rdto.setVideoid(videoid);
         		rdto.setVideoName(videoName);
         		rdto.setVideoUrl(videoUrl);
-        		rdto.setUserid(userid);
+        		rdto.setUserid(dto.getUserId());
         		rdto.setClickNum(clickNum);
         		rdto.setVideoDuration(videoDuration);
         		rdto.setVideoRecommend(videoRecommend);
+        		rdto.setVideoSubject(videoSubject);
+	        	rdto.setVideoTime(videoTime);
 	       
 	        int flag =  videoService.updateVideo(rdto);
 	        if(flag == 1){

@@ -24,6 +24,8 @@ $(function() {
 	    	 	  {field:'videoid',title:'视频ID',width:$(this).width()*0.15},
 	    	 	  {field:'videoName',title:'视频名称',width:$(this).width()*0.15},
 	    	 	  {field:'videoUrl',title:'视频URL',width:$(this).width()*0.15},
+	    	 	  {field:'videoSubject',title:'视频类型',width:$(this).width()*0.15},
+	    	 	  {field:'videoTime',title:'发行年份',width:$(this).width()*0.15},
 	    	 	  {field:'userid',title:'用户ID',width:$(this).width()*0.15},
 	    	 	  {field:'createtime',title:'创建时间',width:$(this).width()*0.15},
 	    	 	  {field:'clickNum',title:'点击数',width:$(this).width()*0.15},
@@ -73,6 +75,8 @@ $(function() {
 		    	 	  $("#useridModal").val(row.userid);
 		    	 	  $("#createtimeModal").val(row.createtime);
 		    	 	  $("#clickNumModal").val(row.clickNum);
+		    	 	  $("#videoSubjectModal").val(row.videoSubject);
+		    	 	  $("#videoTimeModal").val(row.videoTime);
 		    	 	  $("#videoDurationModal").val(row.videoDuration);
 		    	 	  $("#videoRecommendModal").val(row.videoRecommend);
 				$('#myModal').modal({
@@ -98,6 +102,8 @@ $(function() {
 				var clickNum = $("#clickNumModal").val();
 				var videoDuration = $("#videoDurationModal").val();
 				var videoRecommend = $("#videoRecommendModal").val();
+				var	videoSubject = $("#videoSubjectModal").val();
+		    	var videoTime = $("#videoTimeModal").val();
 				
 				$.ajax({
 				   type: "POST",
@@ -110,7 +116,9 @@ $(function() {
 							createtime:createtime,
 							clickNum:clickNum,
 							videoDuration:videoDuration,
-							videoRecommend:videoRecommend
+							videoRecommend:videoRecommend,
+							videoSubject:videoSubject,
+							videoTime:videoTime
 				   },
 				   success: function(msg){
 				     $.messager.alert("操作提示", $.parseJSON(msg),"info");
@@ -129,6 +137,9 @@ $(function() {
 				var clickNum = $("#clickNumModal").val();
 				var videoDuration = $("#videoDurationModal").val();
 				var videoRecommend = $("#videoRecommendModal").val();
+				var	videoSubject = $("#videoSubjectModal").val();
+		    	var videoTime = $("#videoTimeModal").val();
+		    	
 				$.ajax({
 				   type: "POST",
 				   url: "../../video/modifyVideo?random"+parseInt(Math.random()*100000),
@@ -140,7 +151,9 @@ $(function() {
 							createtime:createtime,
 							clickNum:clickNum,
 							videoDuration:videoDuration,
-							videoRecommend:videoRecommend
+							videoRecommend:videoRecommend,
+							videoSubject:videoSubject,
+							videoTime:videoTime
 				   },
 				   success: function(msg){
 				     $('#dg').datagrid('reload');

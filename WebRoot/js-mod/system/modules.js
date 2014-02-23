@@ -64,7 +64,7 @@ $(function() {
 	$("#query").click(
 		function () {
 			$('#dg').datagrid('reload',{
-				resourceName: $('#resourcename').val()
+				resourceName: $('#resourceName').val()
 			});
 		});
 	

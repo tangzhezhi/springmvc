@@ -5,13 +5,14 @@
 	padding: 6px;
 	background-image:url(../../resources/img/public_01.gif) ;
 	background-repeat: no-repeat;
-	*/
+	
 	padding-top:5px;
 	padding-left: 72px;
 	position:absolute;  
+	*/
 	font-size: 16px;
-	color: #FFFFFF;
 	font-weight: bold;
+	color: #FFFFFF;
 	
 }
 

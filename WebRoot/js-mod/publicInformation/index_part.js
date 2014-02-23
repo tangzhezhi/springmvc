@@ -22,7 +22,7 @@ $(function() {
 	$("#gxsp_nav > a").attr("href","./index_part.html?examType="+escape('搞笑视频'));
 	$("#mytest_nav > a").attr("href","./../../login.html");
 		
-		  $("#title_content_top_h").addClass('title_content_top').append(examType);
+//		  $("#title_content_top_h").addClass('title_content_top').append(examType);
 		if(examType!='搞笑视频'){
 			$.ajax({
 			   type: "POST",
@@ -43,7 +43,7 @@ $(function() {
 					   option = option + "<tr><td><img src='../../resources/img/arrow02.gif' width='10' height='10'>&nbsp;&nbsp;&nbsp;&nbsp;<a id='"+dataRow[i].examid+"' href='./web_content.html?examid="+dataRow[i].examid+"' title='"+dataRow[i].examName+"' target='_blank' >"+dataRow[i].examName+"</a></td><td>"+date+"</td></tr>";
 				   }
 				   content = content +option +"</table>";
-				   $("#title_content_top_a").append(examType);
+				   $("#title_content_top_a").addClass('title_content_top').append(examType);
 				   $("#dg").empty().append(content);
 				   $("#totalnum").append("<a href='#'>总共:"+total+"条记录&nbsp;&nbsp;&nbsp;&nbsp;共"+parseInt(total/10+1)+"页</a>");
 				   
@@ -69,6 +69,7 @@ $(function() {
 			});
 		}
 		else{
+				  $("#title_content_top_a").addClass('title_content_top').append(examType);
 				var content = "<table class='table'><thead><tr><th>标　题</th><th>日期</th></tr></thead>";
 				  var option = "";
 				option = option + "<tr><td><img src='../../resources/img/arrow02.gif' width='10' height='10'>&nbsp;&nbsp;&nbsp;&nbsp;<a id='test_video' href='./webVideoContent.html?videoid=testVideo' title='测试视频' target='_blank' >测试视频</a></td></tr>";

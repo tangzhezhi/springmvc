@@ -5,6 +5,8 @@
 
 package org.tang.jpa.service.publicInformation;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -67,6 +69,18 @@ public class VideoService {
 			flag = 0;
 		}
 		return flag;
+	}
+
+	public List findVideoTree() throws Exception {
+		List result = null;
+		try {
+			result =  videoDao.findVideoTree();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return result;
+		
 	}
 	
 	

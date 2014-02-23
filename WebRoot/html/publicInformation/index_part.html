@@ -10,6 +10,7 @@
     <!-- Bootstrap core CSS -->
 	<link href="../../resources/css/bootstrap.css" rel="stylesheet"	media="screen" />
 	<link href="../../css-mod/public/title_content.css" rel="stylesheet" />
+	<link rel="stylesheet" href="../../resources/css/font-awesome.css">
 	<script type="text/javascript" src="../../resources/js/jquery.js"></script>
 	<script type="text/javascript" src="../../resources/js/jquery.json.js"></script>
     <script type="text/javascript" src="../../resources/js/bootstrap.js"></script>
@@ -23,12 +24,9 @@
      
      <style type="text/css">
 		.head{
-			font-family: "微软雅黑";  
-			background-color: #FFFFFF;
-			z-index: 9999;
-			font-size: 16px;
-			font:larger;
+			font-size: 18px;
 		}
+		
      </style>
      
   </head>
@@ -37,7 +35,7 @@
 
     <div class="container">
       <!-- Static navbar -->
-      <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="navbar navbar-default navbar-fixed-top " role="navigation">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
@@ -45,7 +43,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a id="index_nav" class="navbar-brand">首 页</a>
+			<a id="index_nav" class="navbar-brand fa fa-home">首 页</a>         
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -57,7 +55,7 @@
             <li id="gxsp_nav"><a class="head">搞笑视频</a></li>
           </ul>
          <ul  class="nav navbar-nav navbar-right ">
-          	<li id="mytest_nav"><a class="head" href='./../../login.html' target='_blank' >我的考试</a></li>
+          	<li id="mytest_nav"><a class="head fa fa-th" href='./../../login.html' target='_blank' >我的考试</a></li>
           </ul>
         </div>
       </div>
@@ -66,10 +64,12 @@
 	  <div class="row">
 	  		<div  class="col-lg-12 col-md-12 col-sm-12">
 	  			<div id="title_content_top" class="col-lg-8 col-md-8 col-sm-8">
-	  				<div id="title_content_top_h"></div>
+	  				<!-- 
 	  				<a id="title_content_top_a" href="#" style="color:#FFFFFF;font-size:14px;font-weight:bold;">
 	  					<img src='../../resources/img/public_01.gif' width='205' height='29' border='0'>
 	  				</a>
+	  				 -->
+	  				 <button id="title_content_top_a" class="btn btn-default btn-warning btn-block"></button>
 	  			</div>
 	  		</div>
 	  </div>

@@ -18,6 +18,7 @@ import org.tang.jpa.dto.system.UserDTO;
 import org.tang.jpa.service.exam.ExamService;
 import org.tang.jpa.service.exam.ExampaperService;
 import org.tang.jpa.service.publicInformation.ArticleService;
+import org.tang.jpa.service.publicInformation.VideoService;
 import org.tang.jpa.utils.Page;
 
 
@@ -32,6 +33,10 @@ public class PublicIndexController {
 	
 	@Autowired
 	private ExampaperService exampaperService;
+	
+	
+	@Autowired
+	private VideoService videoService;
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/showExamInformationTopFive", method = RequestMethod.POST)  
@@ -138,6 +143,18 @@ public class PublicIndexController {
     }
 	
 	
+	@RequestMapping(value = "/queryVideoTree", method = RequestMethod.POST)  
+    @ResponseBody  
+    public Map<String, Object> queryVideoTree() {  
+        Map<String, Object> model = new HashMap<String, Object>();
+        try {
+			List videoTree = videoService.findVideoTree();
+			model.put("tree",videoTree);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        return model;  
+    }  
 	
 	
 	

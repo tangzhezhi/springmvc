@@ -18,6 +18,8 @@ public interface VideoDao  {
      
     public int deleteVideo(String videoId);  
      
-    public Page<?> selectVideoAll(Page<?> page);  
+    public Page<?> selectVideoAll(Page<?> page);
+
+	public List findVideoTree();  
     
 }

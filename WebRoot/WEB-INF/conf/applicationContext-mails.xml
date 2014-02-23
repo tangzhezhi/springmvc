@@ -17,8 +17,10 @@
         <property name="password" value="${mail.password}"/>
     </bean>
     
+    <!-- 
     <bean id="mailService" class="org.tang.jpa.service.publicInformation.MailService">
         <property name="mailSender" ref="javaMailSender"/>
         <property name="javaMailSender" ref="javaMailSender"/>
     </bean>    
+     -->
 </beans>

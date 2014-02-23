@@ -19,6 +19,9 @@ public class VideoDTO {
     private java.lang.String clickNum;
     private java.lang.String videoDuration;
     private java.lang.String videoRecommend;
+    
+    private String videoSubject;
+    private String videoTime;
 	
 	public java.lang.String getVideoid() {
 		return this.videoid;
@@ -77,4 +80,20 @@ public class VideoDTO {
 		this.videoRecommend = videoRecommend;
 	}
 
+	public String getVideoSubject() {
+		return videoSubject;
+	}
+
+	public void setVideoSubject(String videoSubject) {
+		this.videoSubject = videoSubject;
+	}
+
+	public String getVideoTime() {
+		return videoTime;
+	}
+
+	public void setVideoTime(String videoTime) {
+		this.videoTime = videoTime;
+	}
+	
 }
