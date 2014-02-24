@@ -21,12 +21,12 @@ $(function() {
         afterPageText: '页    共 {pages} 页',  
         displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录',  
 	    columns:[[
-	    	 	  {field:'videoid',title:'视频ID',width:$(this).width()*0.15},
+	    	 	  {field:'videoid',title:'视频ID',width:$(this).width()*0.15,hidden:true},
 	    	 	  {field:'videoName',title:'视频名称',width:$(this).width()*0.15},
 	    	 	  {field:'videoUrl',title:'视频URL',width:$(this).width()*0.15},
 	    	 	  {field:'videoSubject',title:'视频类型',width:$(this).width()*0.15},
 	    	 	  {field:'videoTime',title:'发行年份',width:$(this).width()*0.15},
-	    	 	  {field:'userid',title:'用户ID',width:$(this).width()*0.15},
+	    	 	  {field:'userid',title:'用户ID',width:$(this).width()*0.15,hidden:true},
 	    	 	  {field:'createtime',title:'创建时间',width:$(this).width()*0.15},
 	    	 	  {field:'clickNum',title:'点击数',width:$(this).width()*0.15},
 	    	 	  {field:'videoDuration',title:'视频时长',width:$(this).width()*0.15},
@@ -39,6 +39,34 @@ $(function() {
         	 $('#dg').datagrid('options').pagination=true;
          }
 	});
+	
+	
+		
+		function chosenAjaxData(id,code){
+			var contents = "";
+			$.ajax({
+			   type: "POST",
+			   url:"../../common/queryDictory?random"+parseInt(Math.random()*100000),
+	           dataType:'json',
+	           async:false, 
+	           data:{
+					code:code,
+					page:1,
+					rows:99999
+				},
+			   success: function(data){
+					var selectObj = $('#'+id); 
+					for(var i=0;i<data.rows.length;i++){
+						contents = contents +"<option value='"+data.rows[i].name+"'>"+data.rows[i].name+"</option>";
+	                } 
+					selectObj.append(contents);
+			   }
+			});
+		}
+	
+	
+	
+	
 	
 	$("#query").click(
 		function () {
@@ -57,6 +85,12 @@ $(function() {
 			
 			$("#dg").datagrid("clearSelections");
 			$('#modal_form')[0].reset();
+			
+			$('#videoSubjectModal').empty();
+			chosenAjaxData('videoSubjectModal','video_type');
+			$('#videoSubjectModal').chosen().trigger("chosen:updated");
+			$('#videoSubjectModal_chosen .chosen-single > span').empty().append("<span>请选择视频类型</span>");
+			$('#videoSubjectModal_chosen').removeAttr("style"); 
 			
 	});
 	
@@ -82,6 +116,11 @@ $(function() {
 				$('#myModal').modal({
 	  				keyboard: false
 				});
+				
+				 $('#videoSubjectModal').empty().append("<option value='"+row.videoSubject+"'>"+row.videoSubject+"</option>");
+				 chosenAjaxData('videoSubjectModal','video_type');
+				  $('#videoSubjectModal').chosen().trigger("chosen:updated");
+				
 			}
 	});
 	

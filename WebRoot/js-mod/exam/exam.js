@@ -10,7 +10,7 @@ $(function() {
 		check: {
 			enable: true,
 			chkStyle: "radio",
-			radioType: "level"
+			radioType: "all"
 		},
 		data: {
 			simpleData: {

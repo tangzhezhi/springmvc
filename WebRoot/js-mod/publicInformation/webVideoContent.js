@@ -19,109 +19,90 @@ $(function() {
 		
 		
 	var zNodes = "";
+	var curMenu = null, zTree_Menu = null;
 	
 	var setting = {
 		view: {
-			selectedMulti: false
+			showLine : true,
+			selectedMulti: false,
+			dblClickExpand: true
 		},
-		check: {
-			enable: true,
-			chkStyle: "radio",
-			radioType: "level"
-		},
+//		check: {
+//			enable: true,
+//			chkStyle: "radio",
+//			radioType: "all"
+//		},
 		data: {
 			simpleData: {
 			 	idKey:"id",
             	pIdKey:"pid",
+            	rootPid:null,
 				enable: true
 			}
 		},
 		callback: {
-			onCheck: onCheck
+//			onCheck: onCheck,
+			onNodeCreated: this.onNodeCreated,
+//			beforeClick: this.beforeClick,
+//			onClick: this.onClickTree
+			
 		}
 	};
 	
-	$.ajax({
-	   type: "POST",
-	   url:"../../exam/queryVideoTree?random"+parseInt(Math.random()*100000),
-       dataType:'json',
-       async:false, 
-	   success: function(data){
-			zNodes = data.tree;
-			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
-	   }
-	});
 	
 	
-	function beforeCheck(treeId, treeNode){
-		var contents = " ";
-		 $("#content").empty().append(contents);
+	function beforeClick(treeId, node) {
+		if (node.isParent) {
+			if (node.level === 0) {
+				var pNode = curMenu;
+				while (pNode && pNode.level !==0) {
+					pNode = pNode.getParentNode();
+				}
+				if (pNode !== node) {
+					var a = $("#" + pNode.tId + "_a");
+					a.removeClass("cur");
+					zTree_Menu.expandNode(pNode, false);
+				}
+				a = $("#" + node.tId + "_a");
+				a.addClass("cur");
+
+				var isOpen = false;
+				for (var i=0,l=node.children.length; i<l; i++) {
+					if(node.children[i].open) {
+						isOpen = true;
+						break;
+					}
+				}
+				if (isOpen) {
+					zTree_Menu.expandNode(node, true);
+					curMenu = node;
+				} else {
+					zTree_Menu.expandNode(node.children[0].isParent?node.children[0]:node, true);
+					curMenu = node.children[0];
+				}
+			} else {
+				zTree_Menu.expandNode(node);
+			}
+		}
+		return !node.isParent;
+	}
+	
+	function onClickTree(e, treeId, node) {
+			alert(node);
 	}
 	
 	
-	function onCheck(e, treeId, treeNode) {
-			var stream = {
-			  title: "流音乐测试",
-			  webm:"http://www.jplayer.org/video/webm/Big_Buck_Bunny_Trailer.webm",
-			  m4a:"http://www.jplayer.org/audio/m4a/TSP-01-Cro_magnon_man.m4a",
-			  oga:"http://www.jplayer.org/audio/ogg/TSP-01-Cro_magnon_man.ogg"
-		 	};
-		
-		$("#jquery_jplayer_1").jPlayer({
-			ready: function () {
-				$(this).jPlayer("setMedia", stream);
-			},
-			swfPath: "../../resources/js/jPlay/js/",
-			supplied: "webmv, ogv, m4v",
-			size: {
-				width: "640px",
-				height: "360px",
-				cssClass: "jp-video-360p"
-			},
-			smoothPlayBar: true,
-			keyEnabled: true
-		});
-		 
-	}	
-		
-		
-		
+	
 	var stream =  {
 				poster: "http://www.jplayer.org/video/poster/Big_Buck_Bunny_Trailer_480x270.png"
 			};
-	var setting = {
-		view: {
-			selectedMulti: false
-		},
-		check: {
-			enable: true,
-			chkStyle: "radio",
-			radioType: "level"
-		},
-		data: {
-			simpleData: {
-			 	idKey:"id",
-            	pIdKey:"pid",
-				enable: true
-			}
-		},
-		callback: {
-			onCheck: onCheck
-		}
-	};
-//	
-//	
-	function beforeCheck(treeId, treeNode){
-		var contents = " ";
-		 $("#content").empty().append(contents);
-	}
-	
+
 	
 	function onCheck(e, treeId, treeNode) {
 		stream = {
-				m4v: treeNode.url,
-				ogv: treeNode.url,
-				webmv:treeNode.url,
+				m4v: treeNode.videoUrl,
+				ogv: treeNode.videoUrl,
+				webmv:treeNode.videoUrl,
 				poster: "http://www.jplayer.org/video/poster/Big_Buck_Bunny_Trailer_480x270.png"
 			};
 			$("#jquery_jplayer_1").jPlayer("destroy");
@@ -142,7 +123,6 @@ $(function() {
 				smoothPlayBar: true,
 				keyEnabled: true
 			});
-		
 	}
 
 	$.ajax({
@@ -157,125 +137,29 @@ $(function() {
 	});
 	
 	
-		$("#jquery_jplayer_1").jPlayer({
-			ready: function () {
-				$(this).jPlayer("setMedia",
-					stream
-				);
-			},
-			swfPath: "../../resources/js/jPlay/js/",
-			supplied: "webmv, ogv, m4v",
-			size: {
-				width: "640px",
-				height: "360px",
-				cssClass: "jp-video-360p"
-			},
-			smoothPlayBar: true,
-			keyEnabled: true
-		});
+	zTree_Menu = $.fn.zTree.getZTreeObj("treeDemo");
+	curMenu = zTree_Menu.getNodes()[0].children[0].children[0];
+	zTree_Menu.selectNode(curMenu);
+	var anode = $("#" + zTree_Menu.getNodes()[0].tId + "_a");
+	anode.addClass("cur");
 	
 	
+	$("#jquery_jplayer_1").jPlayer({
+		ready: function () {
+			$(this).jPlayer("setMedia",
+				stream
+			);
+		},
+		swfPath: "../../resources/js/jPlay/js/",
+		supplied: "webmv, ogv, m4v",
+		size: {
+			width: "640px",
+			height: "360px",
+			cssClass: "jp-video-360p"
+		},
+		smoothPlayBar: true,
+		keyEnabled: true
+	});
 	
-	
-//	var stream = {
-//		  title: "流音乐测试",
-//		  webm:"http://www.jplayer.org/video/webm/Big_Buck_Bunny_Trailer.webm",
-//		  m4a:"http://www.jplayer.org/audio/m4a/TSP-01-Cro_magnon_man.m4a",
-//		  oga:"http://www.jplayer.org/audio/ogg/TSP-01-Cro_magnon_man.ogg"
-//	 	};
-		
-		
-//		$("#jquery_jplayer_1").jPlayer({
-//			ready: function () {
-//				$(this).jPlayer("setMedia", stream);
-//			},
-//			swfPath: "../../resources/js/jPlay/js/",
-//			supplied: "webmv, ogv, m4v",
-//			size: {
-//				width: "640px",
-//				height: "360px",
-//				cssClass: "jp-video-360p"
-//			},
-//			smoothPlayBar: true,
-//			keyEnabled: true
-//		});
-		
-//		$("#jquery_jplayer_1").jPlayer({
-//		   ready: function () {
-//		    $(this).jPlayer("setMedia", {
-//		     webm: "http://www.jplayer.org/video/webm/Big_Buck_Bunny_Trailer.webm"
-//		    });
-//		   },
-//		   swfPath: "../../resources/js/jPlay/",
-//		   supplied: "webm,m4a, oga"
-//  		});
-		
-//		var stream = {
-//		  title: "流音乐测试",
-////		  mp3: "http://listen.radionomy.com/abc-jazz"
-//		  webm:"http://www.jplayer.org/video/webm/Big_Buck_Bunny_Trailer.webm",
-//		  m4a:"http://www.jplayer.org/audio/m4a/TSP-01-Cro_magnon_man.m4a",
-//		  oga:"http://www.jplayer.org/audio/ogg/TSP-01-Cro_magnon_man.ogg"
-//		 },
-//		 ready = false;
-////		
-//		 $("#jquery_jplayer_1").jPlayer({
-//			  ready: function (event) {
-//			   ready = true;
-//			   $(this).jPlayer("setMedia", stream);
-//			  },
-//			  pause: function() {
-//			   $(this).jPlayer("clearMedia");
-//			  },
-//			  error: function(event) {
-//			   if(ready && event.jPlayer.error.type === $.jPlayer.error.URL_NOT_SET) {
-//			    // Setup the media stream again and play it.
-//			    $(this).jPlayer("setMedia", stream).jPlayer("play");
-//			   }
-//			  },
-//			  swfPath: "../../resources/js/jPlay/",
-//			  supplied: "webm,mp3",
-//			  preload: "none"
-// 		});
-		
-		
-		
-		
-		
-//	$("#jquery_jplayer_1").jPlayer({
-//		ready: function (event) {
-//			$(this).jPlayer("setMedia", {
-//				m4a:"http://www.jplayer.org/audio/m4a/TSP-01-Cro_magnon_man.m4a",
-//				oga:"http://www.jplayer.org/audio/ogg/TSP-01-Cro_magnon_man.ogg"
-//			});
-//		},
-//		swfPath: "js",
-//		supplied: "m4a, oga",
-//		wmode: "window",
-//		smoothPlayBar: true,
-//		keyEnabled: true
-//	});
-	
-	
-//	$("#jquery_jplayer_1").jPlayer({
-//		ready: function () {
-//			$(this).jPlayer("setMedia", {
-//				m4v: "http://www.jplayer.org/video/m4v/Big_Buck_Bunny_Trailer.m4v",
-//				ogv: "http://www.jplayer.org/video/ogv/Big_Buck_Bunny_Trailer.ogv",
-//				webmv: "http://www.jplayer.org/video/webm/Big_Buck_Bunny_Trailer.webm",
-//				poster: "http://www.jplayer.org/video/poster/Big_Buck_Bunny_Trailer_480x270.png"
-//			});
-//		},
-//		swfPath: "../../resources/js/jPlay/js/",
-//		supplied: "webmv, ogv, m4v",
-//		size: {
-//			width: "640px",
-//			height: "360px",
-//			cssClass: "jp-video-360p"
-//		},
-//		smoothPlayBar: true,
-//		keyEnabled: true
-//	});
-
 });
 

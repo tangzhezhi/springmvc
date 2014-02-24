@@ -44,6 +44,16 @@
     	<result column="bak"  property="bak" />
 	</resultMap>
 	
+	<resultMap type="VideoTreeDTO" id="VideoTreeDTO">
+    	<result column="id"  property="id" />
+    	<result column="pid"  property="pid" />
+    	<result column="name"  property="name" />
+    	<result column="url"  property="videoUrl" />
+    	<result column="checked"  property="checked" />
+    	<result column="iconSkin"  property="iconSkin" />
+    	<result column="bak"  property="bak" />
+	</resultMap>
+	
 		
 	 <!-- 查询分页 -->
 	<select id="selectVideoAll" parameterType="Page" resultMap="PageVideo" >   
@@ -89,7 +99,7 @@
 	</select>
 	
 	
-	<select id="findVideoTree"  resultMap="TreeDTO" >   
+	<select id="findVideoTree"  resultMap="VideoTreeDTO" >   
     	select r.id, r.pid,r.name,r.bak ,r.url   from (
 	        select t.videotime||t.videosubject||t.videoid as id, t.videotime||t.videosubject as pid,
 	        t.videoname as name, t.videoid as bak ,t.videourl as url from t_video t

@@ -16,6 +16,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias alias="OrganizationDTO" type="org.tang.jpa.dto.system.OrganizationDTO"/>
 		<typeAlias alias="RoleDTO" type="org.tang.jpa.dto.system.RoleDTO"/>
 		<typeAlias alias="TreeDTO" type="org.tang.jpa.dto.system.TreeDTO"/>
+		<typeAlias alias="VideoTreeDTO" type="org.tang.jpa.dto.system.VideoTreeDTO"/>
 		<typeAlias alias="RoleResourceDTO" type="org.tang.jpa.dto.system.RoleResourceDTO"/>
 		<typeAlias alias="DictoryDTO" type="org.tang.jpa.dto.system.DictoryDTO"/>
 		<typeAlias alias="DepartmentDTO" type="org.tang.jpa.dto.system.DepartmentDTO"/>
