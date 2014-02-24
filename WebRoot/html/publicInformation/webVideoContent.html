@@ -26,6 +26,36 @@
 		.ztree li a.level0 span {display: block; color: white; padding-top:3px; font-size:12px; font-weight: bold;word-spacing: 2px;}
 		.ztree li a.level0 span.button {	float:right; margin-left: 10px; visibility: visible;display:none;}
 		.ztree li span.button.switch.level0 {display:none;}
+		
+		.ztree li a.level1 {
+			width:180px;height: 20px; 
+			text-align: center; display:block;
+			 background-color: #0AA0AB ;
+			  border:1px silver solid;
+		}
+		.ztree li a.level1 span {
+			display: block; color: white;
+			 padding-top:1px; font-size:12px; 
+			font-weight: bold;word-spacing: 0px;
+		}
+		.ztree li a.level1 span.button {	float:left; margin-left: 1px; visibility: visible;display:none;}
+		.ztree li span.button.switch.level1 {display:none;}
+		
+		.ztree li a.level2 {
+			width:160px;height: 20px; 
+			text-align: center; display:block;
+			 background-color: #79C6BD ;
+			  border:1px silver solid;
+		}
+		.ztree li a.level2 span {
+			display: block; color: white;
+			 padding-top:1px; font-size:12px; 
+			font-weight: bold;word-spacing: 0px;
+		}
+		.ztree li a.level2 span.button {	float:left; margin-left: 1px; visibility: visible;display:none;}
+		.ztree li span.button.switch.level2 {display:none;}
+		
+		
 	</style>
      
      
@@ -72,60 +102,6 @@
 	  			 <ul id="treeDemo" class="ztree"></ul>  
 	  		</div>
 	  		<div id="content" class="col-lg-8 col-md-8 col-md-offset-1 col-sm-8 content">
-	  		<!--  
-	  			<div id="jquery_jplayer_1"></div>
-				<div id="jp_container_1">
-				 <a href="#" class="jp-play">播放</a>
-				 <a href="#" class="jp-pause">暂停</a>
-				</div>
-				-->
-				<!--  
-					<div id="jquery_jplayer_1" class="jp-jplayer"></div>
-
-					<div id="jp_container_1" class="jp-audio">
-						<div class="jp-type-single">
-							<div class="jp-gui jp-interface">
-								<ul class="jp-controls">
-									<li><a href="javascript:;" class="jp-play" tabindex="1">play</a></li>
-									<li><a href="javascript:;" class="jp-pause" tabindex="1">pause</a></li>
-									<li><a href="javascript:;" class="jp-stop" tabindex="1">stop</a></li>
-									<li><a href="javascript:;" class="jp-mute" tabindex="1" title="mute">mute</a></li>
-									<li><a href="javascript:;" class="jp-unmute" tabindex="1" title="unmute">unmute</a></li>
-									<li><a href="javascript:;" class="jp-volume-max" tabindex="1" title="max volume">max volume</a></li>
-								</ul>
-								<div class="jp-progress">
-									<div class="jp-seek-bar">
-										<div class="jp-play-bar"></div>
-									</div>
-								</div>
-								<div class="jp-volume-bar">
-									<div class="jp-volume-bar-value"></div>
-								</div>
-								<div class="jp-time-holder">
-									<div class="jp-current-time"></div>
-									<div class="jp-duration"></div>
-			
-									<ul class="jp-toggles">
-										<li><a href="javascript:;" class="jp-repeat" tabindex="1" title="repeat">repeat</a></li>
-										<li><a href="javascript:;" class="jp-repeat-off" tabindex="1" title="repeat off">repeat off</a></li>
-									</ul>
-								</div>
-							</div>
-							<div class="jp-title">
-								<ul>
-									<li>Cro Magnon Man</li>
-								</ul>
-							</div>
-							<div class="jp-no-solution">
-								<span>Update Required</span>
-								To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
-							</div>
-						</div>
-					</div>
-					-->
-					
-					
-					
 						<div id="jp_container_1" class="jp-video jp-video-360p">
 							<div class="jp-type-single">
 								<div id="jquery_jplayer_1" class="jp-jplayer"></div>
@@ -162,7 +138,7 @@
 										</div>
 										<div class="jp-title">
 											<ul>
-												<li>Big Buck Bunny Trailer</li>
+												<li id="jp-title_li"></li>
 											</ul>
 										</div>
 									</div>

@@ -36,70 +36,18 @@ $(function() {
 			simpleData: {
 			 	idKey:"id",
             	pIdKey:"pid",
-            	rootPid:null,
 				enable: true
 			}
 		},
 		callback: {
-//			onCheck: onCheck,
-			onNodeCreated: this.onNodeCreated,
-//			beforeClick: this.beforeClick,
-//			onClick: this.onClickTree
-			
+			onClick:onClickTree
 		}
 	};
 	
 	
 	
-	function beforeClick(treeId, node) {
-		if (node.isParent) {
-			if (node.level === 0) {
-				var pNode = curMenu;
-				while (pNode && pNode.level !==0) {
-					pNode = pNode.getParentNode();
-				}
-				if (pNode !== node) {
-					var a = $("#" + pNode.tId + "_a");
-					a.removeClass("cur");
-					zTree_Menu.expandNode(pNode, false);
-				}
-				a = $("#" + node.tId + "_a");
-				a.addClass("cur");
-
-				var isOpen = false;
-				for (var i=0,l=node.children.length; i<l; i++) {
-					if(node.children[i].open) {
-						isOpen = true;
-						break;
-					}
-				}
-				if (isOpen) {
-					zTree_Menu.expandNode(node, true);
-					curMenu = node;
-				} else {
-					zTree_Menu.expandNode(node.children[0].isParent?node.children[0]:node, true);
-					curMenu = node.children[0];
-				}
-			} else {
-				zTree_Menu.expandNode(node);
-			}
-		}
-		return !node.isParent;
-	}
-	
-	function onClickTree(e, treeId, node) {
-			alert(node);
-	}
-	
-	
-	
-	var stream =  {
-				poster: "http://www.jplayer.org/video/poster/Big_Buck_Bunny_Trailer_480x270.png"
-			};
-
-	
-	function onCheck(e, treeId, treeNode) {
-		stream = {
+	function onClickTree(e, treeId, treeNode) {
+			stream = {
 				m4v: treeNode.videoUrl,
 				ogv: treeNode.videoUrl,
 				webmv:treeNode.videoUrl,
@@ -123,7 +71,17 @@ $(function() {
 				smoothPlayBar: true,
 				keyEnabled: true
 			});
+			
+			$("#jp-title_li").empty().append(treeNode.bak);
+			
 	}
+	
+	
+	
+	var stream =  {
+				poster: "http://www.jplayer.org/video/poster/Big_Buck_Bunny_Trailer_480x270.png"
+			};
+
 
 	$.ajax({
 	   type: "POST",
