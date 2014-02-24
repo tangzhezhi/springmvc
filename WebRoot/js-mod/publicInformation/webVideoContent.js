@@ -19,6 +19,73 @@ $(function() {
 		
 		
 	var zNodes = "";
+	
+	var setting = {
+		view: {
+			selectedMulti: false
+		},
+		check: {
+			enable: true,
+			chkStyle: "radio",
+			radioType: "level"
+		},
+		data: {
+			simpleData: {
+			 	idKey:"id",
+            	pIdKey:"pid",
+				enable: true
+			}
+		},
+		callback: {
+			onCheck: onCheck
+		}
+	};
+	
+	$.ajax({
+	   type: "POST",
+	   url:"../../exam/queryVideoTree?random"+parseInt(Math.random()*100000),
+       dataType:'json',
+       async:false, 
+	   success: function(data){
+			zNodes = data.tree;
+			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+	   }
+	});
+	
+	
+	function beforeCheck(treeId, treeNode){
+		var contents = " ";
+		 $("#content").empty().append(contents);
+	}
+	
+	
+	function onCheck(e, treeId, treeNode) {
+			var stream = {
+			  title: "流音乐测试",
+			  webm:"http://www.jplayer.org/video/webm/Big_Buck_Bunny_Trailer.webm",
+			  m4a:"http://www.jplayer.org/audio/m4a/TSP-01-Cro_magnon_man.m4a",
+			  oga:"http://www.jplayer.org/audio/ogg/TSP-01-Cro_magnon_man.ogg"
+		 	};
+		
+		$("#jquery_jplayer_1").jPlayer({
+			ready: function () {
+				$(this).jPlayer("setMedia", stream);
+			},
+			swfPath: "../../resources/js/jPlay/js/",
+			supplied: "webmv, ogv, m4v",
+			size: {
+				width: "640px",
+				height: "360px",
+				cssClass: "jp-video-360p"
+			},
+			smoothPlayBar: true,
+			keyEnabled: true
+		});
+		 
+	}	
+		
+		
+		
 	var stream =  {
 				poster: "http://www.jplayer.org/video/poster/Big_Buck_Bunny_Trailer_480x270.png"
 			};
@@ -133,7 +200,6 @@ $(function() {
 //			keyEnabled: true
 //		});
 		
-		
 //		$("#jquery_jplayer_1").jPlayer({
 //		   ready: function () {
 //		    $(this).jPlayer("setMedia", {
@@ -191,6 +257,25 @@ $(function() {
 //	});
 	
 	
-		
+//	$("#jquery_jplayer_1").jPlayer({
+//		ready: function () {
+//			$(this).jPlayer("setMedia", {
+//				m4v: "http://www.jplayer.org/video/m4v/Big_Buck_Bunny_Trailer.m4v",
+//				ogv: "http://www.jplayer.org/video/ogv/Big_Buck_Bunny_Trailer.ogv",
+//				webmv: "http://www.jplayer.org/video/webm/Big_Buck_Bunny_Trailer.webm",
+//				poster: "http://www.jplayer.org/video/poster/Big_Buck_Bunny_Trailer_480x270.png"
+//			});
+//		},
+//		swfPath: "../../resources/js/jPlay/js/",
+//		supplied: "webmv, ogv, m4v",
+//		size: {
+//			width: "640px",
+//			height: "360px",
+//			cssClass: "jp-video-360p"
+//		},
+//		smoothPlayBar: true,
+//		keyEnabled: true
+//	});
+
 });
 
