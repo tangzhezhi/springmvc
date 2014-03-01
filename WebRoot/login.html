@@ -5,6 +5,7 @@
 		<link rel="stylesheet" type="text/css"
 			href="resources/css/bootstrap-theme.css" />
 		<link 	href="resources/css/bootstrap.css"  rel="stylesheet" media="screen" />
+		<link rel="stylesheet" href="resources/css/bootstrapValidator.css"/>
 		<link 	href="css-mod/system/login.css"  rel="stylesheet"  />
 		<script type="text/javascript" src="resources/js/html5shiv.js"></script>
 		<script type="text/javascript" src="resources/js/respond.min.js"></script>
@@ -13,6 +14,8 @@
 		<script type="text/javascript" src="resources/js/bootstrap.js"></script>
 		<script type="text/javascript" src="resources/js/jquery.form.js"></script>
 		<script type="text/javascript" src="resources/js/jquery.md5.js"></script>
+		<script type="text/javascript" src="resources/js/jquery.validator.js"></script>
+		<script type="text/javascript" src="resources/js//bootstrapValidator.js"></script>
 		<script type="text/javascript" src="js-mod/system/login.js"></script>
 		<title>系统</title>
 	</head>
@@ -21,11 +24,13 @@
 			<div class="row">
 		 		 <div class="col-md-5 col-md-offset-4 panel panel-default ">
 		 		 	<h1 class="margin-base-vertical text-center">欢迎登录</h1>
-		 		 	<form id="loginForm" action="login/userLogin" method="post" class="margin-base-vertical">
-			 		 	<p class="input-group">
-			 		 	 	<span class="input-group-addon">*<span class="icon-envelope"></span></span>
-							<input type="text" id="userName" name="userName"  class="form-control input-lg"  placeholder="用户名"/>
-						</p>
+		 		 	<form id="loginForm" action="login/userLogin" method="post" class="margin-base-vertical bootstrap-validator-form">
+			 		 	<div class="form-group">
+			 		 		<p class="input-group">
+			 		 			<span class="input-group-addon">*<span class="icon-envelope"></span></span>
+								<input type="text" id="userName" name="userName"  class="form-control input-lg"  placeholder="用户名"/>
+			 		 		</p>
+						</div>
 						<br />
 						<p class="input-group">
 						<span class="input-group-addon">*<span class="icon-envelope"></span></span>
