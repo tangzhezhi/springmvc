@@ -13,18 +13,7 @@ $(function() {
 
 function showRequest(formData, jqForm, options) {
 	var userName = $("#userName").val();
-	if (userName == "") {
-		$("#msg").html("姓名不能为空！");
-		return false;
-	}
-
-	var userPwd = $("#userPwd").val();
-	if (userPwd == "") {
-		$("#msg").html("年龄不能为空！");
-		return false;
-	}
-	$("#msg").html("正在提交...");
-
+	$("#userPwd").val($.md5($("#userPwd").val()));
 	return true;
 }
 
