@@ -106,5 +106,17 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/activation-1.1.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mail-1.5.0-b01.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/IKAnalyzer2012FF_u1.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/junit-4.10.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/lucene-core-4.7.0.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/lucene-highlighter-4.3.0.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/lucene-memory-4.3.0.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/lucene-queries-4.3.0.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/lucene-queryparser-4.7.0.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mmseg4j-analysis-1.9.1.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mmseg4j-core-1.9.1.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mmseg4j-solr-1.9.1.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/tika-app-1.5.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>

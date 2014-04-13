@@ -62,7 +62,6 @@
 		</where>
 	</select>
 	 
-	 
 	 <!-- 查询分页 -->
 	<select id="selectUserAll" parameterType="Page" resultMap="PageUser" >   
 		select  

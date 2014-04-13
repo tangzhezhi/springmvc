@@ -35,6 +35,10 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias alias="OpinionDTO" type="org.tang.jpa.dto.publicInformation.OpinionDTO"/>
 		<typeAlias alias="EmailDTO" type="org.tang.jpa.dto.publicInformation.EmailDTO"/>
 		<typeAlias alias="Page" type="org.tang.jpa.utils.Page"/>
+		
+		
+		<!-- 移动 -->		
+		<typeAlias alias="MobileUserDTO" type="org.tang.jpa.dto.mobile.MobileUserDTO"/>
 	</typeAliases>
 	
 	<!-- 配置数据库分页的实现 -->  
@@ -58,6 +62,10 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		 <mapper resource="org/tang/jpa/config/publicInformation/Article.xml" /> 
 		 <mapper resource="org/tang/jpa/config/publicInformation/Opinion.xml" /> 
 		 <mapper resource="org/tang/jpa/config/publicInformation/Video.xml" /> 
+		 
+		 
+		 <!-- 移动客户端 -->
+		 <mapper resource="org/tang/jpa/config/mobile/MobileUser.xml" /> 
 	</mappers>
 </configuration>
 

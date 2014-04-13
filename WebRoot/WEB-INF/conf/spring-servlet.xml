@@ -77,6 +77,10 @@
 			<mvc:exclude-mapping path="/public/*/*"/>
 			<mvc:exclude-mapping path="/public/*/*/*"/>
 			<mvc:exclude-mapping path="/login.html"/>
+			
+			<mvc:exclude-mapping path="/mobile/*"/>
+			<mvc:exclude-mapping path="/mobile/*/*"/>
+			<mvc:exclude-mapping path="/mobile/*/*/*"/>
             <bean class="org.tang.jpa.interceptor.AllInterceptor"/> 
 		</mvc:interceptor>
 	</mvc:interceptors>
