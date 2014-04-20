@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tang.jpa.dao.mobile.AttendanceDao">
+
+	<resultMap type="AttendanceDTO" id="AttendanceDTO">
+    	<result column="id"  property="id" />
+    	<result column="userId"  property="userId" />
+    	<result column="userName"  property="userName" />
+    	<result column="createTime"  property="createTime" />
+    	<result column="gps"  property="gps" />
+    	<result column="address"  property="address" />
+	</resultMap>
+	
+	<resultMap type="Page" id="PageAttendance">
+		<result column="totalRecord" property="totalRecord" />
+		<result  column="totalPage" property="totalPage" />
+		<result column="pageNo" property="pageNo" />
+		<result column="pageSize"  property="pageSize" />
+		<collection property="results" ofType="AttendanceDTO">
+    		<result column="id"  property="id" />
+    		<result column="userId"  property="userId" />
+    		<result column="userName"  property="userName" />
+    		<result column="createTime"  property="createTime" />
+    		<result column="gps"  property="gps" />
+    		<result column="address"  property="address" />
+    	</collection>
+	</resultMap>
+
+		
+	 <!-- 查询分页 -->
+	<select id="selectAttendanceAll" parameterType="Page" resultMap="PageAttendance" >   
+		select  
+    			t.id,
+    			t.userId,
+    			t.userName,
+    			t.createTime,
+    			t.gps,
+    			t.address
+		 from T_ATTENDANCE t
+		<where>
+			 1=1 
+    		<if test="params.id != null">
+			 	 and  t.id   =  #{params.id}
+    		</if>
+    		<if test="params.userId != null">
+			 	 and  t.userId   =  #{params.userId}
+    		</if>
+    		<if test="params.userName != null">
+			 	 and  t.userName   =  #{params.userName}
+    		</if>
+    		<if test="params.createTime != null">
+    			<![CDATA[  and  t.createTime   <  #{params.createTime} ]]>
+    		</if>
+    		<if test="params.gps != null">
+			 	 and  t.gps   =  #{params.gps}
+    		</if>
+    		<if test="params.address != null">
+			 	 and  t.address   =  #{params.address}
+    		</if>
+		</where>
+	</select>
+	
+	<select id="selectAttendance" parameterType="AttendanceDTO" resultMap="AttendanceDTO" >   
+		select  
+    			t.id,
+    			t.userId,
+    			t.userName,
+    			t.createTime,
+    			t.gps,
+    			t.address
+		 from T_ATTENDANCE t
+		<where>
+			 1=1 
+    		<if test="userId != null">
+			 	 and  t.userId   =  #{userId}
+    		</if>
+    		<if test="createTime != null">
+    			<![CDATA[  and  t.createTime   <  #{createTime} ]]>
+    		</if>
+		</where>
+	</select>
+	
+	
+	
+	
+	<!-- 向数据库中插入资源记录-->
+	<insert id="insertAttendance" parameterType="AttendanceDTO">    
+		insert into T_ATTENDANCE(
+    			t.id,
+    			t.userId,
+    			t.userName,
+    			t.createTime,
+    			t.gps,
+    			t.address
+		)
+		values(
+    			#{id, jdbcType=VARCHAR},
+    			#{userId, jdbcType=VARCHAR},
+    			#{userName, jdbcType=VARCHAR},
+    			#{createTime, jdbcType=VARCHAR},
+    			#{gps, jdbcType=VARCHAR},
+    			#{address, jdbcType=VARCHAR}
+		)
+	</insert>
+
+
+	
+	
+	  <!-- 更新库中的资源 -->
+	<update id="updateAttendance" parameterType="AttendanceDTO">   
+		update T_ATTENDANCE  
+		<set>
+    			<if test="gps != null and gps != '' ">gps=#{gps},</if>
+    			<if test="address != null and address != '' ">address=#{address},</if>
+    	</set>
+    	where userId=#{userId} and createTime = #{createTime}
+	</update>
+	
+	<!-- 删除-->
+	<delete id="deleteAttendance" parameterType="AttendanceDTO">    
+		delete from T_ATTENDANCE  where userid=  #{userId} and createTime = #{createTime}
+	</delete>
+	
+	
+</mapper>
