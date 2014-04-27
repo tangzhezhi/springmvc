@@ -63,7 +63,7 @@ public class AttendanceController {
     }  
 	
 	
-	@RequestMapping(value = "/addAttendance", method = RequestMethod.POST)  
+	@RequestMapping(value = "/addAttendance", method = {RequestMethod.POST , RequestMethod.GET})  
     @ResponseBody  
     public String addAttendance(
 				@RequestParam(value="userId",required=false) String UserId,
@@ -82,16 +82,16 @@ public class AttendanceController {
 	       
 	        int flag =  attendanceService.insertAttendance(rdto);
 	        if(flag == 1){
-	        	return MyConstants.ADDSUCCESS.getName();
+	        	return "SUCCESS";
 	        }
 	        else{
-	        	return MyConstants.ADDFAIL.getName();
+	        	return "FAILED";
 	        }
     }
 	
 	
 	
-	@RequestMapping(value = "/modifyAttendance", method = RequestMethod.POST)  
+	@RequestMapping(value = "/modifyAttendance", method = {RequestMethod.POST , RequestMethod.GET})  
     @ResponseBody  
     public String modifyAttendance(
 				@RequestParam(value="userId",required=false) String UserId,
@@ -108,16 +108,16 @@ public class AttendanceController {
         		rdto.setAddress(Address);
 	        int flag =  attendanceService.updateAttendance(rdto);
 	        if(flag == 1){
-	        	return MyConstants.MODIFYSUCCESS.getName();
+	        	return "SUCCESS";
 	        }
 	        else{
-	        	return MyConstants.MODIFYFAIL.getName();
+	        	return "FAILED";
 	        }
     }
 	
 	
 	
-	@RequestMapping(value = "/deleteAttendance", method = RequestMethod.POST)  
+	@RequestMapping(value = "/deleteAttendance", method = {RequestMethod.POST , RequestMethod.GET})  
     @ResponseBody  
     public String deleteAttendance(@RequestParam(value="userId",required=true) String userId,
     		@RequestParam(value="createTime",required=false) String CreateTime) {  
@@ -126,10 +126,10 @@ public class AttendanceController {
 			rdto.setCreateTime(CreateTime);
 	        int flag =  attendanceService.deleteAttendance(rdto);
 	        if(flag == 1){
-	        	return MyConstants.DELSUCCESS.getName();
+	        	return "SUCCESS";
 	        }
 	        else{
-	        	return MyConstants.DELFAIL.getName();
+	        	return "FAILED";
 	        }
     }
 	

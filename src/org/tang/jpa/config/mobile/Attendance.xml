@@ -75,7 +75,7 @@
 			 	 and  t.userId   =  #{userId}
     		</if>
     		<if test="createTime != null">
-    			<![CDATA[  and  t.createTime   <  #{createTime} ]]>
+    			<![CDATA[  and  t.createTime   >  #{createTime} ]]>
     		</if>
 		</where>
 	</select>
@@ -85,7 +85,7 @@
 	
 	<!-- 向数据库中插入资源记录-->
 	<insert id="insertAttendance" parameterType="AttendanceDTO">    
-		insert into T_ATTENDANCE(
+		insert into T_ATTENDANCE t(
     			t.id,
     			t.userId,
     			t.userName,
@@ -108,7 +108,7 @@
 	
 	  <!-- 更新库中的资源 -->
 	<update id="updateAttendance" parameterType="AttendanceDTO">   
-		update T_ATTENDANCE  
+		update T_ATTENDANCE   
 		<set>
     			<if test="gps != null and gps != '' ">gps=#{gps},</if>
     			<if test="address != null and address != '' ">address=#{address},</if>
