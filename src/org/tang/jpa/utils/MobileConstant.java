@@ -16,4 +16,8 @@ public class MobileConstant {
 	
 	public static final int attendance_fail = 8002; 
 	
+	public static final int attendance_upload_success = 1003; 
+	
+	public static final int attendance_upload_fail = 8003; 
+	
 }

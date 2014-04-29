@@ -72,6 +72,7 @@ public class AttendanceController {
 				@RequestParam(value="gps",required=false) String Gps,
 				@RequestParam(value="address",required=false) String Address
     		) {  
+			String result="";
 	        	AttendanceDTO rdto = new AttendanceDTO();
 	        	rdto.setId(UUID.randomUUID().toString());
 	        	rdto.setUserId(UserId);
@@ -81,12 +82,20 @@ public class AttendanceController {
 	        	rdto.setAddress(Address);
 	       
 	        int flag =  attendanceService.insertAttendance(rdto);
+	        
+	        MobileBaseRepDTO mbt = new MobileBaseRepDTO();
+	        Gson gson = new Gson();  
+	    	mbt.setSessionKey("examTang");
+        	mbt.setMsgFlag(MobileConstant.attendance_success);
 	        if(flag == 1){
-	        	return "SUCCESS";
+	        	mbt.setMsgFlag(MobileConstant.attendance_upload_success);
 	        }
 	        else{
-	        	return "FAILED";
+	        	mbt.setMsgFlag(MobileConstant.attendance_upload_fail);
 	        }
+	        
+	        result = gson.toJson(mbt);  
+	        return result;  
     }
 	
 	
