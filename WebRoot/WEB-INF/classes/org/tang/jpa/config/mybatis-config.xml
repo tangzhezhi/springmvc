@@ -40,6 +40,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<!-- 移动 -->		
 		<typeAlias alias="MobileUserDTO" type="org.tang.jpa.dto.mobile.MobileUserDTO"/>
 		<typeAlias alias="AttendanceDTO" type="org.tang.jpa.dto.mobile.AttendanceDTO"/>
+		<typeAlias alias="AttendanceGraphDTO" type="org.tang.jpa.dto.mobile.AttendanceGraphDTO"/>
 	</typeAliases>
 	
 	<!-- 配置数据库分页的实现 -->  

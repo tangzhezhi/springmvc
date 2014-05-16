@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.tang.jpa.dao.mobile.AttendanceDao">
 
-	<resultMap type="AttendanceDTO" id="AttendanceDTO">
+	<resultMap type="AttendanceGraphDTO" id="AttendanceGraphDTO">
     	<result column="id"  property="id" />
     	<result column="userId"  property="userId" />
     	<result column="userName"  property="userName" />
@@ -11,6 +11,7 @@
     	<result column="address"  property="address" />
     	<result column="latitude"  property="latitude" />
     	<result column="longitude"  property="longitude" />
+    	<result column="photoUrl"  property="photoUrl" />
 	</resultMap>
 	
 	<resultMap type="Page" id="PageAttendance">
@@ -18,7 +19,7 @@
 		<result  column="totalPage" property="totalPage" />
 		<result column="pageNo" property="pageNo" />
 		<result column="pageSize"  property="pageSize" />
-		<collection property="results" ofType="AttendanceDTO">
+		<collection property="results" ofType="AttendanceGraphDTO">
     		<result column="id"  property="id" />
     		<result column="userId"  property="userId" />
     		<result column="userName"  property="userName" />
@@ -27,6 +28,7 @@
     		<result column="address"  property="address" />
     		<result column="latitude"  property="latitude" />
     		<result column="longitude"  property="longitude" />
+    		<result column="photoUrl"  property="photoUrl" />
     	</collection>
 	</resultMap>
 
@@ -41,8 +43,9 @@
     			t.gps,
     			t.address,
     			t.latitude,
-    			t.longitude
-		 from T_ATTENDANCE t
+    			t.longitude,
+    			t.photoUrl
+		 from T_ATTENDANCE_GRAPH t
 		<where>
 			 1=1 
     		<if test="params.id != null">
@@ -66,7 +69,7 @@
 		</where>
 	</select>
 	
-	<select id="selectAttendance" parameterType="AttendanceDTO" resultMap="AttendanceDTO" >   
+	<select id="selectAttendance" parameterType="AttendanceGraphDTO" resultMap="AttendanceGraphDTO" >   
 		select  
     			t.id,
     			t.userId,
@@ -75,8 +78,9 @@
     			t.gps,
     			t.address,
     			t.latitude,
-    			t.longitude
-		 from T_ATTENDANCE t
+    			t.longitude,
+    			t.photoUrl
+		 from T_ATTENDANCE_GRAPH t
 		<where>
 			 1=1 
     		<if test="userId != null">
@@ -92,8 +96,8 @@
 	
 	
 	<!-- 向数据库中插入资源记录-->
-	<insert id="insertAttendance" parameterType="AttendanceDTO">    
-		insert into T_ATTENDANCE t(
+	<insert id="insertAttendance" parameterType="AttendanceGraphDTO">    
+		insert into T_ATTENDANCE_GRAPH t(
     			t.id,
     			t.userId,
     			t.userName,
@@ -101,7 +105,8 @@
     			t.gps,
     			t.address,
     			t.latitude,
-    			t.longitude
+    			t.longitude,
+    			t.photoUrl
 		)
 		values(
     			#{id, jdbcType=VARCHAR},
@@ -111,7 +116,8 @@
     			#{gps, jdbcType=VARCHAR},
     			#{address, jdbcType=VARCHAR},
     			#{latitude, jdbcType=VARCHAR},
-    			#{longitude, jdbcType=VARCHAR}
+    			#{longitude, jdbcType=VARCHAR},
+    			#{photoUrl, jdbcType=VARCHAR}
 		)
 	</insert>
 
@@ -119,8 +125,8 @@
 	
 	
 	  <!-- 更新库中的资源 -->
-	<update id="updateAttendance" parameterType="AttendanceDTO">   
-		update T_ATTENDANCE   
+	<update id="updateAttendance" parameterType="AttendanceGraphDTO">   
+		update T_ATTENDANCE_GRAPH   
 		<set>
     			<if test="gps != null and gps != '' ">gps=#{gps},</if>
     			<if test="address != null and address != '' ">address=#{address},</if>
@@ -129,8 +135,8 @@
 	</update>
 	
 	<!-- 删除-->
-	<delete id="deleteAttendance" parameterType="AttendanceDTO">    
-		delete from T_ATTENDANCE  where userid=  #{userId} and createTime = #{createTime}
+	<delete id="deleteAttendance" parameterType="AttendanceGraphDTO">    
+		delete from T_ATTENDANCE_GRAPH  where userid=  #{userId} and createTime = #{createTime}
 	</delete>
 	
 	

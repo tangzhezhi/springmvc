@@ -4,7 +4,7 @@
  */
 
 package org.tang.jpa.dto.mobile;
-public class AttendanceDTO {
+public class AttendanceGraphDTO {
 
 	
     private java.lang.String id;
@@ -15,7 +15,7 @@ public class AttendanceDTO {
     private java.lang.String address;
 	private String latitude;
 	private String longitude;
-    
+    private String photoUrl;
     
 	
 	public java.lang.String getId() {
@@ -75,6 +75,14 @@ public class AttendanceDTO {
 
 	public void setLongitude(String longitude) {
 		this.longitude = longitude;
+	}
+
+	public String getPhotoUrl() {
+		return photoUrl;
+	}
+
+	public void setPhotoUrl(String photoUrl) {
+		this.photoUrl = photoUrl;
 	}
 
 }
