@@ -20,4 +20,8 @@ public class MobileConstant {
 	
 	public static final int attendance_upload_fail = 8003; 
 	
+	public static final int contact_query_success = 1004; 
+	
+	public static final int contact_query_fail = 8004; 
+	
 }

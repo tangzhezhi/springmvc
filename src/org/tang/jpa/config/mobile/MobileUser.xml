@@ -7,8 +7,20 @@
 		<result column="username" property="userName" />
 		<result column="userpwd" property="userPwd" />
 		<result column="usertype" property="userType" />
+		<result column="orgid" property="orgId" />
 	</resultMap>
 	
+	
+	<resultMap type="UserInfoDTO" id="UserInfoDTO">
+		<id 	column="userid" property="userId" />
+		<result column="username" property="userName" />
+		<result column="usertype" property="userType" />
+		<result column="usersex" property="sex" />
+		<result column="userphone" property="phone" />
+		<result column="picUrl" property="picUrl" />
+		<result column="orgid" property="orgId" />
+		<result column="departmentid" property="departId" />
+	</resultMap>
 	
 	
 
@@ -27,6 +39,21 @@
     		</if>
 		</where>
 	</select>
-
+	
+	
+	<select id="queryContactUserInfo" parameterType="MobileUserDTO" resultMap="UserInfoDTO" >   
+		select 
+		u.userid,u.username,
+		u.usertype,u.usersex,u.userphone,u.orgid,u.departmentid from t_user u 
+		<where>
+			 1=1
+			<if test="orgId != null">
+			 	and u.orgid = #{orgId}
+    		</if>
+    		<if test="departmentId != null">
+				and u.departmentid = #{departmentId}
+    		</if>
+		</where>
+	</select>
 
 </mapper>

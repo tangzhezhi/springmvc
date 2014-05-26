@@ -1,9 +1,12 @@
 package org.tang.jpa.service.mobile;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tang.jpa.dao.mobile.MobileUserDao;
 import org.tang.jpa.dto.mobile.MobileUserDTO;
+import org.tang.jpa.dto.mobile.UserInfoDTO;
 
 @Service("mobileUserService")
 public class MobileUserService {
@@ -25,4 +28,22 @@ public class MobileUserService {
 		}
         return udto;
 	}
+
+	public List<UserInfoDTO> queryContactUserInfo(MobileUserDTO udto) {
+		
+		List<UserInfoDTO> udtoList = null;
+		try {
+			udtoList =  mobileUserDao.queryContactUserInfo(udto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        return udtoList;
+	}
+	
+	
+	
+	
+	
+	
+	
 }
