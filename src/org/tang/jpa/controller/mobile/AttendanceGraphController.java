@@ -86,6 +86,10 @@ public class AttendanceGraphController {
 				@RequestParam(value="longitude",required=false) String longitude,
 				@RequestParam(value="photo",required=false) MultipartFile file
     		) {  
+		
+		        MobileBaseRepDTO mbt = new MobileBaseRepDTO();
+		        Gson gson = new Gson();  
+		    	mbt.setSessionKey("examTang");
 				String result="";
 	        	AttendanceGraphDTO rdto = new AttendanceGraphDTO();
 	        	rdto.setId(UUID.randomUUID().toString());
@@ -110,15 +114,15 @@ public class AttendanceGraphController {
         	        file.transferTo(targetFile);
         	    } catch (Exception e) {
         	        e.printStackTrace();
-        	        return 
+        	        mbt.setMsgFlag(MobileConstant.attendance_upload_fail);
+        	        result = gson.toJson(mbt);  
+        	        return result;
         	    }
 	        	
 	        	
 	        int flag =  attendanceService.insertAttendanceGraph(rdto);
 	        
-	        MobileBaseRepDTO mbt = new MobileBaseRepDTO();
-	        Gson gson = new Gson();  
-	    	mbt.setSessionKey("examTang");
+
 	        if(flag == 1){
 	        	mbt.setMsgFlag(MobileConstant.attendance_upload_success);
 	        }
