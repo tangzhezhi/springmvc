@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.tang.jpa.dao.mobile.AttendanceDao">
+<mapper namespace="org.tang.jpa.dao.mobile.AttendanceGraphDao">
 
 	<resultMap type="AttendanceGraphDTO" id="AttendanceGraphDTO">
     	<result column="id"  property="id" />
@@ -67,6 +67,7 @@
 			 	 and  t.address   =  #{params.address}
     		</if>
 		</where>
+		order by t.createTime 
 	</select>
 	
 	<select id="selectAttendance" parameterType="AttendanceGraphDTO" resultMap="AttendanceGraphDTO" >   
@@ -90,6 +91,7 @@
     			<![CDATA[  and  t.createTime   >  #{createTime} ]]>
     		</if>
 		</where>
+		order by t.createTime 
 	</select>
 	
 	
