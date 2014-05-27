@@ -7,6 +7,7 @@ public class MobileUserDTO {
 	private String userPwd;
 	private int userType;
 	private String orgId;
+	private String departId;
 	
 	public String getUserId() {
 		return userId;
@@ -38,6 +39,13 @@ public class MobileUserDTO {
 	}
 	public void setOrgId(String orgId) {
 		this.orgId = orgId;
+	}
+	
+	public String getDepartId() {
+		return departId;
+	}
+	public void setDepartId(String departId) {
+		this.departId = departId;
 	}
 	@Override
 	public String toString() {

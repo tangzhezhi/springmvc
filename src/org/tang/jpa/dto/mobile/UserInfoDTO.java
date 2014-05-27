@@ -1,6 +1,5 @@
 package org.tang.jpa.dto.mobile;
 
-
 public  class UserInfoDTO  {
 	private String userId = "";
 	private String userName = "";
@@ -10,6 +9,12 @@ public  class UserInfoDTO  {
 	private String userType;
 	private String orgId;
 	private String departId;
+	
+	private String pushUserId;
+	
+	private String pushChannelId;
+	
+	private String deviceType;
 	
 	public String getUserId() {
 		return userId;
@@ -58,6 +63,34 @@ public  class UserInfoDTO  {
 	}
 	public void setDepartId(String departId) {
 		this.departId = departId;
+	}
+	
+	public String getPushUserId() {
+		return pushUserId;
+	}
+	public void setPushUserId(String pushUserId) {
+		this.pushUserId = pushUserId;
+	}
+	public String getPushChannelId() {
+		return pushChannelId;
+	}
+	public void setPushChannelId(String pushChannelId) {
+		this.pushChannelId = pushChannelId;
+	}
+	public String getDeviceType() {
+		return deviceType;
+	}
+	public void setDeviceType(String deviceType) {
+		this.deviceType = deviceType;
+	}
+	@Override
+	public String toString() {
+		return "UserInfoDTO [departId=" + departId + ", deviceType="
+				+ deviceType + ", orgId=" + orgId + ", phone=" + phone
+				+ ", picUrl=" + picUrl + ", pushChannelId=" + pushChannelId
+				+ ", pushUserId=" + pushUserId + ", sex=" + sex + ", userId="
+				+ userId + ", userName=" + userName + ", userType=" + userType
+				+ "]";
 	}
 	
 }

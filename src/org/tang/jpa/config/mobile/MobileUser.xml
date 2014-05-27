@@ -8,6 +8,7 @@
 		<result column="userpwd" property="userPwd" />
 		<result column="usertype" property="userType" />
 		<result column="orgid" property="orgId" />
+		<result column="departmentid" property="departId" />
 	</resultMap>
 	
 	
@@ -20,6 +21,9 @@
 		<result column="picUrl" property="picUrl" />
 		<result column="orgid" property="orgId" />
 		<result column="departmentid" property="departId" />
+		<result column="pushUserId" property="pushUserId" />
+		<result column="pushChannelId" property="pushChannelId" />
+		<result column="deviceType" property="deviceType" />
 	</resultMap>
 	
 	
@@ -28,7 +32,7 @@
 	<select id="selectMobileUserLoginInfo" parameterType="MobileUserDTO" resultMap="MobileUserDTO" >   
 		select 
 		u.userid,u.username,
-		u.usertype,u.userlevel from t_user u 
+		u.usertype,u.userlevel,u.orgid,u.departmentid from t_user u 
 		<where>
 			 1=1
 			<if test="userName != null">
@@ -50,10 +54,23 @@
 			<if test="orgId != null">
 			 	and u.orgid = #{orgId}
     		</if>
-    		<if test="departmentId != null">
-				and u.departmentid = #{departmentId}
+    		<if test="departId != null">
+				and u.departmentid = #{departId}
     		</if>
 		</where>
 	</select>
-
+	
+	
+	
+<!-- 更新库中的资源 -->
+	<update id="addPushInfo" parameterType="UserInfoDTO">   
+		update t_user   
+		<set>
+   			<if test="pushUserId != null and pushUserId != '' ">pushUserId=#{pushUserId},</if>
+   			<if test="pushChannelId != null and pushChannelId != '' ">pushChannelId=#{pushChannelId},</if>
+   			<if test="deviceType != null and deviceType != '' ">deviceType=#{deviceType},</if>
+    	</set>
+    	where userId=#{userId} 
+	</update>
+	
 </mapper>

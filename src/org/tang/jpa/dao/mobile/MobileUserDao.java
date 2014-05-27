@@ -11,5 +11,7 @@ public interface MobileUserDao {
     
 	public MobileUserDTO selectMobileUserLoginInfo(MobileUserDTO dto);
 
-	public List<UserInfoDTO> queryContactUserInfo(MobileUserDTO udto);  
+	public List<UserInfoDTO> queryContactUserInfo(MobileUserDTO udto);
+
+	public int addPushInfo(UserInfoDTO udto);  
 }

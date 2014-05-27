@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,23 +25,20 @@ public class ContactController {
 	
 	@RequestMapping(value = "/queryContactUserInfo", method = {RequestMethod.POST , RequestMethod.GET})  
     @ResponseBody  
-    public String  queryContactUserInfo(@RequestParam(value="orgId") String orgId) {  
-		String result = "";
+    public ModelMap   queryContactUserInfo(@RequestParam(value="orgId") String orgId) {  
+		ModelMap mm = new ModelMap();
 		MobileUserDTO udto = new MobileUserDTO();
         udto.setOrgId(orgId);
-        MobileBaseRepDTO mbt = new MobileBaseRepDTO();
-        Gson gson = new Gson();  
         
         List<UserInfoDTO> dtoList = mobileUserService.queryContactUserInfo(udto);
         if(dtoList!=null){
-        	mbt.setSessionKey("examTang");
-        	mbt.setMsgFlag(MobileConstant.contact_query_success);
-        	mbt.setResponse(gson.toJson(dtoList));
+        	mm.put("sessionKey", "examTang");
+        	mm.put("msgFlag", MobileConstant.contact_query_success);
+        	mm.put("response", dtoList);
         }
         else{
-        	mbt.setMsgFlag(MobileConstant.contact_query_fail);
+        	mm.put("msgFlag", MobileConstant.contact_query_fail);
         }
-        result = gson.toJson(mbt);  
-        return result;  //跳转  ;  
+        return mm;  //跳转  ;  
     }
 }

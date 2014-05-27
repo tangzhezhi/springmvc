@@ -2,12 +2,14 @@ package org.tang.jpa.controller.mobile;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.tang.jpa.dto.mobile.MobileBaseRepDTO;
 import org.tang.jpa.dto.mobile.MobileUserDTO;
+import org.tang.jpa.dto.mobile.UserInfoDTO;
 import org.tang.jpa.service.mobile.MobileUserService;
 import org.tang.jpa.utils.MobileConstant;
 
@@ -42,4 +44,30 @@ public class MobileLoginController {
         result = gson.toJson(mbt);  
         return result;  //跳转  ;  
     }
+	
+	@RequestMapping(value = "/addPushInfo", method = {RequestMethod.POST , RequestMethod.GET})  
+    @ResponseBody  
+    public ModelMap  addPushInfo(@RequestParam(value="userId") String userId,
+    		@RequestParam(value="pushUserId") String pushUserId,
+    		@RequestParam(value="pushChannelId") String pushChannelId,
+    		@RequestParam(value="deviceType") String deviceType) {  
+		UserInfoDTO udto = new UserInfoDTO();
+        udto.setPushChannelId(pushChannelId);
+        udto.setPushUserId(pushUserId);
+        udto.setDeviceType(deviceType);
+        udto.setUserId(userId);
+        int flag = 0;
+        ModelMap mm = new ModelMap();
+        flag = mobileUserService.addPushInfo(udto);
+        if(flag==1){
+        	mm.put("sessionKey", "examTang");
+        	mm.put("msgFlag", MobileConstant.pushInfo_upload_success);
+        }
+        else{
+        	mm.put("msgFlag", MobileConstant.pushInfo_upload_fail);
+        }
+        return mm;  //跳转  ;  
+    }
+	
+	
 }
