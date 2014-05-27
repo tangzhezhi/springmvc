@@ -1,7 +1,6 @@
 package org.tang.jpa.controller.mobile;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -9,13 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.tang.jpa.dto.mobile.MobileBaseRepDTO;
 import org.tang.jpa.dto.mobile.MobileUserDTO;
 import org.tang.jpa.dto.mobile.UserInfoDTO;
 import org.tang.jpa.service.mobile.MobileUserService;
 import org.tang.jpa.utils.MobileConstant;
-
-import com.google.gson.Gson;
 
 @Controller("contactController")  
 @RequestMapping("mobile")  

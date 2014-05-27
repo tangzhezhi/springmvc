@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -67,7 +68,7 @@ public class AttendanceGraphController {
 	
 	@RequestMapping(value = "/addAttendanceGraph", method = {RequestMethod.POST , RequestMethod.GET})  
     @ResponseBody  
-    public String addAttendance(
+    public ModelMap addAttendance(
 				@RequestParam(value="userId",required=false) String UserId,
 				@RequestParam(value="userName",required=false) String UserName,
 				@RequestParam(value="createTime",required=false) String CreateTime,
@@ -77,11 +78,8 @@ public class AttendanceGraphController {
 				@RequestParam(value="longitude",required=false) String longitude,
 				@RequestParam(value="photo",required=false) MultipartFile file
     		) {  
-		
-		        MobileBaseRepDTO mbt = new MobileBaseRepDTO();
-		        Gson gson = new Gson();  
-		    	mbt.setSessionKey("examTang");
-				String result="";
+				ModelMap mm = new ModelMap();
+		        mm.put("sessionKey", "examTang");
 	        	AttendanceGraphDTO rdto = new AttendanceGraphDTO();
 	        	rdto.setId(UUID.randomUUID().toString());
 	        	rdto.setUserId(UserId);
@@ -103,11 +101,11 @@ public class AttendanceGraphController {
         	    // 保存
         	    try {
         	        file.transferTo(targetFile);
+        	        rdto.setPhotoUrl(targetFile.getAbsolutePath());
         	    } catch (Exception e) {
         	        e.printStackTrace();
-        	        mbt.setMsgFlag(MobileConstant.attendance_upload_fail);
-        	        result = gson.toJson(mbt);  
-        	        return result;
+                	mm.put("msgFlag", MobileConstant.attendance_upload_fail);
+        	        return mm;
         	    }
 	        	
 	        	
@@ -115,14 +113,12 @@ public class AttendanceGraphController {
 	        
 
 	        if(flag == 1){
-	        	mbt.setMsgFlag(MobileConstant.attendance_upload_success);
+	        	mm.put("msgFlag", MobileConstant.attendance_upload_success);
 	        }
 	        else{
-	        	mbt.setMsgFlag(MobileConstant.attendance_upload_fail);
+	        	mm.put("msgFlag", MobileConstant.attendance_upload_fail);
 	        }
-	        
-	        result = gson.toJson(mbt);  
-	        return result;  
+	        return mm;  
     }
 	
 	

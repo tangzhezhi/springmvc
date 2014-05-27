@@ -64,7 +64,7 @@
 			 	 and  t.address   =  #{params.address}
     		</if>
 		</where>
-		order by t.createTime 
+		order by t.createTime desc
 	</select>
 	
 	<select id="selectAttendance" parameterType="AttendanceDTO" resultMap="AttendanceDTO" >   
@@ -87,7 +87,7 @@
     			<![CDATA[  and  t.createTime   >  #{createTime} ]]>
     		</if>
 		</where>
-		order by t.createTime 
+		order by t.createTime desc
 	</select>
 	
 	
