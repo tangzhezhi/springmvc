@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tang.jpa.dao.mobile.ChatMsgDao">
+
+	<resultMap type="ChatMsgDTO" id="ChatMsgDTO">
+    	<result column="id"  property="id" />
+    	<result column="fromUserId"  property="fromUserId" />
+    	<result column="toUserId"  property="toUserId" />
+    	<result column="content"  property="content" />
+    	<result column="createTime"  property="createTime" />
+    	<result column="state"  property="state" />
+    	<result column="sendTime"  property="sendTime" />
+	</resultMap>
+	
+	<resultMap type="Page" id="PageChatMsg">
+		<result column="totalRecord" property="totalRecord" />
+		<result  column="totalPage" property="totalPage" />
+		<result column="pageNo" property="pageNo" />
+		<result column="pageSize"  property="pageSize" />
+		<collection property="results" ofType="ChatMsgDTO">
+    		<result column="id"  property="id" />
+    		<result column="fromUserId"  property="fromUserId" />
+    		<result column="toUserId"  property="toUserId" />
+    		<result column="content"  property="content" />
+    		<result column="createTime"  property="createTime" />
+    		<result column="state"  property="state" />
+    		<result column="sendTime"  property="sendTime" />
+    	</collection>
+	</resultMap>
+
+		
+	 <!-- 查询分页 -->
+	<select id="selectChatMsgAll" parameterType="Page" resultMap="PageResource" >   
+		select  
+    			t.id,
+    			t.fromUserId,
+    			t.toUserId,
+    			t.content,
+    			t.createTime,
+    			t.state,
+    			t.sendTime
+		 from T_CHAT_MSG t
+		<where>
+			 1=1 
+    		<if test="params.id != null">
+			 	 and  t.id   =  #{params.id}
+    		</if>
+    		<if test="params.fromUserId != null">
+			 	 and  t.fromUserId   =  #{params.fromUserId}
+    		</if>
+    		<if test="params.toUserId != null">
+			 	 and  t.toUserId   =  #{params.toUserId}
+    		</if>
+    		<if test="params.content != null">
+			 	 and  t.content   =  #{params.content}
+    		</if>
+    		<if test="params.createTime != null">
+			 	 and  t.createTime   =  #{params.createTime}
+    		</if>
+    		<if test="params.state != null">
+			 	 and  t.state   =  #{params.state}
+    		</if>
+    		<if test="params.sendTime != null">
+			 	 and  t.sendTime   =  #{params.sendTime}
+    		</if>
+		</where>
+	</select>
+	
+	
+	<!-- 向数据库中插入资源记录-->
+	<insert id="insertChatMsg" parameterType="ChatMsgDTO">    
+		insert into T_CHAT_MSG(
+    			t.id,
+    			t.fromUserId,
+    			t.toUserId,
+    			t.content,
+    			t.createTime,
+    			t.state,
+    			t.sendTime
+		)
+		values(
+    			#{id, jdbcType=VARCHAR},
+    			#{fromUserId, jdbcType=VARCHAR},
+    			#{toUserId, jdbcType=VARCHAR},
+    			#{content, jdbcType=VARCHAR},
+    			#{createTime, jdbcType=VARCHAR},
+    			#{state, jdbcType=VARCHAR},
+    			#{sendTime, jdbcType=VARCHAR}
+		)
+	</insert>
+
+
+	
+	
+	  <!-- 更新库中的资源 -->
+	<update id="updateChatMsg" parameterType="ChatMsgDTO">   
+		update T_CHAT_MSG  
+		<set>
+    			<if test="id != null and id != '' ">id=#{id},</if>
+    			<if test="fromUserId != null and fromUserId != '' ">fromUserId=#{fromUserId},</if>
+    			<if test="toUserId != null and toUserId != '' ">toUserId=#{toUserId},</if>
+    			<if test="content != null and content != '' ">content=#{content},</if>
+    			<if test="createTime != null and createTime != '' ">createTime=#{createTime},</if>
+    			<if test="state != null and state != '' ">state=#{state},</if>
+    			<if test="sendTime != null and sendTime != '' ">sendTime=#{sendTime},</if>
+    	</set>
+    	where chatMsgid=#{chatMsgid}
+	</update>
+	
+	<!-- 删除-->
+	<delete id="deleteChatMsg" parameterType="String">    
+		delete from T_CHAT_MSG  where chatMsgid=  #{chatMsgid}
+	</delete>
+	
+	
+</mapper>

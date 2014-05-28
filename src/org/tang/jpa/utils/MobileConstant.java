@@ -28,4 +28,8 @@ public class MobileConstant {
 	
 	public static final int pushInfo_upload_fail = 8005; 
 	
+	public static final int chat_msg_send_success = 1006; 
+	
+	public static final int chat_msg_send_fail = 8006; 
+	
 }
