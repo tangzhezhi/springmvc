@@ -10,6 +10,9 @@
     	<result column="createTime"  property="createTime" />
     	<result column="state"  property="state" />
     	<result column="sendTime"  property="sendTime" />
+    	<result column="pushuserid"  property="pushuserId" />
+    	<result column="pushchannelid"  property="pushChannelId" />
+    	<result column="devicetype"  property="deviceType" />
 	</resultMap>
 	
 	<resultMap type="Page" id="PageChatMsg">
@@ -25,12 +28,15 @@
     		<result column="createTime"  property="createTime" />
     		<result column="state"  property="state" />
     		<result column="sendTime"  property="sendTime" />
+    		<result column="pushuserid"  property="pushuserId" />
+	    	<result column="pushchannelid"  property="pushChannelId" />
+	    	<result column="devicetype"  property="deviceType" />
     	</collection>
 	</resultMap>
 
 		
 	 <!-- 查询分页 -->
-	<select id="selectChatMsgAll" parameterType="Page" resultMap="PageResource" >   
+	<select id="selectChatMsgAll" parameterType="Page" resultMap="PageChatMsg" >   
 		select  
     			t.id,
     			t.fromUserId,
@@ -67,9 +73,31 @@
 	</select>
 	
 	
+	 <!-- 查询推送信息-->
+	<select id="selectChatMsgWaitPush" parameterType="ChatMsgDTO" resultMap="ChatMsgDTO" >   
+		select  
+    			t.id,
+    			t.fromUserId,
+    			t.toUserId,
+    			t.content,
+    			t.createTime,
+    			t.state,
+    			t.sendTime,
+    			u.pushuserid,
+    			u.pushchannelid,
+    			u.devicetype
+		 from T_CHAT_MSG t left join t_user u on (t.toUserId = u.userid)
+		<where>
+			 1=1 and t.state   =  '0'  and u.pushuserid is not null  <![CDATA[  and  rownum   <  200]]>
+		</where>
+	</select>
+	
+	
+	
+	
 	<!-- 向数据库中插入资源记录-->
 	<insert id="insertChatMsg" parameterType="ChatMsgDTO">    
-		insert into T_CHAT_MSG(
+		insert into T_CHAT_MSG t (
     			t.id,
     			t.fromUserId,
     			t.toUserId,
@@ -96,21 +124,19 @@
 	<update id="updateChatMsg" parameterType="ChatMsgDTO">   
 		update T_CHAT_MSG  
 		<set>
-    			<if test="id != null and id != '' ">id=#{id},</if>
-    			<if test="fromUserId != null and fromUserId != '' ">fromUserId=#{fromUserId},</if>
-    			<if test="toUserId != null and toUserId != '' ">toUserId=#{toUserId},</if>
-    			<if test="content != null and content != '' ">content=#{content},</if>
-    			<if test="createTime != null and createTime != '' ">createTime=#{createTime},</if>
     			<if test="state != null and state != '' ">state=#{state},</if>
     			<if test="sendTime != null and sendTime != '' ">sendTime=#{sendTime},</if>
     	</set>
-    	where chatMsgid=#{chatMsgid}
+    	where id=#{id}
 	</update>
 	
 	<!-- 删除-->
 	<delete id="deleteChatMsg" parameterType="String">    
-		delete from T_CHAT_MSG  where chatMsgid=  #{chatMsgid}
+		delete from T_CHAT_MSG  where id=  #{id}
 	</delete>
+	
+	
+	
 	
 	
 </mapper>

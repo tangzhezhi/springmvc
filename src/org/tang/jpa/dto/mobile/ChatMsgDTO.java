@@ -18,6 +18,9 @@ public class ChatMsgDTO {
     private java.lang.String createTime;
     private java.lang.String state;
     private java.lang.String sendTime;
+    private String pushuserId;
+    private String pushChannelId;
+    private String deviceType;
 	
 	public java.lang.String getId() {
 		return this.id;
@@ -67,6 +70,30 @@ public class ChatMsgDTO {
 	
 	public void setSendTime(java.lang.String sendTime) {
 		this.sendTime = sendTime;
+	}
+
+	public String getPushuserId() {
+		return pushuserId;
+	}
+
+	public void setPushuserId(String pushuserId) {
+		this.pushuserId = pushuserId;
+	}
+
+	public String getPushChannelId() {
+		return pushChannelId;
+	}
+
+	public void setPushChannelId(String pushChannelId) {
+		this.pushChannelId = pushChannelId;
+	}
+
+	public String getDeviceType() {
+		return deviceType;
+	}
+
+	public void setDeviceType(String deviceType) {
+		this.deviceType = deviceType;
 	}
 
 }

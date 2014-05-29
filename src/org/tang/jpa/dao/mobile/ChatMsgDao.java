@@ -20,4 +20,7 @@ public interface ChatMsgDao  {
      
     public Page<?> selectChatMsgAll(Page<?> page);  
     
+    public List<ChatMsgDTO> selectChatMsgWaitPush();  
+    
+    
 }

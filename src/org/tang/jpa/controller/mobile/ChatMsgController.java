@@ -23,8 +23,7 @@ import org.tang.jpa.utils.MyConstants;
 import org.tang.jpa.utils.Page;
 
 @Controller("chatMsgController")  
-@RequestMapping("chatMsg")  
-@SessionAttributes("currentUser")
+@RequestMapping("mobile")  
 public class ChatMsgController {
 	@Autowired
 	private ChatMsgService chatMsgService;
@@ -51,10 +50,10 @@ public class ChatMsgController {
 	        
 
 	        if(flag == 1){
-	        	mm.put("msgFlag", MobileConstant.attendance_upload_success);
+	        	mm.put("msgFlag", MobileConstant.chat_msg_send_success);
 	        }
 	        else{
-	        	mm.put("msgFlag", MobileConstant.attendance_upload_fail);
+	        	mm.put("msgFlag", MobileConstant.chat_msg_send_fail);
 	        }
 	        return mm; 
     }

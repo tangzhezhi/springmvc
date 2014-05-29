@@ -42,7 +42,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias alias="AttendanceDTO" type="org.tang.jpa.dto.mobile.AttendanceDTO"/>
 		<typeAlias alias="AttendanceGraphDTO" type="org.tang.jpa.dto.mobile.AttendanceGraphDTO"/>
 		<typeAlias alias="UserInfoDTO" type="org.tang.jpa.dto.mobile.UserInfoDTO"/>
-		
+		<typeAlias alias="ChatMsgDTO" type="org.tang.jpa.dto.mobile.ChatMsgDTO"/>
 		
 	</typeAliases>
 	

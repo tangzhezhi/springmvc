@@ -23,11 +23,12 @@
 		destroy-method="close">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
 		<!-- 
+		<property name="url" value="jdbc:oracle:thin:@localhost:1523:orcl" />
 		<property name="url" value="jdbc:oracle:thin:@192.168.2.213:1521:orcl" />
 		 -->
-		<property name="url" value="jdbc:oracle:thin:@localhost:1523:orcl" />
-		<property name="username" value="exam" />
-		<property name="password" value="exam" />
+		<property name="url" value="jdbc:oracle:thin:@192.168.2.213:1521:orcl" />
+		<property name="username" value="tang" />
+		<property name="password" value="tang" />
 
 		<property name="filters" value="stat" />
 		<property name="queryTimeout" value="60000" />
