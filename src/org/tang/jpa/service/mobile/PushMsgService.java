@@ -21,6 +21,7 @@ import com.baidu.yun.channel.model.PushUnicastMessageRequest;
 import com.baidu.yun.channel.model.PushUnicastMessageResponse;
 import com.baidu.yun.core.log.YunLogEvent;
 import com.baidu.yun.core.log.YunLogHandler;
+import com.google.gson.Gson;
 
 @Service
 public class PushMsgService {
@@ -65,14 +66,16 @@ public class PushMsgService {
      });
 
      try {
-    	 
+    	 Gson gson = new Gson();
     	 for(ChatMsgDTO c :lists){
              // 4. 创建请求类对象
              PushUnicastMessageRequest request = new PushUnicastMessageRequest();
              request.setDeviceType(3);
              request.setChannelId(Long.valueOf(c.getPushChannelId()));
              request.setUserId(c.getPushuserId());
-             request.setMessage(c.getContent());
+             String jsonString = gson.toJson(c);
+             System.out.println("jsonString...."+jsonString);
+             request.setMessage(jsonString);
              // 5. 调用pushMessage接口
              PushUnicastMessageResponse response = channelClient
                      .pushUnicastMessage(request);

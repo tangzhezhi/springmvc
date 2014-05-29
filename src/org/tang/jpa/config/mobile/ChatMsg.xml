@@ -6,6 +6,8 @@
     	<result column="id"  property="id" />
     	<result column="fromUserId"  property="fromUserId" />
     	<result column="toUserId"  property="toUserId" />
+    	<result column="fromUserName"  property="fromUserName" />
+    	<result column="toUserName"  property="toUserName" />
     	<result column="content"  property="content" />
     	<result column="createTime"  property="createTime" />
     	<result column="state"  property="state" />
@@ -85,8 +87,11 @@
     			t.sendTime,
     			u.pushuserid,
     			u.pushchannelid,
-    			u.devicetype
-		 from T_CHAT_MSG t left join t_user u on (t.toUserId = u.userid)
+    			u.devicetype,
+    			u.username as toUserName,
+    			u2.username as fromUserName
+		 from T_CHAT_MSG t left join t_user u on (t.toUserId = u.userid) 
+		 left join t_user u2 on (t.fromUserId = u.userid)
 		<where>
 			 1=1 and t.state   =  '0'  and u.pushuserid is not null  <![CDATA[  and  rownum   <  200]]>
 		</where>

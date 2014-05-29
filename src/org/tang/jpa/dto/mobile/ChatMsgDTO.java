@@ -4,12 +4,8 @@
  */
 
 package org.tang.jpa.dto.mobile;
-import org.apache.log4j.Logger;
 
 public class ChatMsgDTO {
-
-	private static final long serialVersionUID = 1L;
-	private Logger logger = Logger.getLogger(this.getClass());
 	
     private java.lang.String id;
     private java.lang.String fromUserId;
@@ -21,6 +17,9 @@ public class ChatMsgDTO {
     private String pushuserId;
     private String pushChannelId;
     private String deviceType;
+    
+    private String fromUserName;
+    private String toUserName;
 	
 	public java.lang.String getId() {
 		return this.id;
@@ -95,5 +94,22 @@ public class ChatMsgDTO {
 	public void setDeviceType(String deviceType) {
 		this.deviceType = deviceType;
 	}
+
+	public String getFromUserName() {
+		return fromUserName;
+	}
+
+	public void setFromUserName(String fromUserName) {
+		this.fromUserName = fromUserName;
+	}
+
+	public String getToUserName() {
+		return toUserName;
+	}
+
+	public void setToUserName(String toUserName) {
+		this.toUserName = toUserName;
+	}
+	
 
 }
