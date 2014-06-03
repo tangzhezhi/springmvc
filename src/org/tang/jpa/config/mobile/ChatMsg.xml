@@ -15,6 +15,7 @@
     	<result column="pushuserid"  property="pushuserId" />
     	<result column="pushchannelid"  property="pushChannelId" />
     	<result column="devicetype"  property="deviceType" />
+    	<result column="msgType"  property="msgType" />
 	</resultMap>
 	
 	<resultMap type="Page" id="PageChatMsg">
@@ -26,6 +27,8 @@
     		<result column="id"  property="id" />
     		<result column="fromUserId"  property="fromUserId" />
     		<result column="toUserId"  property="toUserId" />
+    		<result column="fromUserName"  property="fromUserName" />
+    		<result column="toUserName"  property="toUserName" />
     		<result column="content"  property="content" />
     		<result column="createTime"  property="createTime" />
     		<result column="state"  property="state" />
@@ -33,6 +36,7 @@
     		<result column="pushuserid"  property="pushuserId" />
 	    	<result column="pushchannelid"  property="pushChannelId" />
 	    	<result column="devicetype"  property="deviceType" />
+	    	<result column="msgType"  property="msgType" />
     	</collection>
 	</resultMap>
 
@@ -43,10 +47,13 @@
     			t.id,
     			t.fromUserId,
     			t.toUserId,
+    			t.fromUserName,
+    			t.toUserName,
     			t.content,
     			t.createTime,
     			t.state,
-    			t.sendTime
+    			t.sendTime,
+    			t.msgType
 		 from T_CHAT_MSG t
 		<where>
 			 1=1 
@@ -88,12 +95,30 @@
     			u.pushuserid,
     			u.pushchannelid,
     			u.devicetype,
-    			u.username as toUserName,
-    			u2.username as fromUserName
+    			t.fromUserName as fromUserName,
+    			t.toUserName as toUserName,
+    			t.msgType
 		 from T_CHAT_MSG t left join t_user u on (t.toUserId = u.userid) 
-		 left join t_user u2 on (t.fromUserId = u.userid)
 		<where>
 			 1=1 and t.state   =  '0'  and u.pushuserid is not null  <![CDATA[  and  rownum   <  200]]>
+		</where>
+	</select>
+	
+	
+	
+	<!-- 查询推送设备信息-->
+	<select id="selectPushMachine" parameterType="ChatMsgDTO" resultMap="ChatMsgDTO" >   
+		select  
+    			u.pushuserid,
+    			u.pushchannelid,
+    			u.devicetype
+		 from t_user u 
+		<where>
+		 	 1=1
+			 <if test="toUserId != null  ">
+			 	 and  u.userid   =  #{toUserId}
+    		</if>
+			 and u.pushuserid is not null  
 		</where>
 	</select>
 	
@@ -106,19 +131,25 @@
     			t.id,
     			t.fromUserId,
     			t.toUserId,
+    			t.fromUserName,
+    			t.toUserName,
     			t.content,
     			t.createTime,
     			t.state,
-    			t.sendTime
+    			t.sendTime,
+    			t.msgType
 		)
 		values(
     			#{id, jdbcType=VARCHAR},
     			#{fromUserId, jdbcType=VARCHAR},
     			#{toUserId, jdbcType=VARCHAR},
+    			#{fromUserName, jdbcType=VARCHAR},
+    			#{toUserName, jdbcType=VARCHAR},
     			#{content, jdbcType=VARCHAR},
     			#{createTime, jdbcType=VARCHAR},
     			#{state, jdbcType=VARCHAR},
-    			#{sendTime, jdbcType=VARCHAR}
+    			#{sendTime, jdbcType=VARCHAR},
+    			#{msgType, jdbcType=VARCHAR}
 		)
 	</insert>
 

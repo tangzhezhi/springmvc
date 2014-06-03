@@ -2,6 +2,9 @@ package org.tang.jpa.utils;
 
 public class MobileConstant {
 	
+    // 1. 设置developer平台的ApiKey/SecretKey
+	public static final String baidu_push_apiKey = "9HCWGt0jqjxwgTaynTvOGaaU";
+	public static final String baidu_push_secretKey = "WPqtDFZLiGQcQf5xZnFL603o0mf0KjZd";
 	/**
 	 * 登录成功
 	 */

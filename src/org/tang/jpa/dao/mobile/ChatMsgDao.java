@@ -22,5 +22,5 @@ public interface ChatMsgDao  {
     
     public List<ChatMsgDTO> selectChatMsgWaitPush();  
     
-    
+    public List<ChatMsgDTO> selectPushMachine(ChatMsgDTO dto);  
 }
