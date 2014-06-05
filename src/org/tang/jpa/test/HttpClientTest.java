@@ -38,7 +38,7 @@ public class HttpClientTest {
 	
 	@SuppressWarnings("deprecation")
 	public static void main(String args[]) throws ClientProtocolException, IOException{
-		String msg = " i love you mm";
+		String msg = " 你也好a";
 		mobilePost(msg);
 	}
 }
