@@ -21,29 +21,51 @@ public class MobileLoginController {
 	@Autowired
 	private MobileUserService mobileUserService;
 	
+//	@RequestMapping(value = "/userLogin", method = {RequestMethod.POST , RequestMethod.GET})  
+//    @ResponseBody  
+//    public String  userLogin(@RequestParam(value="userName") String userName,
+//    		@RequestParam(value="userPwd") String userPwd) {  
+//		String result = "";
+//		MobileUserDTO udto = new MobileUserDTO();
+//        udto.setUserName(userName);
+//        udto.setUserPwd(userPwd);
+//        MobileBaseRepDTO mbt = new MobileBaseRepDTO();
+//        Gson gson = new Gson();  
+//        
+//        MobileUserDTO dto = mobileUserService.verifyMobileUserLoginInfo(udto);
+//        if(dto!=null){
+//        	mbt.setSessionKey("examTang");
+//        	mbt.setMsgFlag(MobileConstant.login_success);
+//        	mbt.setResponse(gson.toJson(dto));
+//        }
+//        else{
+//        	mbt.setMsgFlag(MobileConstant.login_fail);
+//        }
+//        result = gson.toJson(mbt);  
+//        return result;  //跳转  ;  
+//    }
+	
 	@RequestMapping(value = "/userLogin", method = {RequestMethod.POST , RequestMethod.GET})  
     @ResponseBody  
-    public String  userLogin(@RequestParam(value="userName") String userName,
-    		@RequestParam(value="userPwd") String userPwd) {  
-		String result = "";
+    public ModelMap  userLogin(@RequestParam(value="userName") String userName,
+    		@RequestParam(value="userPwd") String userPwd) { 
+		ModelMap mm = new ModelMap();
 		MobileUserDTO udto = new MobileUserDTO();
         udto.setUserName(userName);
         udto.setUserPwd(userPwd);
-        MobileBaseRepDTO mbt = new MobileBaseRepDTO();
-        Gson gson = new Gson();  
-        
         MobileUserDTO dto = mobileUserService.verifyMobileUserLoginInfo(udto);
+    	mm.put("sessionKey", "examTang");
         if(dto!=null){
-        	mbt.setSessionKey("examTang");
-        	mbt.setMsgFlag(MobileConstant.login_success);
-        	mbt.setResponse(gson.toJson(dto));
+        	mm.put("msgFlag", MobileConstant.login_success);
+        	mm.put("response", dto);
         }
         else{
-        	mbt.setMsgFlag(MobileConstant.login_fail);
+        	mm.put("msgFlag", MobileConstant.login_fail);
         }
-        result = gson.toJson(mbt);  
-        return result;  //跳转  ;  
+        return mm;  //跳转  ;  
     }
+	
+	
 	
 	@RequestMapping(value = "/addPushInfo", method = {RequestMethod.POST , RequestMethod.GET})  
     @ResponseBody  

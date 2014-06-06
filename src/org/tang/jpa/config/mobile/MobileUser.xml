@@ -7,6 +7,7 @@
 		<result column="username" property="userName" />
 		<result column="userpwd" property="userPwd" />
 		<result column="usertype" property="userType" />
+		<result column="userpicurl" property="picUrl" />
 		<result column="orgid" property="orgId" />
 		<result column="departmentid" property="departId" />
 	</resultMap>
@@ -32,7 +33,7 @@
 	<select id="selectMobileUserLoginInfo" parameterType="MobileUserDTO" resultMap="MobileUserDTO" >   
 		select 
 		u.userid,u.username,
-		u.usertype,u.userlevel,u.orgid,u.departmentid from t_user u 
+		u.usertype,u.userlevel,u.orgid,u.departmentid,u.userpicurl from t_user u 
 		<where>
 			 1=1
 			<if test="userName != null">

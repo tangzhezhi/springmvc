@@ -8,6 +8,7 @@ public class MobileUserDTO {
 	private int userType;
 	private String orgId;
 	private String departId;
+	private String picUrl;
 	
 	public String getUserId() {
 		return userId;
@@ -47,10 +48,12 @@ public class MobileUserDTO {
 	public void setDepartId(String departId) {
 		this.departId = departId;
 	}
-	@Override
-	public String toString() {
-		return "MobileUserDTO [userId=" + userId + ", userName=" + userName
-				+ ", userType=" + userType + "]";
+	
+	public String getPicUrl() {
+		return picUrl;
+	}
+	public void setPicUrl(String picUrl) {
+		this.picUrl = picUrl;
 	}
 	
 }
