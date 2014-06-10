@@ -35,4 +35,17 @@ public class MobileConstant {
 	
 	public static final int chat_msg_send_fail = 8006; 
 	
+	public static final int notice_query_success = 1007; 
+	
+	public static final int notice_query_fail = 8007; 
+	
+	public static final int notice_add_success = 1008; 
+	
+	public static final int notice_add_fail = 8008; 
+	
+	public static final int notice_msg = 1009; 
+	
+	public static final int chat_msg = 1010; 
+	
+	
 }

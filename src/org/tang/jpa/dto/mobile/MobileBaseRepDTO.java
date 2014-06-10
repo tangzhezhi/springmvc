@@ -24,10 +24,5 @@ public class MobileBaseRepDTO {
 	public void setResponse(String response) {
 		this.response = response;
 	}
-	@Override
-	public String toString() {
-		return "MobileBaseRepDTO [msgFlag=" + msgFlag + ", response="
-				+ response + ", sessionKey=" + sessionKey + "]";
-	}
 	
 }

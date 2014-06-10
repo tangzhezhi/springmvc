@@ -20,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias alias="RoleResourceDTO" type="org.tang.jpa.dto.system.RoleResourceDTO"/>
 		<typeAlias alias="DictoryDTO" type="org.tang.jpa.dto.system.DictoryDTO"/>
 		<typeAlias alias="DepartmentDTO" type="org.tang.jpa.dto.system.DepartmentDTO"/>
-		
+		<typeAlias alias="NoticeDTO" type="org.tang.jpa.dto.system.NoticeDTO"/>
 		
 		<typeAlias alias="OptionsDTO" type="org.tang.jpa.dto.exam.OptionsDTO"/>
 		<typeAlias alias="ExampaperDTO" type="org.tang.jpa.dto.exam.ExampaperDTO"/>
@@ -44,6 +44,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias alias="UserInfoDTO" type="org.tang.jpa.dto.mobile.UserInfoDTO"/>
 		<typeAlias alias="ChatMsgDTO" type="org.tang.jpa.dto.mobile.ChatMsgDTO"/>
 		
+		
 	</typeAliases>
 	
 	<!-- 配置数据库分页的实现 -->  
@@ -59,6 +60,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		 <mapper resource="org/tang/jpa/config/system/Role.xml" /> 		 
 		 <mapper resource="org/tang/jpa/config/system/Dictory.xml" /> 		 
 		 <mapper resource="org/tang/jpa/config/system/Department.xml" /> 
+		 <mapper resource="org/tang/jpa/config/system/Notice.xml" /> 
 		 
 		 <mapper resource="org/tang/jpa/config/exam/Options.xml" /> 
 		 <mapper resource="org/tang/jpa/config/exam/Exampaper.xml" /> 
@@ -73,7 +75,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		 <mapper resource="org/tang/jpa/config/mobile/MobileUser.xml" /> 
 		 <mapper resource="org/tang/jpa/config/mobile/Attendance.xml" /> 
 		 <mapper resource="org/tang/jpa/config/mobile/AttendanceGraph.xml" /> 
-		 	 <mapper resource="org/tang/jpa/config/mobile/ChatMsg.xml" /> 
+		 <mapper resource="org/tang/jpa/config/mobile/ChatMsg.xml" /> 
 	</mappers>
 </configuration>
 

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tang.jpa.dao.system.NoticeDao">
+
+	<resultMap type="NoticeDTO" id="NoticeDTO">
+    	<result column="id"  property="id" />
+    	<result column="orgid"  property="orgId" />
+    	<result column="authorid"  property="authorId" />
+    	<result column="authorname"  property="authorName" />
+    	<result column="type"  property="type" />
+    	<result column="title"  property="title" />
+    	<result column="content"  property="content" />
+    	<result column="createtime"  property="createTime" />
+	</resultMap>
+	
+	<resultMap type="Page" id="PageNotice">
+		<result column="totalRecord" property="totalRecord" />
+		<result  column="totalPage" property="totalPage" />
+		<result column="pageNo" property="pageNo" />
+		<result column="pageSize"  property="pageSize" />
+		<collection property="results" ofType="NoticeDTO">
+    		<result column="id"  property="id" />
+    		<result column="orgid"  property="orgId" />
+    		<result column="authorid"  property="authorId" />
+    		<result column="authorname"  property="authorName" />
+    		<result column="type"  property="type" />
+    		<result column="title"  property="title" />
+    		<result column="content"  property="content" />
+    		<result column="createtime"  property="createTime" />
+    	</collection>
+	</resultMap>
+
+		
+	 <!-- 查询分页 -->
+	<select id="selectNoticeAll" parameterType="Page" resultMap="PageNotice" >   
+		select  
+    			t.id,
+    			t.authorid,
+    			t.authorname,
+    			t.type,
+    			t.title,
+    			t.content,
+    			t.createtime
+		 from T_NOTICE t
+		<where>
+			 1=1 
+    		<if test="params.authorId != null and params.authorId != '' " >
+			 	 and  t.authorid   =  #{params.authorId}
+    		</if>
+    		<if test="params.orgId != null and params.orgId!= '' " >
+			 	 and  t.orgId   =  #{params.orgId}
+    		</if>
+    		<if test="params.authorName != null and params.authorName != '' " >
+			 	 and  t.authorname   =  #{params.authorName}
+    		</if>
+    		<if test="params.type != null and params.type != '' " >
+			 	 and  t.type   =  #{params.type}
+    		</if>
+    		<if test="params.title != null and params.title != '' " >
+			 	 and  t.title   =  #{params.title}
+    		</if>
+    		<if test="params.content != null and params.content != '' " >
+			 	 and  t.content   =  #{params.content}
+    		</if>
+    		<if test="params.createTime != null and params.createTime != '' " >
+			 	 and  t.createtime   =  #{params.createTime}
+    		</if>
+		</where>
+	</select>
+	
+	
+	<select id="queryNotice" parameterType="NoticeDTO" resultMap="NoticeDTO" >   
+				select  
+    			t.id,
+    			t.orgid,
+    			t.authorid,
+    			t.authorname,
+    			t.type,
+    			t.title,
+    			t.content,
+    			t.createtime
+		 from T_NOTICE t
+		<where>
+			1=1
+			<if test="type != null and type != '' " >
+			 	 and  t.type   =  #{type}
+    		</if>
+    		<if test="orgId != null and orgId != '' " >
+			 	 and  t.orgId   =  #{orgId}
+    		</if>
+    		<if test="createTime != null and createTime != '' " >
+			 	 and  t.createTime   >  #{createTime}
+    		</if>
+			    <![CDATA[  and  rownum   <  20]]>
+		</where>
+		order by t.createTime desc
+	</select>
+	
+	
+	<!-- 向数据库中插入资源记录-->
+	<insert id="insertNotice" parameterType="NoticeDTO">    
+		insert into T_NOTICE(
+    			id,
+    			authorid,
+    			authorname,
+    			type,
+    			title,
+    			content,
+    			createtime
+		)
+		values(
+    			#{id, jdbcType=VARCHAR},
+    			#{authorId, jdbcType=VARCHAR},
+    			#{authorName, jdbcType=VARCHAR},
+    			#{type, jdbcType=VARCHAR},
+    			#{title, jdbcType=VARCHAR},
+    			#{content, jdbcType=VARCHAR},
+    			#{createTime, jdbcType=VARCHAR}
+		)
+	</insert>
+
+
+	
+	
+	  <!-- 更新库中的资源 -->
+	<update id="updateNotice" parameterType="NoticeDTO">   
+		update T_NOTICE  
+		<set>
+    			<if test="title != null and title != '' ">title=#{title},</if>
+    			<if test="content != null and content != '' ">content=#{content},</if>
+    	</set>
+    	where id=#{id}
+	</update>
+	
+	<!-- 删除-->
+	<delete id="deleteNotice" parameterType="String">    
+		delete from T_NOTICE  where id=  #{id}
+	</delete>
+	
+	
+</mapper>
