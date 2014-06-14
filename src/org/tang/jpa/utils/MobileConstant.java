@@ -47,5 +47,8 @@ public class MobileConstant {
 	
 	public static final int chat_msg = 1010; 
 	
+	public static final int video_query_success = 1011; 
+	
+	public static final int video_query_fail = 8011; 
 	
 }

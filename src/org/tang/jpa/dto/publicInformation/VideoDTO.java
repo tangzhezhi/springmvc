@@ -22,6 +22,7 @@ public class VideoDTO {
     
     private String videoSubject;
     private String videoTime;
+    private String videopic;
 	
 	public java.lang.String getVideoid() {
 		return this.videoid;
@@ -94,6 +95,14 @@ public class VideoDTO {
 
 	public void setVideoTime(String videoTime) {
 		this.videoTime = videoTime;
+	}
+
+	public String getVideopic() {
+		return videopic;
+	}
+
+	public void setVideopic(String videopic) {
+		this.videopic = videopic;
 	}
 	
 }

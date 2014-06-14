@@ -13,6 +13,7 @@
     	<result column="videoRecommend"  property="videoRecommend" />
     	<result column="videoSubject"  property="videoSubject" />
     	<result column="videoTime"  property="videoTime" />
+    	<result column="videopic"  property="videopic" />
 	</resultMap>
 	
 	<resultMap type="Page" id="PageVideo">
@@ -31,6 +32,7 @@
     		<result column="videoRecommend"  property="videoRecommend" />
     		<result column="videoSubject"  property="videoSubject" />
     		<result column="videoTime"  property="videoTime" />
+    		<result column="videopic"  property="videopic" />
     	</collection>
 	</resultMap>
 	
@@ -67,7 +69,8 @@
     			t.videoDuration,
     			t.videoRecommend,
     			t.videoSubject,
-    			t.videoTime
+    			t.videoTime,
+    			t.videopic
 		 from T_VIDEO t
 		<where>
 			 1=1 
