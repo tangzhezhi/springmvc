@@ -43,7 +43,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias alias="AttendanceGraphDTO" type="org.tang.jpa.dto.mobile.AttendanceGraphDTO"/>
 		<typeAlias alias="UserInfoDTO" type="org.tang.jpa.dto.mobile.UserInfoDTO"/>
 		<typeAlias alias="ChatMsgDTO" type="org.tang.jpa.dto.mobile.ChatMsgDTO"/>
-		
+		<typeAlias alias="TaskWeeklyDTO" type="org.tang.jpa.dto.mobile.TaskWeeklyDTO"/>
 		
 	</typeAliases>
 	
@@ -76,6 +76,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		 <mapper resource="org/tang/jpa/config/mobile/Attendance.xml" /> 
 		 <mapper resource="org/tang/jpa/config/mobile/AttendanceGraph.xml" /> 
 		 <mapper resource="org/tang/jpa/config/mobile/ChatMsg.xml" /> 
+		 <mapper resource="org/tang/jpa/config/mobile/TaskWeekly.xml" /> 
 	</mappers>
 </configuration>
 

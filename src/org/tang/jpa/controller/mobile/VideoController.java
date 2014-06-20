@@ -34,7 +34,7 @@ public class VideoController {
 			page.setPageNo(Integer.valueOf(pageNo));
 			page.setPageSize(Integer.valueOf(pageSize));
 			Map params = new HashMap();
-			params.put("videoname", videoName);
+			params.put("videoName", videoName);
 			page.setParams(params);
 			Page p = videoService.findVideo(page);
 			mm.put("sessionKey", "examTang");
@@ -43,11 +43,20 @@ public class VideoController {
 				mm.put("msgFlag", MobileConstant.video_query_success);
 			    mm.put("response",p==null?0:p.getResults());
 			    mm.put("total", p==null?0:p.getTotalRecord());
+			    mm.put("pageNo", p==null?0: p.getPageNo());
+			    mm.put("pageSize", p==null?0: p.getPageSize());
+			    mm.put("totalPage", p==null?0: p.getTotalPage());
 			}
 			else{
-				mm.put("msgFlag", MobileConstant.video_query_fail);
+				mm.put("msgFlag", MobileConstant.video_query_success);
+			    mm.put("response",null);
+			    mm.put("total", 0);
+			    mm.put("pageNo", 0);
+			    mm.put("pageSize", 0);
+			    mm.put("totalPage", 0);
 			}
 		} catch (NumberFormatException e) {
+			mm.put("msgFlag", MobileConstant.video_query_fail);
 			e.printStackTrace();
 		}
         return mm;  

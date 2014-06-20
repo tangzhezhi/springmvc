@@ -78,7 +78,7 @@
 			 	 and  t.videoid   =  #{params.videoid}
     		</if>
     		<if test="params.videoName != null and params.videoName != '' " >
-			 	 and  t.videoName   =  #{params.videoName}
+			 	 and  t.videoName   like  '%${params.videoName}%' 
     		</if>
     		<if test="params.videoUrl != null and params.videoUrl != '' " >
 			 	 and  t.videoUrl   =  #{params.videoUrl}

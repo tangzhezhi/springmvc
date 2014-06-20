@@ -51,4 +51,12 @@ public class MobileConstant {
 	
 	public static final int video_query_fail = 8011; 
 	
+	public static final int taskweekly_query_success = 1012; 
+	
+	public static final int taskweekly_query_fail = 8012; 
+	
+	public static final int taskweekly_add_success = 1013; 
+	
+	public static final int taskweekly_add_fail = 8013; 
+	
 }
