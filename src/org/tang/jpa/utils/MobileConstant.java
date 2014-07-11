@@ -59,4 +59,8 @@ public class MobileConstant {
 	
 	public static final int taskweekly_add_fail = 8013; 
 	
+	public static final int attendance_query_state_success = 1014; 
+	
+	public static final int attendance_query_state_fail = 8014; 
+	
 }

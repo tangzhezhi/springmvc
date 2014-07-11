@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tang.jpa.dao.attendance.AttendanceStateDetailDao">
+	
+	<resultMap type="AttendanceStateDetailDTO" id="AttendanceStateDetailDTO">
+    	<result column="id"  property="id" />
+    	<result column="pid"  property="pid" />
+    	<result column="attendanceTime"  property="attendanceTime" />
+    	<result column="attendanceName"  property="attendanceName" />
+    	<result column="state"  property="state" />
+    	<result column="attendanceRuleId"  property="attendanceRuleId" />
+	</resultMap>
+	
+	<resultMap type="Page" id="PageAttendanceStateDetail">
+		<result column="totalRecord" property="totalRecord" />
+		<result  column="totalPage" property="totalPage" />
+		<result column="pageNo" property="pageNo" />
+		<result column="pageSize"  property="pageSize" />
+		<collection property="results" ofType="AttendanceStateDetailDTO">
+    		<result column="id"  property="id" />
+    		<result column="pid"  property="pid" />
+    		<result column="attendanceTime"  property="attendanceTime" />
+    		<result column="attendanceName"  property="attendanceName" />
+    		<result column="state"  property="state" />
+    		<result column="attendanceRuleId"  property="attendanceRuleId" />
+    	</collection>
+	</resultMap>
+	
+	
+	
+		
+	 <!-- 查询分页 -->
+	<select id="selectAttendanceStateDetailAll" parameterType="Page" resultMap="PageAttendanceStateDetail" >   
+		select  
+    			t.id,
+    			t.pid,
+    			t.attendanceTime,
+    			t.attendanceName,
+    			t.state,
+    			t.attendanceRuleId
+		 from T_ATTENDANCE_STATE_DETAIL t
+		<where>
+			 1=1 
+    		<if test="params.id != null and params.id != '' " >
+			 	 and  t.id   =  #{params.id}
+    		</if>
+    		<if test="params.pid != null and params.pid != '' " >
+			 	 and  t.pid   =  #{params.pid}
+    		</if>
+    		<if test="params.attendanceTime != null and params.attendanceTime != '' " >
+			 	 and  t.attendanceTime   =  #{params.attendanceTime}
+    		</if>
+    		<if test="params.attendanceName != null and params.attendanceName != '' " >
+			 	 and  t.attendanceName   =  #{params.attendanceName}
+    		</if>
+    		<if test="params.state != null and params.state != '' " >
+			 	 and  t.state   =  #{params.state}
+    		</if>
+    		<if test="params.attendanceRuleId != null and params.attendanceRuleId != '' " >
+			 	 and  t.attendanceRuleId   =  #{params.attendanceRuleId}
+    		</if>
+		</where>
+	</select>
+	
+	
+	<select id="selectAttendanceStateDetail" parameterType="AttendanceStateDetailDTO" resultMap="AttendanceStateDetailDTO" >   
+		select  
+    			t.id,
+    			t.pid,
+    			t.attendanceTime,
+    			t.attendanceName,
+    			t.state,
+    			t.attendanceRuleId
+		 from T_ATTENDANCE_STATE_DETAIL t
+		<where>
+			 1=1 
+    		<if test="pid != null">
+			 	 and  t.pid  =  #{pid}
+    		</if>
+		</where>
+		order by t.attendanceTime 
+	</select>
+	
+	
+	
+	
+	<!-- 向数据库中插入资源记录-->
+	<insert id="insertAttendanceStateDetail" parameterType="AttendanceStateDetailDTO">    
+		insert into T_ATTENDANCE_STATE_DETAIL(
+    			id,
+    			pid,
+    			attendanceTime,
+    			attendanceName,
+    			state,
+    			attendanceRuleId
+		)
+		values(
+    			#{id, jdbcType=VARCHAR},
+    			#{pid, jdbcType=VARCHAR},
+    			#{attendanceTime, jdbcType=VARCHAR},
+    			#{attendanceName, jdbcType=VARCHAR},
+    			#{state, jdbcType=VARCHAR},
+    			#{attendanceRuleId, jdbcType=VARCHAR}
+		)
+	</insert>
+
+
+	
+	
+	  <!-- 更新库中的资源 -->
+	<update id="updateAttendanceStateDetail" parameterType="AttendanceStateDetailDTO">   
+		update T_ATTENDANCE_STATE_DETAIL  
+		<set>
+    			<if test="state != null and state != '' ">state=#{state},</if>
+    			<if test="attendanceRuleId != null and attendanceRuleId != '' ">attendanceRuleId=#{attendanceRuleId},</if>
+    	</set>
+    	where attendanceStateDetailid=#{attendanceStateDetailid}
+	</update>
+	
+	<!-- 删除-->
+	<delete id="deleteAttendanceStateDetail" parameterType="String">    
+		delete from T_ATTENDANCE_STATE_DETAIL  where id=  #{id}
+	</delete>
+	
+	
+</mapper>

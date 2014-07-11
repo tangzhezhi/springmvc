@@ -62,8 +62,8 @@ public class HttpClientTest {
 	
 	@SuppressWarnings("deprecation")
 	public static void main(String args[]) throws ClientProtocolException, IOException{
-		String msg = " 我love";
-//		mobilePost(msg);
-		mobileNoticePost(msg);
+		String msg = " 我love you abc ";
+		mobilePost(msg);
+//		mobileNoticePost(msg);
 	}
 }

@@ -145,7 +145,13 @@ public class PushMsgService {
 	             request.setDeviceType(3);
 	             request.setChannelId(Long.valueOf(entity.getPushChannelId()));
 	             request.setUserId(entity.getPushuserId());
-	             String jsonString = gson.toJson(entity);
+		            
+		         ModelMap mm = new ModelMap();
+			     mm.put("sessionKey", "examTang");
+			     mm.put("msgFlag", MobileConstant.chat_msg);
+			     mm.put("response", entity);
+	             
+	             String jsonString = gson.toJson(mm);
 	             System.out.println("jsonString...."+jsonString);
 	             request.setMessage(jsonString);
 	             // 5. 调用pushMessage接口

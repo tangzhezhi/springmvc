@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tang.jpa.dao.attendance.AttendanceStateDao">
+	
+	<resultMap type="AttendanceState" id="AttendanceState">
+    	<result column="id"  property="id" />
+    	<result column="attendanceTime"  property="attendanceTime" />
+    	<result column="attendanceName"  property="attendanceName" />
+    	<result column="state"  property="state" />
+    	<result column="userId"  property="userId" />
+	</resultMap>
+	
+	<resultMap type="AttendanceStateDTO" id="AttendanceStateDTO">
+    	<result column="id"  property="id" />
+    	<result column="userId"  property="userId" />
+    	<result column="state"  property="state" />
+    	<result column="attendanceDate"  property="attendanceDate" />
+	</resultMap>
+	
+	<resultMap type="Page" id="PageAttendanceState">
+		<result column="totalRecord" property="totalRecord" />
+		<result  column="totalPage" property="totalPage" />
+		<result column="pageNo" property="pageNo" />
+		<result column="pageSize"  property="pageSize" />
+		<collection property="results" ofType="AttendanceStateDTO">
+    		<result column="id"  property="id" />
+    		<result column="userId"  property="userId" />
+    		<result column="state"  property="state" />
+    		<result column="attendanceDate"  property="attendanceDate" />
+    	</collection>
+	</resultMap>
+
+		
+	 <!-- 查询分页 -->
+	<select id="selectAttendanceStateAll" parameterType="Page" resultMap="PageAttendanceState" >   
+		select  
+    			t.id,
+    			t.userId,
+    			t.state,
+    			t.attendanceDate
+		 from T_ATTENDANCE_STATE t
+		<where>
+			 1=1 
+    		<if test="params.id != null and params.id != '' " >
+			 	 and  t.id   =  #{params.id}
+    		</if>
+    		<if test="params.userId != null and params.userId != '' " >
+			 	 and  t.userId   =  #{params.userId}
+    		</if>
+    		<if test="params.state != null and params.state != '' " >
+			 	 and  t.state   =  #{params.state}
+    		</if>
+    		<if test="params.attendanceDate != null and params.attendanceDate != '' " >
+			 	 and  t.attendanceDate   =  #{params.attendanceDate}
+    		</if>
+		</where>
+	</select>
+	
+	<select id="selectAttendanceState" parameterType="AttendanceStateDTO" resultMap="AttendanceState" >   
+		select  
+    			t.id,
+    			t.attendanceTime,
+    			t.attendanceName,
+    			a.userid,
+    			t.state
+		 from T_ATTENDANCE_STATE_DETAIL t left join T_ATTENDANCE_STATE a on (t.pid = a.id)
+		<where>
+			 1=1 
+    		<if test="userId != null">
+			 	 and  a.userid  =  #{userId}
+    		</if>
+    		<if test="attendanceDate != null">
+			 	 and  a.attendanceDate  =  #{attendanceDate}
+    		</if>
+		</where>
+		order by t.attendanceTime 
+	</select>
+	
+	
+	<!-- 向数据库中插入资源记录-->
+	<insert id="insertAttendanceState" parameterType="AttendanceStateDTO">    
+		insert into T_ATTENDANCE_STATE(
+    			id,
+    			userId,
+    			state,
+    			attendanceDate
+		)
+		values(
+    			#{id, jdbcType=VARCHAR},
+    			#{userId, jdbcType=VARCHAR},
+    			#{state, jdbcType=VARCHAR},
+    			#{attendanceDate, jdbcType=VARCHAR}
+		)
+	</insert>
+
+
+	
+	
+	  <!-- 更新库中的资源 -->
+	<update id="updateAttendanceState" parameterType="AttendanceStateDTO">   
+		update T_ATTENDANCE_STATE  
+		<set>
+    			<if test="state != null and state != '' ">state=#{state},</if>
+    	</set>
+    	where id=#{id}
+	</update>
+	
+	<!-- 删除-->
+	<delete id="deleteAttendanceState" parameterType="String">    
+		delete from T_ATTENDANCE_STATE  where id=  #{id}
+	</delete>
+	
+	
+</mapper>

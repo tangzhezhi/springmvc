@@ -1,0 +1,99 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!-- 开启controller注解支持 -->
+    <context:component-scan base-package="org.tang.jpa.controller" use-default-filters="false">
+        <context:include-filter type="annotation"
+                                expression="org.springframework.stereotype.Controller"/>
+        <context:include-filter type="annotation"
+                                expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+    </context:component-scan>
+
+
+    <mvc:annotation-driven>
+        <mvc:argument-resolvers>
+            <bean class="org.tang.jpa.utils.CurrentUserMethodArgumentResolver"/>
+        </mvc:argument-resolvers>
+    </mvc:annotation-driven>
+
+    <!-- 当在web.xml 中   DispatcherServlet使用 <url-pattern>/</url-pattern> 映射时，能映射静态资源 -->
+    <mvc:default-servlet-handler/>
+
+    <!-- 静态资源映射 -->
+   <mvc:resources mapping="/resources/**" location="/resources/" cache-period="31536000"/>
+
+
+	<bean
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+	</bean>
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" p:ignoreDefaultModelOnRedirect="true">
+		<property name="messageConverters">
+			<list>
+				<bean
+					class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"  p:supportedMediaTypes="*/*" />
+			</list>
+		</property>
+	</bean>
+	
+	
+	 <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">  
+        <property name="mediaTypes">  
+            <map>  
+                <entry key="html" value="text/html" />  
+                <entry key="json" value="application/json" />  
+                <entry key="xml" value="application/xml" />  
+                <entry key="octet-stream" value="application/octet-stream" />  
+                 
+            </map>  
+        </property>  
+        <property name="viewResolvers">  
+            <list>  
+                <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />  
+                <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
+                    <property name="prefix" value="/" />  
+                    <property name="suffix" value=".html" />  
+                </bean>  
+            </list>  
+        </property>  
+        <property name="defaultViews">  
+            <list>  
+                <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />  
+            </list>  
+        </property>  
+    </bean>  
+      
+           <!-- SpringMVC上传文件时,需配置MultipartResolver处理器 -->  
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
+        <!-- 指定所上传文件的总大小不能超过800KB......注意maxUploadSize属性的限制不是针对单个文件,而是所有文件的容量之和 -->  
+        <property name="maxUploadSize" value="8000000"/>  
+    </bean>  
+    
+      
+          <!-- SpringMVC在超出上传文件限制时，会抛出org.springframework.web.multipart.MaxUploadSizeExceededException 
+     该异常是SpringMVC在检查上传的文件信息时抛出来的，而且此时还没有进入到Controller方法中 -->  
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">  
+        <property name="exceptionMappings">  
+            <props>  
+            	<prop key="org.apache.shiro.authz.UnauthorizedException">error/401</prop>  
+                <prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">error/405</prop>  
+                <prop key="java.lang.Throwable">error/500</prop>  
+            </props>  
+        </property>  
+    </bean>  
+    <!-- 控制器异常处理 -->
+    <bean id="exceptionHandlerExceptionResolver" class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver">
+    </bean>
+
+    <import resource="spring-mvc-shiro.xml"/>
+
+</beans>
