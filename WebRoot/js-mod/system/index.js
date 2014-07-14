@@ -9,7 +9,7 @@ $(function() {
 	   type: "POST",
 	   url: "user/menu?random"+parseInt(Math.random()*100000),
 	   success: function(msg){
-			_menus = $.parseJSON(msg);
+			_menus = msg;
 			
 			var firstMenuName = $('#css3menu a:first').attr('name');
 			

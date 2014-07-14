@@ -115,7 +115,7 @@
                 /resources/** = anon  	
                 /css-mod/** = anon  	
                 /js-mod/** = anon  	
-                /logout = logout
+                /login/userLoginOut = logout
                 /** = user,authc
             </value>
         </property>

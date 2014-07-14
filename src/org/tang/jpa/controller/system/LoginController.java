@@ -110,6 +110,7 @@ public class LoginController {
     @ResponseBody  
     public ModelAndView  userLoginOut(HttpSession session,
     		ModelAndView model,@ModelAttribute("currentUser") UserDTO dto) {  
+		HttpServletRequest request =  ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
 		session.removeAttribute("currentUser");
 		model.setViewName("redirect:/login.html");
 		return model;  //跳转  ;  
