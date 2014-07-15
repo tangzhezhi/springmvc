@@ -109,6 +109,11 @@ $(function() {
 				     $.messager.alert("操作提示", $.parseJSON(msg),"info");
 				     $('#dg').datagrid('reload');
 				     $("#dg").datagrid("clearSelections");
+				   },
+				   error : function (x){
+					  if(x.status==401){
+						   $.messager.alert("提示", "你没有权限","info");
+					  }
 				   }
 				});
 			}

@@ -31,9 +31,9 @@
 	
 	
 	
-	 <!-- 查询用户资源 -->
+	 <!-- 查询用户页面资源 -->
 	<select id="selectResourceOfUser" parameterType="ResourceDTO" resultMap="ResourceDTO" >   
-		select  t.resourceid,t.resourcename,t.resourceurl,t.resourceparentid from t_resource t
+		select  t.resourceid,t.resourcename,t.resourceurl,t.resourceparentid,t.resourceCode from t_resource t
 		left join t_role_resource rr on(
 		     rr.resourceid = t.resourceid
 		)
@@ -56,6 +56,7 @@
 		</where>
 		 order by t.resourcesort
 	</select>
+	
 	
 	
 	

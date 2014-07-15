@@ -93,7 +93,9 @@
     <!-- 控制器异常处理 -->
     <bean id="exceptionHandlerExceptionResolver" class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver">
     </bean>
-
+	
+	 <bean class="org.tang.jpa.utils.DefaultExceptionHandler"/>
+	 
     <import resource="spring-mvc-shiro.xml"/>
 
 </beans>

@@ -1,5 +1,8 @@
 package org.tang.jpa.controller.system;
 
+import java.util.ArrayList;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -13,7 +16,6 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.jasig.cas.client.authentication.AttributePrincipal;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +26,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.tang.jpa.dto.system.UserDTO;
-import org.tang.jpa.service.system.UserService;
 
 
 @Controller("loginController")  
@@ -32,9 +33,8 @@ import org.tang.jpa.service.system.UserService;
 public class LoginController {
 	private  Logger  logger  = Logger.getLogger("LoginController");
 	
-	@Autowired
-	private UserService userService;
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/userLogin", method = {RequestMethod.POST , RequestMethod.GET})  
     @ResponseBody  
     public ModelAndView  userLogin(HttpSession session,ModelAndView model,@RequestParam(value="userName",required=false) String userName,
@@ -53,13 +53,23 @@ public class LoginController {
 				}
 				if(StringUtils.isBlank(userPwd)){
 					if(principal.getAttributes().size()>0){
-						userPwd = principal.getAttributes().get("password").toString();
+						if(principal.getAttributes().size()>1){
+							 Map attributes = principal.getAttributes();
+							 ArrayList<String> ss =  (ArrayList<String>) attributes.get("value");
+							 userName = ss.get(0) ;
+							 userPwd = ss.get(1);
+						}
+						else{
+							 Map attributes = principal.getAttributes();
+							 String ss =  (String) attributes.get("value");
+						}
+
 					}
 				}
 			}
 			
 			UsernamePasswordToken token = new UsernamePasswordToken(userName,
-					"21232f297a57a5a743894a0e4a801fc3");
+					userPwd);
 			token.setRememberMe(false);
 			String ret="";
 			try {
@@ -69,19 +79,19 @@ public class LoginController {
 			} catch (UnknownAccountException ex) {
 				ret = "{success:false,message:'账号错误'}";
 				logger.debug(ret);
-				model.setViewName("redirect:/login.html");
+				model.setViewName("redirect:https://localhost:8443/cas/");
 			} catch (IncorrectCredentialsException ex) {
 				ret = "{success:false,message:'密码错误'}";
 				logger.debug(ret);
-				model.setViewName("redirect:/login.html");
+				model.setViewName("redirect:https://localhost:8443/cas/");
 			} catch (LockedAccountException ex) {
 				ret = "{success:false,message:'账号已被锁定，请与管理员联系'}";
 				logger.debug(ret);
-				model.setViewName("redirect:/login.html");
+				model.setViewName("redirect:https://localhost:8443/cas/");
 			} catch (AuthenticationException ex) {
 				ret = "{success:false,message:'您没有授权'}";
 				logger.debug(ret+":::"+ex);
-				model.setViewName("redirect:/login.html");
+				model.setViewName("redirect:https://localhost:8443/cas/");
 			}
 		}
 		else{
@@ -89,20 +99,6 @@ public class LoginController {
 		}
 		 return model;  //跳转  
 		
-		
-//		UserDTO udto = new UserDTO();
-//        udto.setUserName(userName);
-//        udto.setUserPwd(userPwd);
-//        UserDTO dto = userService.verifyUserLoginInfo(udto);
-//        if(dto!=null){
-//        	 session.setAttribute("currentUser", dto);
-//        	 model.setViewName("redirect:/index.html");
-//        	 return model;  //跳转  ;  
-//        }
-//        else{
-//        	model.setViewName("redirect:/login.html");
-//        	return model;
-//        }
     }
 	
 	

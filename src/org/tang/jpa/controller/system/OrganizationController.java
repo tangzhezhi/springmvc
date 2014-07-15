@@ -3,6 +3,8 @@ package org.tang.jpa.controller.system;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,6 +27,7 @@ public class OrganizationController {
 	private OrganizationService organizationService;
 	
 	@SuppressWarnings("unchecked")
+	@RequiresPermissions("organization:view")
 	@RequestMapping(value = "/queryOrganization", method = RequestMethod.POST)  
     @ResponseBody  
     public Map<String, Object> queryOrganization(@ModelAttribute("currentUser") UserDTO dto
@@ -48,7 +51,7 @@ public class OrganizationController {
         return model;  
     }  
 	
-	
+	@RequiresPermissions("organization:create")
 	@RequestMapping(value = "/addOrganization", method = RequestMethod.POST)  
     @ResponseBody  
     public String addOrganization(@ModelAttribute("currentUser") UserDTO dto,
