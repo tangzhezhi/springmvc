@@ -53,17 +53,9 @@ public class LoginController {
 				}
 				if(StringUtils.isBlank(userPwd)){
 					if(principal.getAttributes().size()>0){
-						if(principal.getAttributes().size()>1){
-							 Map attributes = principal.getAttributes();
-							 ArrayList<String> ss =  (ArrayList<String>) attributes.get("value");
-							 userName = ss.get(0) ;
-							 userPwd = ss.get(1);
-						}
-						else{
-							 Map attributes = principal.getAttributes();
-							 String ss =  (String) attributes.get("value");
-						}
-
+						 Map attributes = principal.getAttributes();
+						 userName =  (String) attributes.get("username");
+						 userPwd =  (String) attributes.get("password");
 					}
 				}
 			}

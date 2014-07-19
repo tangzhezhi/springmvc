@@ -23,7 +23,7 @@ $(function() {
 				examid:getUrlParam('examid')
 		   },
 		   success: function(data){
-			    var dataRow = $.parseJSON(data).data
+			    var dataRow = data.data
 			   var content = "";
 			   var option = "";
 			   var temp_tools = "<p class='head_explain'>【<a href='#' onclick='window.print();'>打印本页</a>】【<a href='#' onclick='window.close();'>关闭窗口</a>】</p>";

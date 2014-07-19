@@ -32,8 +32,8 @@ $(function() {
 					examType:examType
 			   },
 			   success: function(data){
-				   var dataRow = $.parseJSON(data).rows
-				   total = $.parseJSON(data).total;
+				   var dataRow = data.rows
+				   total = data.total;
 				   var content = "<table class='table'><thead><tr><th>标　题</th><th>日期</th></tr></thead>";
 				   var option = "";
 				   var date="";
@@ -128,8 +128,8 @@ function pageClick(pageNo,examType){
 						examType:examType
 				   },
 				   success: function(data){
-					   var dataRow = $.parseJSON(data).rows
-					   var total = $.parseJSON(data).total;
+					   var dataRow = data.rows
+					   var total = data.total;
 					   var content = "<table class='table'><thead><tr><th>标　题</th><th>日期</th></tr></thead>";
 					   var option = "";
 					   var date="";
